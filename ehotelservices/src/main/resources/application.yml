@@ -14,6 +14,8 @@ spring:
     properties:
       hibernate.format_sql: true
       hibernate.dialect: org.hibernate.dialect.PostgreSQL81Dialect
+      hibernate:
+        default_schema: ehotel
 
 
 
