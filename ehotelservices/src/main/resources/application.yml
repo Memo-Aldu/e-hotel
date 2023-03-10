@@ -3,6 +3,17 @@ server:
 spring:
   application:
     name: ehotel-service
+  datasource:
+    url: jdbc:postgresql://34.168.253.84:5432/appdb
+    username: appuser
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate.format_sql: true
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL81Dialect
 
 
 
