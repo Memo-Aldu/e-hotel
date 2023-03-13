@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: ehotel-service
+  datasource:
+    url: jdbc:postgresql://34.168.253.84:5432/appdb
+    username: appuser
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL81Dialect
+      hibernate:
+        default_schema: ehotel
+
+
+
+
+
+
+
