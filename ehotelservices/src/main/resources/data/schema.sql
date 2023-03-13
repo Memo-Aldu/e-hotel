@@ -19,6 +19,7 @@ CREATE TABLE app_user ( --DONE
 CREATE TABLE hotel_chain( --DONE
     chain_ID BIGSERIAL PRIMARY KEY,
     chain_email email NOT NULL UNIQUE,
+    chain_name VARCHAR(30) NOT NULL,
     chain_phone_number TEXT NOT NULL UNIQUE,
     chain_rating smallint not null check(chain_rating between 1 and 5),
     chain_central_address TEXT not null);
@@ -30,6 +31,7 @@ CREATE TABLE hotel( --DONE
     hotel_address TEXT NOT NULL,
     hotel_email email NOT NULL UNIQUE,
     hotel_phone_number TEXT NOT NULL UNIQUE,
+    hotel_rating smallint not null check(hotel_rating between 1 and 5),
     foreign key (chain_ID) references hotel_chain (chain_ID)
       on delete cascade --cant exist without chain_hotel
 );
