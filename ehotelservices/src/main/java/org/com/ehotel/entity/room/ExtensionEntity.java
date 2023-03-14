@@ -47,9 +47,4 @@ public class ExtensionEntity {
             joinColumns = @JoinColumn(name = "extension_id"),
             inverseJoinColumns = @JoinColumn(name = "stay_id"))
     private Set<StayEntity> stays = new HashSet<>();
-
-
-    //TODO many to one with stay
-    // many to one with reservation
-
 }
