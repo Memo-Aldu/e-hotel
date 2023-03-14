@@ -1,7 +1,11 @@
-package org.com.ehotel.mapper.room;
+package org.com.ehotel.mapper.hotel;
 
+import org.com.ehotel.dto.hotel.RoleDTO;
+import org.com.ehotel.entity.hotel.RoleEntity;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 /**
  * @author : memo-aldu
@@ -10,4 +14,8 @@ import org.springframework.stereotype.Component;
  **/
 @Component @Mapper
 public interface RoleMapper {
+    RoleDTO toDTO(RoleEntity entity);
+    RoleEntity toEntity(RoleDTO dto);
+    Set<RoleDTO> toDTOs(Set<RoleEntity> entities);
+    Set<RoleEntity> toEntities(Set<RoleDTO> dtos);
 }
