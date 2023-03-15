@@ -13,7 +13,8 @@ CREATE TYPE payment_status AS ENUM ('PAYED', 'UNPAID');
 -- ENTITIES
 CREATE TABLE app_user ( --DONE
     email email UNIQUE NOT NULL PRIMARY KEY,
-    password TEXT NOT NULL CHECK (char_length(password) >=4)
+    password TEXT NOT NULL CHECK (char_length(password) >=4),
+    user_role VARCHAR NOT NULL DEFAULT 'ROLE_USER'
 );
 
 CREATE TABLE hotel_chain( --DONE

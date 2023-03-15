@@ -9,6 +9,6 @@ import org.com.ehotel.entity.user.EmployeeEntity;
  * @created : 3/13/2023, Monday
  **/
 public record AppUserDTO(
-        String email, String password,
+        String email, String password, String userRole,
         CustomerEntity customer, EmployeeEntity employee) {
 }

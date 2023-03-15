@@ -21,6 +21,10 @@ public class AppUserEntity {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "user_role")
+    private String userRole;
+
     @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL)
     private CustomerEntity customer;
 
