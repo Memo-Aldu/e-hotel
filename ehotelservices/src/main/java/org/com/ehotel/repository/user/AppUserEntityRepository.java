@@ -19,4 +19,10 @@ public interface AppUserEntityRepository extends JpaRepository<AppUserEntity, St
 
     @Query(value = "SELECT * FROM appdb.ehotel.app_user a WHERE a.email = :employee_email", nativeQuery = true)
     Optional<AppUserEntity> findAppUserEntityByEmail(@Param("employee_email") String email);
+
+    @Query(value = "SELECT CASE WHEN COUNT(a) > 0 THEN true ELSE false END FROM appdb.ehotel.app_user a WHERE a.email = :employee_email", nativeQuery = true)
+    boolean existsByEmail(@Param("employee_email") String email);
+
+    @Modifying @Query(value = "DELETE FROM appdb.ehotel.app_user a WHERE a.email = :employee_email", nativeQuery = true)
+    void deleteByEmail(@Param("employee_email") String email);
 }
