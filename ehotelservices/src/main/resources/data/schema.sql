@@ -76,7 +76,7 @@ CREATE TABLE employee( --DONE
 );
 
 ALTER TABLE department --DONE
-    ADD COLUMN dept_manager_NAS VARCHAR(9) NOT NULL,
+    ADD COLUMN dept_manager_NAS VARCHAR(9),
 	ADD FOREIGN KEY (dept_manager_NAS) REFERENCES employee(employee_NAS)
 	ON DELETE RESTRICT;
 
