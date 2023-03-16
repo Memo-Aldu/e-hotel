@@ -4,6 +4,7 @@ import org.com.ehotel.entity.user.AppUserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -16,4 +17,6 @@ import java.util.Optional;
 @Repository
 public interface AppUserEntityRepository extends JpaRepository<AppUserEntity, String> {
 
+    @Query(value = "SELECT * FROM appdb.ehotel.app_user a WHERE a.email = :employee_email", nativeQuery = true)
+    Optional<AppUserEntity> findAppUserEntityByEmail(@Param("employee_email") String email);
 }

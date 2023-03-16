@@ -36,6 +36,6 @@ public interface EmployeeEntityRepository extends JpaRepository<EmployeeEntity, 
     @Query(value = "SELECT * FROM employee e WHERE e.employee_dept = :employee_dept", nativeQuery = true)
     List<EmployeeEntity> findEmployeesByDepartmentId(@Param("employee_dept") int branchId);
     @Query(value = "SELECT * FROM employee e WHERE e.employee_role = :employee_role", nativeQuery = true)
-    List<EmployeeEntity> findEmployeesByRoleID(@Param("employee_dept") int roleID);
+    List<EmployeeEntity> findEmployeesByRoleID(@Param("employee_role") int roleID);
 
 }
