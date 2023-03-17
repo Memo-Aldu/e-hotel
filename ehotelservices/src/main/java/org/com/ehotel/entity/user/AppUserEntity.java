@@ -2,6 +2,7 @@ package org.com.ehotel.entity.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.com.ehotel.enums.AppRoles;
 
 import javax.persistence.*;
 
@@ -23,7 +24,8 @@ public class AppUserEntity {
     private String password;
 
     @Column(name = "user_role")
-    private String userRole;
+    @Enumerated(EnumType.STRING)
+    private AppRoles userRole;
 
     @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL)
     private CustomerEntity customer;

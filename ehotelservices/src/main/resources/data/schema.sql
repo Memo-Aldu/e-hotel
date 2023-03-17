@@ -9,12 +9,13 @@ CREATE DOMAIN email AS citext --DONE
 CREATE TYPE reservation_status AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'CANCELED', 'UPDATED');
 CREATE TYPE room_status AS ENUM ('OCCUPIED', 'UNOCCUPIED', 'CLOSED');
 CREATE TYPE payment_status AS ENUM ('PAYED', 'UNPAID');
+CREATE TYPE app_role AS ENUM ('ROLE_USER', 'ROLE_ADMIN', 'ROLE_HOTEL_MANAGER', 'ROLE_MANAGER', 'ROLE_EMPLOYEE', 'ROLE_CUSTOMER');
 
 -- ENTITIES
 CREATE TABLE app_user ( --DONE
     email email UNIQUE NOT NULL PRIMARY KEY,
     password TEXT NOT NULL CHECK (char_length(password) >=4),
-    user_role VARCHAR NOT NULL DEFAULT 'ROLE_USER'
+    user_role app_role NOT NULL DEFAULT app_role('ROLE_USER')
 );
 
 CREATE TABLE hotel_chain( --DONE
