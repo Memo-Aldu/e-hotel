@@ -15,7 +15,7 @@ import java.util.Set;
  **/
 
 public record CustomerDTO(
-        String NAS, AppUserEntity appUser, String phoneNumber, String firstName,
+        String NAS, String email, String phoneNumber, String firstName,
         String middleName, String lastName, String address, Date dateOfBirth,
         Date registrationDate, Set<StayEntity> stays, Set<ReservationEntity> reservations,
         Set<ReviewEntity> reviews) {

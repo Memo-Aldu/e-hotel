@@ -16,6 +16,17 @@ spring:
       hibernate.dialect: org.hibernate.dialect.PostgreSQL81Dialect
       hibernate:
         default_schema: ehotel
+## Application Configuration Properties
+application:
+  jwt:
+    secretKey: 12345678901234567890123456789012
+    tokenExpirationAfterDays: 1
+    refreshTokenExpirationAfterDays: 30
+    tokenPrefix: "Bearer "
+    accessHeader: access_token
+    refreshHeader: refresh_token
+    issuer: ehotelservices
+    audience: ehotelfrontend
 
 
 

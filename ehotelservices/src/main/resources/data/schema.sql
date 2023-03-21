@@ -11,11 +11,21 @@ CREATE TYPE room_status AS ENUM ('OCCUPIED', 'UNOCCUPIED', 'CLOSED');
 CREATE TYPE payment_status AS ENUM ('PAYED', 'UNPAID');
 CREATE TYPE app_role AS ENUM ('ROLE_USER', 'ROLE_ADMIN', 'ROLE_HOTEL_MANAGER', 'ROLE_MANAGER', 'ROLE_EMPLOYEE', 'ROLE_CUSTOMER');
 
+CREATE CAST (varchar AS app_role) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS reservation_status) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS room_status) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS payment_status) WITH INOUT AS IMPLICIT;
+
+
 -- ENTITIES
 CREATE TABLE app_user ( --DONE
     email email UNIQUE NOT NULL PRIMARY KEY,
     password TEXT NOT NULL CHECK (char_length(password) >=4),
-    user_role app_role NOT NULL DEFAULT app_role('ROLE_USER')
+    user_role app_role DEFAULT app_role('ROLE_USER'),
+    account_non_expired BOOLEAN DEFAULT TRUE,
+    account_non_locked BOOLEAN DEFAULT TRUE,
+    credentials_non_expired BOOLEAN DEFAULT TRUE,
+    account_enable BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE hotel_chain( --DONE

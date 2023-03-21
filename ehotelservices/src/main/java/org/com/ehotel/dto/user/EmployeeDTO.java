@@ -16,6 +16,6 @@ import java.util.Set;
  **/
 public record EmployeeDTO(
         String NAS, String phoneNumber, String firstName, String middleName, String lastName,
-        String address, Double salary, Date dateOfBirth, Date registrationDate, AppUserEntity appUser,
+        String address, Double salary, Date dateOfBirth, Date registrationDate, String email,
         RoleEntity role, DepartmentEntity department, Set<IncidentEntity> reports, Set<StayEntity> confirmedStays) {
 }

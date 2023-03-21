@@ -3,6 +3,7 @@ package org.com.ehotel.mapper.user;
 import org.com.ehotel.dto.user.AppUserDTO;
 import org.com.ehotel.entity.user.AppUserEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -14,7 +15,11 @@ import java.util.Set;
  **/
 @Mapper @Component
 public interface AppUserMapper {
+    @Mapping(source = "customer.NAS", target = "customerId")
+    @Mapping(source = "employee.NAS", target = "employeeId")
     AppUserDTO toDTO(AppUserEntity entity);
+    @Mapping(source = "customerId", target = "customer.NAS")
+    @Mapping(source = "employeeId", target = "employee.NAS")
     AppUserEntity toEntity(AppUserDTO dto);
     Set<AppUserDTO> toDTOs(Set<AppUserEntity> entities);
     Set<AppUserEntity> toEntities(Set<AppUserDTO> dtos);
