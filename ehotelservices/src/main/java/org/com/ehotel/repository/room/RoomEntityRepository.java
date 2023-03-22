@@ -105,8 +105,8 @@ public interface RoomEntityRepository extends JpaRepository<RoomEntity, Integer>
      */
 
     @Modifying
-    @Query(value = "UPDATE appdb.ehotel.room r SET room_status = 'OCCUPIED' WHERE r.room_ID= :room_ID", nativeQuery = true)
-    Optional<RoomEntity> updateRoomStatus(@Param("OCCUPIED") String status, @Param("room_ID") int room_ID);
+    @Query(value = "UPDATE appdb.ehotel.room r SET room_status = :occupancy_status WHERE r.room_ID= :room_ID", nativeQuery = true)
+    Optional<RoomEntity> updateRoomStatus(@Param ("occupancy_status") String occupancy_status, @Param("room_ID") int room_ID);
 
 
     @Modifying
