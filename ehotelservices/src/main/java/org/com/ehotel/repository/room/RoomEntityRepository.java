@@ -68,7 +68,7 @@ public interface RoomEntityRepository extends JpaRepository<RoomEntity, Integer>
     Optional<RoomEntity> findRoomEntityByRoomPriceAndRoomCapacity(@Param("price_per_night") String price_per_night, @Param("capacity") String capacity);
 
     @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT type_ID FROM appdb.ehotel.room_type t WHERE t.price_per_night = :price_per_night AND t.room_description = :room_description)", nativeQuery = true)
-    Optional<RoomEntity> findRoomEntityByRoomPriceAndRoomDescription(@Param("price_per_night") String price_per_night, @Param("description") String description);
+    Optional<RoomEntity> findRoomEntityByRoomPriceAndRoomDescription(@Param("price_per_night") String price_per_night, @Param("room_description") String description);
 
     @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT type_ID FROM appdb.ehotel.room_type t WHERE t.price_per_night = :price_per_night AND t.capacity = :capacity) AND a.room_id IN (SELECT hotel_ID FROM appdb.ehotel.hotel h WHERE h.hotel_name = :hotel_name)", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByRoomPriceAndRoomCapacityAndHotelName(@Param("price_per_night") double price_per_night, @Param("capacity") String capacity, @Param("hotel_name") String hotel_name);

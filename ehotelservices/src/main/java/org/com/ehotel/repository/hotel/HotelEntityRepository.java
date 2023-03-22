@@ -37,7 +37,7 @@ public interface HotelEntityRepository extends JpaRepository<HotelEntity, Intege
 
     @Modifying
     @Query(value = "UPDATE appdb.ehotel.hotel r SET hotel_name = :hotel_name WHERE r.hotel_ID= :hotel_ID", nativeQuery = true)
-    Optional<HotelEntity> updateHotelName(@Param("hotel_hotel_name") String hotel_name, @Param("hotel_ID") int hotel_ID);
+    Optional<HotelEntity> updateHotelName(@Param("hotel_name") String hotel_name, @Param("hotel_ID") int hotel_ID);
 
     @Modifying
     @Query(value = "UPDATE appdb.ehotel.hotel r SET hotel_address = :hotel_address WHERE r.hotel_ID= :hotel_ID", nativeQuery = true)
