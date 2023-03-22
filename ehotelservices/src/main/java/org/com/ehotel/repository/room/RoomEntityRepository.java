@@ -31,46 +31,46 @@ public interface RoomEntityRepository extends JpaRepository<RoomEntity, Integer>
     @Query(value = "SELECT * FROM appdb.ehotel.room r WHERE r.hotel_ID IN (SELECT hotel_ID FROM appdb.ehotel.hotel a WHERE a.hotel_phone_number =  :hotel_phone_number)", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByHotelPhoneNumber(@Param("hotel_phone_number") String hotel_phone_number);
 
-    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE  r.hotel_ID IN (SELECT hotel_ID FROM appdb.ehotel.hotel a WHERE a.hotel_rating = :hotel_rating)", nativeQuery = true)
+    @Query(value = "SELECT * FROM appdb.ehotel.room r WHERE  r.hotel_ID IN (SELECT hotel_ID FROM appdb.ehotel.hotel a WHERE a.hotel_rating = :hotel_rating)", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByHotelRating(@Param("hotel_rating") short hotel_rating);
 
     /**
      * Search By Hotel Chain info
      */
-    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE  r.hotel_ID IN (SELECT hotel_ID FROM appdb.ehotel.hotel a WHERE a.chain_ID in (SELECT chain_ID FROM appdb.ehotel.hotel_chain WHERE c.chain_name = :chain_name)). ", nativeQuery = true)
-    Optional<RoomEntity> findRoomeEntityByChainHotelName(@Param("chain_name") String chain_name);
+    @Query(value = "SELECT * FROM appdb.ehotel.room r WHERE  r.hotel_ID IN (SELECT hotel_ID FROM appdb.ehotel.hotel a WHERE a.chain_ID in (SELECT chain_ID FROM appdb.ehotel.hotel_chain c WHERE c.chain_name = :chain_name))", nativeQuery = true)
+    Optional<RoomEntity> findRoomEntityByChainHotelName(@Param("chain_name") String chain_name);
 
     /**
      * Search By View info
      */
-    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT room_type_ID FROM appdb.ehotel.room_type t WHERE t.view_ID IN (SELECT view_ID FROM appdb.ehotel.room_view v WHERE v.view_description = :view_description))", nativeQuery = true)
+    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT type_ID FROM appdb.ehotel.room_type t WHERE t.view_ID IN (SELECT view_ID FROM appdb.ehotel.room_view v WHERE v.view_description = :view_description))", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByViewDescription(@Param("view_description") String view_description);
 
     /**
      * Search By Room Type info
      */
-    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT room_type_ID FROM appdb.ehotel.room_type t WHERE t.price_per_night = :price_per_night)", nativeQuery = true)
+    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT type_ID FROM appdb.ehotel.room_type t WHERE t.price_per_night = :price_per_night)", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByPricePerNight(@Param("price_per_night") double price_per_night);
 
-    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT room_type_ID FROM appdb.ehotel.room_type t WHERE t.capacity = :capacity)", nativeQuery = true)
+    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT type_ID FROM appdb.ehotel.room_type t WHERE t.capacity = :capacity)", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByCapacity(@Param("capacity") String capacity);
 
-    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT room_type_ID FROM appdb.ehotel.room_type t WHERE t.room_description = :room_description)", nativeQuery = true)
+    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT type_ID FROM appdb.ehotel.room_type t WHERE t.room_description = :room_description)", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByRoomDescription(@Param("room_description") String room_description);
 
-    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT room_type_ID FROM appdb.ehotel.room_type t WHERE t.room_name = :room_name)", nativeQuery = true)
+    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT type_ID FROM appdb.ehotel.room_type t WHERE t.room_name = :room_name)", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByRoomName(@Param("room_name") String room_name);
 
     /**
      * Search By Multiple Attributes
      */
-    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT room_type_ID FROM appdb.ehotel.room_type t WHERE t.price_per_night = :price_per_night AND t.capacity = :capacity)", nativeQuery = true)
+    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT type_ID FROM appdb.ehotel.room_type t WHERE t.price_per_night = :price_per_night AND t.capacity = :capacity)", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByRoomPriceAndRoomCapacity(@Param("price_per_night") String price_per_night, @Param("capacity") String capacity);
 
-    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT room_type_ID FROM appdb.ehotel.room_type t WHERE t.price_per_night = :price_per_night AND t.room_description = :room_description)", nativeQuery = true)
+    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT type_ID FROM appdb.ehotel.room_type t WHERE t.price_per_night = :price_per_night AND t.room_description = :room_description)", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByRoomPriceAndRoomDescription(@Param("price_per_night") String price_per_night, @Param("description") String description);
 
-    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT room_type_ID FROM appdb.ehotel.room_type t WHERE t.price_per_night = :price_per_night AND t.capacity = :capacity) AND a.room_id IN (SELECT hotel_ID FROM appdb.ehotel.hotel h WHERE h.hotel_name = :hotel_name)", nativeQuery = true)
+    @Query(value = "SELECT * FROM appdb.ehotel.room a WHERE a.room_type_ID IN (SELECT type_ID FROM appdb.ehotel.room_type t WHERE t.price_per_night = :price_per_night AND t.capacity = :capacity) AND a.room_id IN (SELECT hotel_ID FROM appdb.ehotel.hotel h WHERE h.hotel_name = :hotel_name)", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByRoomPriceAndRoomCapacityAndHotelName(@Param("price_per_night") double price_per_night, @Param("capacity") String capacity, @Param("hotel_name") String hotel_name);
 
     @Query(value = "SELECT * FROM appdb.ehotel.room r WHERE r.hotel_ID IN (SELECT hotel_ID FROM appdb.ehotel.hotel h WHERE h.hotel_name = :hotel_name) AND r.occupancy_status = :occupancy_status", nativeQuery = true)
@@ -105,7 +105,7 @@ public interface RoomEntityRepository extends JpaRepository<RoomEntity, Integer>
      */
 
     @Modifying
-    @Query(value = "UPDATE appdb.ehotel.room r SET room_status = :occupancy_status WHERE r.room_ID= :room_ID", nativeQuery = true)
+    @Query(value = "UPDATE appdb.ehotel.room r SET occupancy_status = :occupancy_status WHERE r.room_ID= :room_ID", nativeQuery = true)
     Optional<RoomEntity> updateRoomStatus(@Param ("occupancy_status") String occupancy_status, @Param("room_ID") int room_ID);
 
 
@@ -114,7 +114,7 @@ public interface RoomEntityRepository extends JpaRepository<RoomEntity, Integer>
     void insertRoomEntity(@Param("room_ID") int room_ID, @Param("hotel_ID") int hotel_ID, @Param("room_type_ID") int room_type_ID, @Param("occupancy_status") String occupancy_status, @Param("occupancy_status") int room_number);
 
     @Modifying
-    @Query(value = "UPDATE appdb.ehotel.room r SET room_status = 'OCCUPIED' WHERE r.room_ID= :room_ID", nativeQuery = true)
+    @Query(value = "UPDATE appdb.ehotel.room r SET occupancy_status = 'OCCUPIED' WHERE r.room_ID= :room_ID", nativeQuery = true)
     void deleteRoomEntityById( @Param("room_ID") int room_ID);
 
 }
