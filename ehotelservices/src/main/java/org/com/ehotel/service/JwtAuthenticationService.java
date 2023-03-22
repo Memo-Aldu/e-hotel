@@ -1,6 +1,6 @@
 package org.com.ehotel.service;
 
-import org.com.ehotel.dto.requests.AuthenticationRequestDTO;
+import org.com.ehotel.dto.auth.AuthenticationRequestDTO;
 import org.com.ehotel.dto.user.AppUserDTO;
 import org.springframework.security.core.Authentication;
 
@@ -14,4 +14,6 @@ public interface JwtAuthenticationService {
     String createRefreshToken(AppUserDTO user);
     String getAccessTokenName();
     String getRefreshTokenName();
+    String getSubjectFromToken(String token);
+    String getTokenFromRequestHeader(String header);
 }

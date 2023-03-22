@@ -17,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -90,23 +91,25 @@ public class JWTUtils {
         return authorizationHeader.startsWith(jwtConfig.tokenPrefix());
     }
 
-    public void isValidToken(String token) {
-        try {
-            decodeAndVerifyJWT(token);
-        } catch (InvalidTokenException e) {
-            log.error("Invalid token : {}", e.getMessage());
-            throw new InvalidTokenException("Invalid token: " + e.getMessage());
-        }
-    }
-
     public String[] getAuthoritiesFromToken(String token) {
         DecodedJWT decodedJWT = decodeAndVerifyJWT(token);
         return decodedJWT.getClaim("authorities").asArray(String.class);
     }
 
     public String getSubjectFromToken(String token) {
-        DecodedJWT decodedJWT = decodeAndVerifyJWT(token);
-        return decodedJWT.getSubject();
+        if(token == null || token.isEmpty()) {
+            log.warn("Token is null or empty");
+            throw new InvalidTokenException("Bad token");
+        }
+        try {
+            log.info("Getting subject from token : {}", token);
+            // get the subject from the token
+            return decodeAndVerifyJWT(token).getSubject();
+        } catch (InvalidTokenException e) {
+            log.error("Invalid token : {}", e.getMessage());
+            throw new InvalidTokenException("Invalid token: " + e.getMessage());
+        }
+
     }
 
     private DecodedJWT decodeAndVerifyJWT(String token) throws SignatureVerificationException {

@@ -2,8 +2,9 @@ package org.com.ehotel.controller.user;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.com.ehotel.dto.requests.RegistrationRequest;
+import org.com.ehotel.dto.user.UserRegistrationRequest;
 import org.com.ehotel.dto.user.AppUserDTO;
+import org.com.ehotel.dto.user.UserUpdateRequest;
 import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.helper.AppHttpResponse;
 import org.com.ehotel.helper.ResponseHandler;
@@ -35,16 +36,16 @@ public class AppUserController {
 
     /**
      * Get user by email
-     * @param email user email
      * @param  request HttpServletRequest
      * @return ResponseEntity<AppHttpResponse>
      */
-    @GetMapping("/{email}")
-    public ResponseEntity<AppHttpResponse> getUserByEmail(
-            @PathVariable String email, HttpServletRequest request) {
-        log.info("Getting user with email: " + email);
-        AppUserDTO user = userService.getUserByEmail(email);
-        log.info("User found: " + user);
+    @GetMapping
+    public ResponseEntity<AppHttpResponse> getUserByEmail(HttpServletRequest request) {
+        // getting the token from the request header
+        final String token = authService.getTokenFromRequestHeader(request.getHeader(AUTHORIZATION));
+        final String subject = authService.getSubjectFromToken(token);
+        log.info("Getting user with email: " + subject);
+        final AppUserDTO user = userService.getUserByEmail(subject);
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .success(true)
@@ -64,7 +65,7 @@ public class AppUserController {
      */
     @PostMapping("/register")
     public ResponseEntity<AppHttpResponse> registerUser(
-            @RequestBody RegistrationRequest regRequest, HttpServletRequest request) {
+            @RequestBody UserRegistrationRequest regRequest, HttpServletRequest request) {
         log.info("Registering user: " + regRequest);
         // Validate registration request
         if (!regRequest.isValid()) {
@@ -87,8 +88,60 @@ public class AppUserController {
                 setupResponseHeaders(request));
     }
 
-    //TODO: UPDATE USER
-    //TODO: DELETE USER
+    /**
+     * Update user
+     * @param updateRequest UserUpdateRequest
+     * @param request HttpServletRequest
+     * @return ResponseEntity<AppHttpResponse>
+     */
+    @PatchMapping
+    public ResponseEntity<AppHttpResponse> updateUser(@RequestBody UserUpdateRequest updateRequest, HttpServletRequest request) {
+        log.info("Updating user with request: " + updateRequest.password() + " " + updateRequest.userRole());
+        // get token from header
+        final String token = authService.getTokenFromRequestHeader(request.getHeader(AUTHORIZATION));
+        // get subject from token
+        final String subject = authService.getSubjectFromToken(token);
+        final AppUserDTO updatedUser = userService.updateUser(subject, updateRequest);
+
+        Map<String, Object> data = Map.of
+                ("user", updatedUser,
+                        // create new token and refresh token
+                        authService.getAccessTokenName(), authService.createToken(updatedUser),
+                        authService.getRefreshTokenName(), authService.createRefreshToken(updatedUser));
+        log.info("User updated: " + updatedUser);
+        return responseHandler.httpResponse(
+                AppHttpResponse.builder()
+                        .success(true)
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.CREATED)
+                        .message("User updated successfully")
+                        .data(data)
+                        .build(),
+                setupResponseHeaders(request));
+
+    }
+
+    /**
+     * Delete user
+     * @param request HttpServletRequest
+     * @return ResponseEntity<AppHttpResponse>
+     */
+    @DeleteMapping
+    public ResponseEntity<AppHttpResponse> deleteUser(HttpServletRequest request) {
+        // get token from header
+        final String token = authService.getTokenFromRequestHeader(request.getHeader(AUTHORIZATION));
+        // get subject from token
+        final String subject = authService.getSubjectFromToken(token);
+        userService.deleteUser(subject);
+        return responseHandler.httpResponse(
+                AppHttpResponse.builder()
+                        .success(true)
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.OK)
+                        .message("User deleted successfully")
+                        .build(),
+                setupResponseHeaders(request));
+    }
 
     private HttpHeaders setupResponseHeaders(HttpServletRequest request) {
         HttpHeaders headers = new HttpHeaders();

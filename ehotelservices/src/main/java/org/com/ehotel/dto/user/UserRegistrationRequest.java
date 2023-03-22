@@ -1,4 +1,4 @@
-package org.com.ehotel.dto.requests;
+package org.com.ehotel.dto.user;
 
 import org.com.ehotel.enums.AppRoles;
 
@@ -9,7 +9,7 @@ import javax.validation.Valid;
  * @mailto : maldu064@uOttawa.ca
  * @created : 2023-03-21, Tuesday
  **/
-public record RegistrationRequest(
+public record UserRegistrationRequest(
         @Valid String email,
         @Valid String password,
         AppRoles userRole

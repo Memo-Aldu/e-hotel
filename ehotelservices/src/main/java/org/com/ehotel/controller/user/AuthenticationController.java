@@ -3,7 +3,7 @@ package org.com.ehotel.controller.user;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.com.ehotel.dto.requests.AuthenticationRequestDTO;
+import org.com.ehotel.dto.auth.AuthenticationRequestDTO;
 import org.com.ehotel.dto.user.AppUserDTO;
 import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.exceptions.MissingAuthenticationException;

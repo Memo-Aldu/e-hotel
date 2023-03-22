@@ -1,4 +1,4 @@
-package org.com.ehotel.dto.requests;
+package org.com.ehotel.dto.auth;
 
 public record AuthenticationRequestDTO(
         String email,

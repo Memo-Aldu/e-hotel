@@ -15,9 +15,10 @@ public class EndpointConfig {
     private final String[] openEndpoints = new String[]{
             AUTH_PREFIX+"authenticate", AUTH_PREFIX+"token/refresh",
             USER_PREFIX+"register"};
-
     private final String[] userEndpoints = new String[]{
-            USER_PREFIX+"**"
+            USER_PREFIX
+    };
+    private final String[] customerEndpoints = new String[]{
     };
     private final String[] employeeEndpoints =  new String[]{};
     private final String[] adminEndpoints =  new String[]{};

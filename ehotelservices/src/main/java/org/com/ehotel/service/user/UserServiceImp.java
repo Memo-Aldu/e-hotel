@@ -2,11 +2,13 @@ package org.com.ehotel.service.user;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.com.ehotel.dto.requests.RegistrationRequest;
+import org.com.ehotel.dto.user.UserRegistrationRequest;
 import org.com.ehotel.dto.user.AppUserDTO;
+import org.com.ehotel.dto.user.UserUpdateRequest;
 import org.com.ehotel.entity.user.AppUserEntity;
 import org.com.ehotel.exceptions.AppEntityAlreadyExistException;
 import org.com.ehotel.exceptions.AppEntityNotFoundException;
+import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.mapper.user.AppUserMapper;
 import org.com.ehotel.repository.user.AppUserEntityRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +26,7 @@ import java.util.Optional;
 public class UserServiceImp implements UserService {
     private final AppUserMapper appUserMapper;
     private final AppUserEntityRepository userRepo;
+
     @Override
     public AppUserDTO getUserByEmail(String email) {
         AppUserEntity user = userRepo.findAppUserEntityByEmail(email)
@@ -32,7 +35,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public AppUserDTO registerUser(RegistrationRequest request) {
+    public AppUserDTO registerUser(UserRegistrationRequest request) {
         log.info("Registering user: " + request);
         // Check if user already exists
         Optional<AppUserEntity> optionalUser = userRepo
@@ -58,9 +61,35 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public AppUserDTO updateUser(String email, UserUpdateRequest request) {
+        AppUserEntity requestedUser = userRepo
+                .findAppUserEntityByEmail(email).orElseThrow(
+                        () -> new AppEntityNotFoundException("User not found with email: " + email));
+        boolean isUpdated = false;
+        if(request.password() != null && !request.password().isEmpty()) {
+            requestedUser.setPassword(request.password());
+            isUpdated = true;
+        }
+        if(request.userRole() != null && !request.userRole().name().isEmpty()) {
+            requestedUser.setUserRole(request.userRole());
+            isUpdated = true;
+        }
+        if(!isUpdated) {
+            throw new BadRequestException("Nothing to update");
+        }
+        return appUserMapper.toDTO(userRepo.save(requestedUser));
+    }
+
+    @Override
+    public void deleteUser(String email) {
+        AppUserEntity user = userRepo.findAppUserEntityByEmail(email)
+                .orElseThrow(() -> new AppEntityNotFoundException("User not found with email: " + email));
+        userRepo.delete(user);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        AppUserDTO user = getUserByEmail(email);
-        log.info("User found with email: " + user.email());
-        return user;
+        log.info("Loading user by email: " + email);
+        return getUserByEmail(email);
     }
 }

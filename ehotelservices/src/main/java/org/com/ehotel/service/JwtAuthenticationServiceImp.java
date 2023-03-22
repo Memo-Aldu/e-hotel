@@ -3,7 +3,7 @@ package org.com.ehotel.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.com.ehotel.configuration.security.JWTConfig;
-import org.com.ehotel.dto.requests.AuthenticationRequestDTO;
+import org.com.ehotel.dto.auth.AuthenticationRequestDTO;
 import org.com.ehotel.configuration.security.JWTUtils;
 import org.com.ehotel.dto.user.AppUserDTO;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -64,8 +64,20 @@ public class JwtAuthenticationServiceImp implements JwtAuthenticationService {
     }
 
     @Override
+    public String getSubjectFromToken(String token) {
+        return jwtUtils.getSubjectFromToken(token);
+    }
+
+    @Override
+    public String getTokenFromRequestHeader(String header) {
+        return jwtUtils.getTokenFromHeader(header);
+    }
+
+    @Override
     public boolean authenticateToken(String authorizationHeader) {
-        Authentication authentication = jwtUtils.authenticateToken(authorizationHeader);
+        Authentication authentication = jwtUtils.authenticateToken(
+                jwtUtils.getTokenFromHeader(authorizationHeader)
+        );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         log.info("User {} is authenticated : {} ",
                 authentication.getName(), authentication.isAuthenticated());
