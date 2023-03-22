@@ -13,7 +13,7 @@ import java.util.Set;
  **/
 
 public record RoomTypeDTO(
-        Integer id, HotelEntity hotel, RoomViewEntity view,
+        Integer id, Integer hotelId, Integer viewId,
         Set<RoomEntity> rooms, Double pricePerNight, Short capacity,
         String roomName, String roomDescription) {
 }

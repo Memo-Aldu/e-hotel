@@ -8,5 +8,5 @@ import org.com.ehotel.entity.room.RoomEntity;
  * @created : 3/13/2023, Monday
  **/
 public record CommodityDTO(
-        Integer id, RoomEntity room, String name) {
+        Integer id, Integer roomId, String name) {
 }

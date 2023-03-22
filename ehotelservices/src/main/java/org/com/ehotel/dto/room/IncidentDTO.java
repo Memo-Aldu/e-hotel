@@ -12,5 +12,5 @@ import java.sql.Date;
  **/
 public record IncidentDTO(
         Integer id, String description, Date date,
-        RoomEntity room, EmployeeEntity reporter) {
+        Integer roomId, Integer reporterId) {
 }

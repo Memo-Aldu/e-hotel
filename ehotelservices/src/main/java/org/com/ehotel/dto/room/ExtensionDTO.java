@@ -12,6 +12,6 @@ import java.util.Set;
  * @created : 3/13/2023, Monday
  **/
 public record ExtensionDTO(
-        Integer id, String name, Double price, RoomEntity room,
+        Integer id, String name, Double price, Integer roomId,
         Set<ReservationEntity> reservations, Set<StayEntity> stays) {
 }

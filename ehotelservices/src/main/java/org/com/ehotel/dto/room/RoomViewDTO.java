@@ -11,6 +11,6 @@ import java.util.Set;
  * @created : 3/13/2023, Monday
  **/
 public record RoomViewDTO(
-        Integer id, HotelEntity hotel, Set<RoomTypeEntity> roomTypes,
+        Integer id, Integer hotelId, Set<RoomTypeEntity> roomTypes,
         String name, String description) {
 }
