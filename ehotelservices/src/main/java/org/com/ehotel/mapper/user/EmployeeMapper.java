@@ -16,8 +16,12 @@ import java.util.Set;
 @Component @Mapper
 public interface EmployeeMapper {
     @Mapping(source = "appUser.email", target = "email")
+    @Mapping(source = "department.id", target = "departmentId")
+    @Mapping(source = "role.id", target = "roleId")
     EmployeeDTO toDTO(EmployeeEntity entity);
     @Mapping(source = "email", target = "appUser.email")
+    @Mapping(source = "departmentId", target = "department.id")
+    @Mapping(source = "roleId", target = "role.id")
     EmployeeEntity toEntity(EmployeeDTO dto);
     Set<EmployeeDTO> toDTOs(Set<EmployeeEntity> entities);
     Set<EmployeeEntity> toEntities(Set<EmployeeDTO> dtos);
