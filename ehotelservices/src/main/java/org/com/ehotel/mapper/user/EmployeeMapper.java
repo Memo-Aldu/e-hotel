@@ -16,8 +16,9 @@ import java.util.Set;
 @Component @Mapper
 public interface EmployeeMapper {
     @Mapping(source = "appUser.email", target = "email")
-    @Mapping(source = "department.id", target = "departmentId")
-    @Mapping(source = "role.id", target = "roleId")
+    @Mapping(source = "department.id", target = "departmentId") @Mapping(source = "role.id", target = "roleId")
+    @Mapping(target = "confirmedStays", ignore = true) @Mapping(target = "reports", ignore = true)
+
     EmployeeDTO toDTO(EmployeeEntity entity);
     @Mapping(source = "email", target = "appUser.email")
     @Mapping(source = "departmentId", target = "department.id")

@@ -15,6 +15,10 @@ import java.util.Set;
  **/
 @Component @Mapper
 public interface HotelMapper {
+    // ignore all the Set<DTO> fields
+    @Mapping(target = "rooms", ignore = true) @Mapping(target = "departments", ignore = true)
+    @Mapping(target = "roomViews", ignore = true) @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "roomTypes", ignore = true) @Mapping(target = "reviews", ignore = true)
     @Mapping(source = "chainHotel.id", target = "chainHotelId")
     HotelDTO toDTO(HotelEntity entity);
     @Mapping(source = "chainHotelId", target = "chainHotel.id")

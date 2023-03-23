@@ -16,6 +16,7 @@ import java.util.Set;
 @Component @Mapper
 public interface ReservationMapper {
     @Mapping(source = "customer.NAS", target = "customerNAS")
+    @Mapping(target = "reservedRooms", ignore = true) @Mapping(target = "reservedExtensions", ignore = true)
     ReservationDTO toDTO(ReservationEntity entity);
     @Mapping(source = "customerNAS", target = "customer.NAS")
     ReservationEntity toEntity(ReservationDTO dto);

@@ -16,6 +16,7 @@ import java.util.Set;
 @Component @Mapper
 public interface ExtensionMapper {
     @Mapping(source = "room.id", target = "roomId")
+    @Mapping(target = "reservations", ignore = true) @Mapping(target = "stays", ignore = true)
     ExtensionDTO toDTO(ExtensionEntity entity);
     @Mapping(source = "roomId", target = "room.id")
     ExtensionEntity toEntity(ExtensionDTO dto);

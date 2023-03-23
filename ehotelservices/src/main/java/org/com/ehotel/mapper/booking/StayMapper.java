@@ -17,6 +17,7 @@ import java.util.Set;
 public interface StayMapper {
     @Mapping(source = "customer.NAS", target = "customerNAS")
     @Mapping(source = "employee.NAS", target = "employeeNAS")
+    @Mapping(target = "rooms", ignore = true) @Mapping(target = "requestedExtensions", ignore = true)
     StayDTO toDTO(StayEntity entity);
     @Mapping(source = "customerNAS", target = "customer.NAS")
     @Mapping(source = "employeeNAS", target = "employee.NAS")

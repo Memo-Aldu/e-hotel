@@ -17,6 +17,7 @@ import java.util.Set;
 public interface DepartmentMapper {
     @Mapping(source = "hotel.id", target = "hotelId")
     @Mapping(source = "manager.NAS", target = "managerId")
+    @Mapping(target = "employees", ignore = true)
     DepartmentDTO toDTO(DepartmentEntity entity);
     @Mapping(source = "hotelId", target = "hotel.id")
     @Mapping(source = "managerId", target = "manager.NAS")

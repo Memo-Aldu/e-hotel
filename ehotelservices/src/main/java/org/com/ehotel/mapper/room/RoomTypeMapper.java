@@ -16,7 +16,7 @@ import java.util.Set;
 @Component @Mapper
 public interface RoomTypeMapper {
     @Mapping(source = "hotel.id", target = "hotelId")
-    @Mapping(source = "view.id", target = "viewId")
+    @Mapping(source = "view.id", target = "viewId") @Mapping(target = "rooms", ignore = true)
     RoomTypeDTO toDTO(RoomTypeEntity entity);
     @Mapping(source = "hotelId", target = "hotel.id")
     @Mapping(source = "viewId", target = "view.id")

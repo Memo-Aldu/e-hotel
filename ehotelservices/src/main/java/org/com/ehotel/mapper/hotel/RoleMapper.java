@@ -16,6 +16,7 @@ import java.util.Set;
 @Component @Mapper
 public interface RoleMapper {
     @Mapping(source = "hotel.id", target = "hotelId")
+    @Mapping(target = "employees", ignore = true)
     RoleDTO toDTO(RoleEntity entity);
     @Mapping(source = "hotelId", target = "hotel.id")
     RoleEntity toEntity(RoleDTO dto);
