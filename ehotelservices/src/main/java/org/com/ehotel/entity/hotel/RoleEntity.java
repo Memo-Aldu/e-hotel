@@ -34,6 +34,6 @@ public class RoleEntity {
     private HotelEntity hotel;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role", cascade = CascadeType.ALL)
-    private Set<EmployeeEntity> roles = new HashSet<>();
+    private Set<EmployeeEntity> employees = new HashSet<>();
 
 }
