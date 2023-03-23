@@ -6,11 +6,26 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import java.sql.Date;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface RoomEntityRepository extends JpaRepository<RoomEntity, Integer> {
 
+    @Query(value = "SELECT R.* FROM appdb.ehotel.room R " +
+            "INNER JOIN appdb.ehotel.room_type T ON R.room_type_id = T.type_id " +
+            "INNER JOIN appdb.ehotel.room_view V ON T.view_id = V.view_id " +
+            "INNER JOIN appdb.ehotel.hotel H ON R.hotel_id = H.hotel_id " +
+            "INNER JOIN appdb.ehotel.hotel_chain C ON H.chain_id = C.chain_id WHERE T.price_per_night <= :price_per_night AND T.capacity = :capacity " +
+            "AND C.chain_name LIKE CONCAT('%',:hotel_chain_name,'%') AND H.hotel_rating BETWEEN :hotel_rating_min AND :hotel_rating_max " +
+            "AND H.hotel_address LIKE CONCAT('%',:hotel_address,'%') AND ((R.occupancy_status = 'UNOCCUPIED') OR " +
+            "(R.room_id IN (SELECT S.room_id FROM appdb.ehotel.stay S WHERE ((S.check_out_date < :check_in_date) OR (:check_out_date < S.check_in_date))" +
+            " ORDER BY S.check_out_date DESC)))" , nativeQuery = true)
+    Set<RoomEntity> search(@Param("check_in_date") Date checkInDate, @Param("check_out_date") Date checkOutDate,
+                           @Param("hotel_address") String hotelAddress, @Param("hotel_rating_min") short hotelRatingMin,
+                           @Param("hotel_rating_max") short hotelRatingMax, @Param("hotel_chain_name") String hotelChainName,
+                           @Param("price_per_night") double pricePerNight, @Param("capacity") int capacity);
 
     @Query(value = "SELECT * FROM appdb.ehotel.room r WHERE r.room_number= :room_number", nativeQuery = true)
     Optional<RoomEntity> findRoomEntityByRoomNumber(@Param("room_number") int room_number);

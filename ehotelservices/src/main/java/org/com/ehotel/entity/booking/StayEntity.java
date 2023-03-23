@@ -32,6 +32,7 @@ public class StayEntity {
     private Double paymentTotal;
 
     @Column(name = "payment_status")
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
     @Column(name = "check_in_date", nullable = false)

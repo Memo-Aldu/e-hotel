@@ -30,6 +30,7 @@ public class RoomEntity {
     private Integer roomNumber;
 
     @Column(name = "occupancy_status")
+    @Enumerated(EnumType.STRING)
     private RoomStatus status;
 
     @ManyToOne(fetch = FetchType.EAGER)
