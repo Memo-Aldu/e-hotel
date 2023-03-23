@@ -1,5 +1,6 @@
 package org.com.ehotel.dto.hotel;
 
+import org.com.ehotel.dto.user.EmployeeDTO;
 import org.com.ehotel.entity.hotel.HotelEntity;
 import org.com.ehotel.entity.user.EmployeeEntity;
 
@@ -12,5 +13,8 @@ import java.util.Set;
  **/
 public record RoleDTO(
         Integer id, String title, String description,
-        Integer hotelId, Set<EmployeeEntity> roles) {
+        Integer hotelId, Set<EmployeeDTO> employees) {
+    public RoleDTO(Integer id, String title, String description, Integer hotelId) {
+        this(id, title, description, hotelId, null);
+    }
 }

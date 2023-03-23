@@ -1,8 +1,5 @@
 package org.com.ehotel.dto.room;
 
-import org.com.ehotel.entity.room.RoomEntity;
-import org.com.ehotel.entity.user.EmployeeEntity;
-
 import java.sql.Date;
 
 /**

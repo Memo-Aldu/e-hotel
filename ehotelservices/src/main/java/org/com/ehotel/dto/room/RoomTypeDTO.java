@@ -1,9 +1,5 @@
 package org.com.ehotel.dto.room;
 
-import org.com.ehotel.entity.hotel.HotelEntity;
-import org.com.ehotel.entity.room.RoomEntity;
-import org.com.ehotel.entity.room.RoomViewEntity;
-
 import java.util.Set;
 
 /**
@@ -14,6 +10,10 @@ import java.util.Set;
 
 public record RoomTypeDTO(
         Integer id, Integer hotelId, Integer viewId,
-        Set<RoomEntity> rooms, Double pricePerNight, Short capacity,
+        Set<RoomDTO> rooms, Double pricePerNight, Short capacity,
         String roomName, String roomDescription) {
+    public RoomTypeDTO(Integer id, Integer hotelId, Integer viewId, Double pricePerNight,
+                       Short capacity, String roomName, String roomDescription) {
+        this(id, hotelId, viewId, null, pricePerNight, capacity, roomName, roomDescription);
+    }
 }

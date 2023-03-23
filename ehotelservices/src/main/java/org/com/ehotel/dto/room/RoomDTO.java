@@ -1,12 +1,7 @@
 package org.com.ehotel.dto.room;
 
-import org.com.ehotel.entity.booking.ReservationEntity;
-import org.com.ehotel.entity.booking.StayEntity;
-import org.com.ehotel.entity.hotel.HotelEntity;
-import org.com.ehotel.entity.room.CommodityEntity;
-import org.com.ehotel.entity.room.ExtensionEntity;
-import org.com.ehotel.entity.room.IncidentEntity;
-import org.com.ehotel.entity.room.RoomTypeEntity;
+import org.com.ehotel.dto.booking.ReservationDTO;
+import org.com.ehotel.dto.booking.StayDTO;
 import org.com.ehotel.enums.RoomStatus;
 
 import java.util.Set;
@@ -19,6 +14,9 @@ import java.util.Set;
 
 public record RoomDTO(
         Integer id, Integer roomNumber, RoomStatus status, Integer hotelId, Integer typeId,
-        Set<IncidentEntity> incidents, Set<CommodityEntity> commodities, Set<ExtensionEntity> extensions,
-        Set<ReservationEntity> reservations, Set<StayEntity> stays) {
+        Set<IncidentDTO> incidents, Set<CommodityDTO> commodities, Set<ExtensionDTO> extensions,
+        Set<ReservationDTO> reservations, Set<StayDTO> stays) {
+    public RoomDTO(Integer id, Integer roomNumber, RoomStatus status, Integer hotelId, Integer typeId) {
+        this(id, roomNumber, status, hotelId, typeId, null, null, null, null, null);
+    }
 }

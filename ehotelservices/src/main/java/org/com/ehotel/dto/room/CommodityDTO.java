@@ -1,6 +1,5 @@
 package org.com.ehotel.dto.room;
 
-import org.com.ehotel.entity.room.RoomEntity;
 
 /**
  * @author : memo-aldu

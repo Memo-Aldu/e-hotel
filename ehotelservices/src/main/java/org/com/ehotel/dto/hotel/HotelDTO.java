@@ -1,5 +1,9 @@
 package org.com.ehotel.dto.hotel;
 
+import org.com.ehotel.dto.reviews.ReviewDTO;
+import org.com.ehotel.dto.room.RoomDTO;
+import org.com.ehotel.dto.room.RoomTypeDTO;
+import org.com.ehotel.dto.room.RoomViewDTO;
 import org.com.ehotel.entity.hotel.ChainHotelEntity;
 import org.com.ehotel.entity.hotel.DepartmentEntity;
 import org.com.ehotel.entity.hotel.RoleEntity;
@@ -17,7 +21,12 @@ import java.util.Set;
  **/
 public record HotelDTO(
         Integer id, String name, String address, String email, String phoneNumber, Short rating,
-        Integer chainHotelId, Set<RoleEntity> roles, Set<DepartmentEntity> departments,
-        Set<RoomViewEntity> roomViews, Set<RoomTypeEntity> roomTypes, Set<RoomEntity> rooms,
-        Set<ReviewEntity> reviews) {
+        Integer chainHotelId, Set<RoleDTO> roles, Set<DepartmentDTO> departments,
+        Set<RoomViewDTO> roomViews, Set<RoomTypeDTO> roomTypes, Set<RoomDTO> rooms,
+        Set<ReviewDTO> reviews) {
+    public HotelDTO(Integer id, String name, String address, String email, String phoneNumber,
+                    Short rating, Integer chainHotelId) {
+        this(id, name, address, email, phoneNumber, rating, chainHotelId,null,
+                null, null, null, null, null);
+    }
 }

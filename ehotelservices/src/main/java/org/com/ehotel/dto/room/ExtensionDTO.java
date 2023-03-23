@@ -1,8 +1,7 @@
 package org.com.ehotel.dto.room;
 
-import org.com.ehotel.entity.booking.ReservationEntity;
-import org.com.ehotel.entity.booking.StayEntity;
-import org.com.ehotel.entity.room.RoomEntity;
+import org.com.ehotel.dto.booking.ReservationDTO;
+import org.com.ehotel.dto.booking.StayDTO;
 
 import java.util.Set;
 
@@ -13,5 +12,8 @@ import java.util.Set;
  **/
 public record ExtensionDTO(
         Integer id, String name, Double price, Integer roomId,
-        Set<ReservationEntity> reservations, Set<StayEntity> stays) {
+        Set<ReservationDTO> reservations, Set<StayDTO> stays) {
+    public ExtensionDTO(Integer id, String name, Double price, Integer roomId) {
+        this(id, name, price, roomId, null, null);
+    }
 }
