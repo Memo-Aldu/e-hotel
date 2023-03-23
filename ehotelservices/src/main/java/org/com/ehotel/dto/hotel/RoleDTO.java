@@ -12,5 +12,5 @@ import java.util.Set;
  **/
 public record RoleDTO(
         Integer id, String title, String description,
-        HotelEntity hotel, Set<EmployeeEntity> roles) {
+        Integer hotelId, Set<EmployeeEntity> roles) {
 }

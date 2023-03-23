@@ -16,6 +16,6 @@ import java.util.Set;
  **/
 public record StayDTO(
         Integer id, Double paymentTotal, PaymentStatus paymentStatus,
-        Date checkInDate, Date checkOutDate, Date creationDate, CustomerEntity customer,
-        EmployeeEntity employee, Set<RoomEntity> rooms, Set<ExtensionEntity> requestedExtensions) {
+        Date checkInDate, Date checkOutDate, Date creationDate, String customerNAS,
+        String employeeNAS, Set<RoomEntity> rooms, Set<ExtensionEntity> requestedExtensions) {
 }

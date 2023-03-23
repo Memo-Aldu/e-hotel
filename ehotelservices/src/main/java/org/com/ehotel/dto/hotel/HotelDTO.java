@@ -17,7 +17,7 @@ import java.util.Set;
  **/
 public record HotelDTO(
         Integer id, String name, String address, String email, String phoneNumber, Short rating,
-        ChainHotelEntity chainHotel, Set<RoleEntity> roles, Set<DepartmentEntity> departments,
+        Integer chainHotelId, Set<RoleEntity> roles, Set<DepartmentEntity> departments,
         Set<RoomViewEntity> roomViews, Set<RoomTypeEntity> roomTypes, Set<RoomEntity> rooms,
         Set<ReviewEntity> reviews) {
 }

@@ -15,6 +15,6 @@ import java.util.Set;
  **/
 public record ReservationDTO(
         Integer id, ReservationStatus status, String specialRequest, Double totalPrice,
-        Date checkInDate, Date checkOutDate, Date creationDate, CustomerEntity customer,
+        Date checkInDate, Date checkOutDate, Date creationDate, String customerNAS,
         Set<RoomEntity> reservedRooms, Set<ExtensionEntity> reservedExtensions) {
 }

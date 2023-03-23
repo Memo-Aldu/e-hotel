@@ -11,6 +11,6 @@ import java.util.Set;
  * @created : 3/13/2023, Monday
  **/
 public record DepartmentDTO(
-        Integer id, String name, HotelEntity hotel,
-        Set<EmployeeEntity> employees, EmployeeEntity manager) {
+        Integer id, String name, Integer hotelId,
+        Set<EmployeeEntity> employees, Integer managerId) {
 }

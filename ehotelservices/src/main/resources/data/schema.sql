@@ -222,7 +222,7 @@ CREATE TABLE extension_reservation( --DONE
 );
 
 CREATE TABLE reviews( --DONE
-    hotel_ID BIGSERIAL PRIMARY KEY,
+    hotel_ID BIGSERIAL NOT NULL,
     customer_NAS VARCHAR(9) NOT NULL, --fk,
     review_comment TEXT NOT NULL,
     review_rating smallint not null check(review_rating between 1 and 5),
@@ -230,7 +230,8 @@ CREATE TABLE reviews( --DONE
     foreign key (hotel_ID) references hotel(hotel_ID)
         ON DELETE CASCADE,
     foreign key (customer_NAS) references customer(customer_NAS)
-        ON DELETE SET NULL
+        ON DELETE SET NULL,
+    PRIMARY KEY (hotel_ID, customer_NAS)
 );
 
 CREATE TABLE room_reservation(--DONE
