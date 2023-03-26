@@ -33,11 +33,11 @@ public class RoomEntity {
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "hotel_id", name = "hotel_id")
     private HotelEntity hotel;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "type_id", name = "room_type_id")
     private RoomTypeEntity type;
 
