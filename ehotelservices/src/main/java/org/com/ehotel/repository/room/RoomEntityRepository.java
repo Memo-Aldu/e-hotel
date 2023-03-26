@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 import java.sql.Date;
 import java.util.Optional;
 import java.util.Set;
@@ -22,13 +23,14 @@ public interface RoomEntityRepository extends JpaRepository<RoomEntity, Integer>
             "AND H.hotel_address LIKE CONCAT('%',:hotel_address,'%') AND ((R.occupancy_status = 'UNOCCUPIED') OR " +
             "(R.room_id IN (SELECT S.room_id FROM appdb.ehotel.stay S WHERE ((S.check_out_date < :check_in_date) OR (:check_out_date < S.check_in_date))" +
             " ORDER BY S.check_out_date DESC)))" , nativeQuery = true)
-    Set<RoomEntity> search(@Param("check_in_date") Date checkInDate, @Param("check_out_date") Date checkOutDate,
+    Set<RoomEntity> search(@Param("check_in_date") Date checkInDate , @Param("check_out_date") Date checkOutDate,
                            @Param("hotel_address") String hotelAddress, @Param("hotel_rating_min") short hotelRatingMin,
                            @Param("hotel_rating_max") short hotelRatingMax, @Param("hotel_chain_name") String hotelChainName,
                            @Param("price_per_night") double pricePerNight, @Param("capacity") int capacity);
 
-    @Query(value = "SELECT * FROM appdb.ehotel.room r WHERE r.room_number= :room_number", nativeQuery = true)
-    Optional<RoomEntity> findRoomEntityByRoomNumber(@Param("room_number") int room_number);
+    @Query(value = "SELECT * FROM appdb.ehotel.room WHERE room_id = :room_id", nativeQuery = true)
+    Optional<RoomEntity> findRoomEntityByRoomId(@Param("room_id") int room_id);
+
 
     /**
      * Search By Hotel info
@@ -125,8 +127,8 @@ public interface RoomEntityRepository extends JpaRepository<RoomEntity, Integer>
 
 
     @Modifying
-    @Query(value = "INSERT INTO appdb.ehotel.room (room_ID, hotel_ID , room_type_ID , occupancy_status, room_number) VALUES (:room_ID, :hotel_ID , :room_type_ID , :occupancy_status, :room_number)", nativeQuery = true)
-    void insertRoomEntity(@Param("room_ID") int room_ID, @Param("hotel_ID") int hotel_ID, @Param("room_type_ID") int room_type_ID, @Param("occupancy_status") String occupancy_status, @Param("occupancy_status") int room_number);
+    @Query(value = "INSERT INTO appdb.ehotel.room (hotel_ID , room_type_ID, room_number) VALUES (:hotel_ID , :room_type_ID , :room_number)", nativeQuery = true)
+    Integer insertRoomEntity(@Param("hotel_ID") int hotel_ID, @Param("room_type_ID") int room_type_ID, @Param("room_number") int room_number);
 
     @Modifying
     @Query(value = "UPDATE appdb.ehotel.room r SET occupancy_status = 'OCCUPIED' WHERE r.room_ID= :room_ID", nativeQuery = true)
