@@ -40,7 +40,7 @@ public class AppUserController {
      * @return ResponseEntity<AppHttpResponse>
      */
     @GetMapping
-    public ResponseEntity<AppHttpResponse> getUserByEmail(HttpServletRequest request) {
+    public ResponseEntity<AppHttpResponse> getUser(HttpServletRequest request) {
         // getting the token from the request header
         final String token = authService.getTokenFromRequestHeader(request.getHeader(AUTHORIZATION));
         final String subject = authService.getSubjectFromToken(token);
