@@ -1,6 +1,6 @@
 package org.com.ehotel.dto.room;
 
-import java.util.Set;
+import org.com.ehotel.dto.hotel.HotelDTO;
 
 /**
  * @author : memo-aldu
@@ -8,9 +8,5 @@ import java.util.Set;
  * @created : 3/13/2023, Monday
  **/
 public record RoomViewDTO(
-        Integer id, Integer hotelId, Set<RoomTypeDTO> roomTypes,
-        String name, String description) {
-    public RoomViewDTO(Integer id, Integer hotelId, String name, String description) {
-        this(id, hotelId, null, name, description);
-    }
+        Integer id, HotelDTO hotel, String name, String description) {
 }

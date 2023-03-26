@@ -13,13 +13,10 @@ import java.util.Set;
  * @mailto : maldu064@uOttawa.ca
  * @created : 3/14/2023, Tuesday
  **/
-@Component @Mapper
+@Component @Mapper(componentModel = "spring", uses = {HotelMapper.class})
 public interface DepartmentMapper {
-    @Mapping(source = "hotel.id", target = "hotelId")
     @Mapping(source = "manager.NAS", target = "managerId")
-    @Mapping(target = "employees", ignore = true)
     DepartmentDTO toDTO(DepartmentEntity entity);
-    @Mapping(source = "hotelId", target = "hotel.id")
     @Mapping(source = "managerId", target = "manager.NAS")
     DepartmentEntity toEntity(DepartmentDTO dto);
     Set<DepartmentDTO> toDTOs(Set<DepartmentEntity> entities);

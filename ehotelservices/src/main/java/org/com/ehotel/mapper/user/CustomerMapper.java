@@ -15,10 +15,9 @@ import java.util.Set;
  **/
 @Mapper @Component
 public interface CustomerMapper {
-    @Mapping(target = "stays", ignore = true) @Mapping(target = "reservations", ignore = true)
-    @Mapping(target = "reviews", ignore = true) @Mapping(source = "appUser.email", target = "email")
+    @Mapping(source = "appUser.email", target = "email")
     CustomerDTO toDTO(CustomerEntity entity);
-    @Mapping(source = "email", target = "appUser.email")
+    @Mapping(target = "appUser.email", source = "email")
     CustomerEntity toEntity(CustomerDTO dto);
     Set<CustomerDTO> toDTOs(Set<CustomerEntity> entities);
     Set<CustomerEntity> toEntities(Set<CustomerDTO> dtos);

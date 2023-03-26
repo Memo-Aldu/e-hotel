@@ -1,5 +1,7 @@
 package org.com.ehotel.dto.room;
 
+import org.com.ehotel.dto.user.EmployeeDTO;
+
 import java.sql.Date;
 
 /**
@@ -9,5 +11,5 @@ import java.sql.Date;
  **/
 public record IncidentDTO(
         Integer id, String description, Date date,
-        Integer roomId, Integer reporterId) {
+        RoomDTO room, EmployeeDTO reporter) {
 }

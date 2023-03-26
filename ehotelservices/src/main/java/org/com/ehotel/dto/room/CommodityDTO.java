@@ -7,5 +7,5 @@ package org.com.ehotel.dto.room;
  * @created : 3/13/2023, Monday
  **/
 public record CommodityDTO(
-        Integer id, Integer roomId, String name) {
+        Integer id, RoomDTO room, String name) {
 }

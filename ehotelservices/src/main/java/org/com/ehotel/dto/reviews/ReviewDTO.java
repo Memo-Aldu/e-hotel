@@ -1,8 +1,8 @@
 package org.com.ehotel.dto.reviews;
 
-import org.com.ehotel.entity.hotel.HotelEntity;
+import org.com.ehotel.dto.hotel.HotelDTO;
+import org.com.ehotel.dto.user.CustomerDTO;
 import org.com.ehotel.entity.reviews.ReviewPK;
-import org.com.ehotel.entity.user.CustomerEntity;
 
 import java.sql.Date;
 
@@ -12,6 +12,6 @@ import java.sql.Date;
  * @created : 3/13/2023, Monday
  **/
 public record ReviewDTO(
-        ReviewPK id, Integer hotelId, String customerNAS,
+        ReviewPK id, HotelDTO hotel, CustomerDTO customer,
         Short rating, String comment, Date date) {
 }

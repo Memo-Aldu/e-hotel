@@ -18,13 +18,13 @@ import java.util.List;
 @Builder
 public record AppUserDTO(
         String email, String password, AppRoles userRole,
-        String customerId, String employeeId, boolean isAccountNonExpired,
+        CustomerDTO customer, EmployeeDTO employee, boolean isAccountNonExpired,
         boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnable,
         Collection<SimpleGrantedAuthority> authorities) implements Serializable, UserDetails {
 
-    public AppUserDTO(String email, String password, AppRoles userRole, String customerId, String employeeId, boolean isEnable,
+    public AppUserDTO(String email, String password, AppRoles userRole, CustomerDTO customer, EmployeeDTO employee, boolean isEnable,
                       boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired) {
-        this(email, password, userRole, customerId, employeeId, true, true, true, isEnable,
+        this(email, password, userRole, customer, employee, true, true, true, isEnable,
                 List.of(new SimpleGrantedAuthority(userRole.name())));
     }
     //Ignoring the value of authorities when returning the object as JSON

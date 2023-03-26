@@ -20,13 +20,6 @@ import java.util.Set;
  * @created : 3/13/2023, Monday
  **/
 public record HotelDTO(
-        Integer id, String name, String address, String email, String phoneNumber, Short rating,
-        Integer chainHotelId, Set<RoleDTO> roles, Set<DepartmentDTO> departments,
-        Set<RoomViewDTO> roomViews, Set<RoomTypeDTO> roomTypes, Set<RoomDTO> rooms,
-        Set<ReviewDTO> reviews) {
-    public HotelDTO(Integer id, String name, String address, String email, String phoneNumber,
-                    Short rating, Integer chainHotelId) {
-        this(id, name, address, email, phoneNumber, rating, chainHotelId,null,
-                null, null, null, null, null);
-    }
+        Integer id, String name, String address, String email,
+        String phoneNumber, Short rating, ChainHotelDTO chainHotel) {
 }

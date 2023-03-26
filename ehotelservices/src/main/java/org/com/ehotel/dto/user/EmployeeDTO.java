@@ -1,10 +1,9 @@
 package org.com.ehotel.dto.user;
 
-import org.com.ehotel.dto.booking.StayDTO;
-import org.com.ehotel.dto.room.IncidentDTO;
+import org.com.ehotel.dto.hotel.DepartmentDTO;
+import org.com.ehotel.dto.hotel.RoleDTO;
 
 import java.sql.Date;
-import java.util.Set;
 
 /**
  * @author : memo-aldu
@@ -14,5 +13,5 @@ import java.util.Set;
 public record EmployeeDTO(
         String NAS, String phoneNumber, String firstName, String middleName, String lastName,
         String address, Double salary, Date dateOfBirth, Date registrationDate, String email,
-        Integer roleId, Integer departmentId, Set<IncidentDTO> reports, Set<StayDTO> confirmedStays) {
+        RoleDTO role, DepartmentDTO department) {
 }

@@ -1,6 +1,6 @@
 package org.com.ehotel.dto.room;
 
-import java.util.Set;
+import org.com.ehotel.dto.hotel.HotelDTO;
 
 /**
  * @author : memo-aldu
@@ -9,11 +9,6 @@ import java.util.Set;
  **/
 
 public record RoomTypeDTO(
-        Integer id, Integer hotelId, Integer viewId,
-        Set<RoomDTO> rooms, Double pricePerNight, Short capacity,
+        Integer id, HotelDTO hotel, RoomViewDTO view, Double pricePerNight, Short capacity,
         String roomName, String roomDescription) {
-    public RoomTypeDTO(Integer id, Integer hotelId, Integer viewId, Double pricePerNight,
-                       Short capacity, String roomName, String roomDescription) {
-        this(id, hotelId, viewId, null, pricePerNight, capacity, roomName, roomDescription);
-    }
 }
