@@ -40,6 +40,9 @@ public class CommodityServiceImp implements CommodityService {
 
     @Override
     public void deleteCommodityById(Integer comId) {
+        if(!commodityRepository.existsById(comId)) {
+            throw new AppEntityNotFoundException("Commodity not found with id: " + comId);
+        }
         commodityRepository.deleteById(comId);
     }
 
