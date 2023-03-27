@@ -164,7 +164,7 @@ CREATE TABLE extension( --DONE
     extension_ID BIGSERIAL PRIMARY KEY, --pk
     room_ID BIGSERIAL NOT NULL, --fk
     extension_name VARCHAR NOT NULL,
-    extension_price NUMERIC(4,2) NOT NULL,
+    extension_price NUMERIC(5,2) NOT NULL,
     foreign key (room_ID) references room (room_ID)
       ON DELETE CASCADE
 );
