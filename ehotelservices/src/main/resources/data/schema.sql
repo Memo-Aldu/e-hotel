@@ -75,7 +75,7 @@ CREATE TABLE employee( --DONE
     employee_middle_name VARCHAR,
     employee_last_name VARCHAR NOT NULL,
     employee_address TEXT NOT NULL,
-    employee_salary numeric(7,2) NOT NULL,
+    employee_salary numeric(9,2) NOT NULL,
     employee_DOB DATE NOT NULL,
     employee_registration_Date DATE NOT NULL default CURRENT_DATE,
     foreign key (employee_email) references app_user (email)
@@ -118,7 +118,7 @@ CREATE TABLE room_type( --DONE
     type_ID BIGSERIAL PRIMARY KEY, --pk
     hotel_ID BIGSERIAL NOT NULL, --fk
     view_ID BIGSERIAL, --fk
-    price_per_night numeric(4,2) check (price_per_night > 0),
+    price_per_night numeric(6,2) check (price_per_night > 0),
     capacity smallint NOT NULL check (capacity > 0),
     room_name VARCHAR NOT NULL,
     room_description TEXT,
@@ -164,7 +164,7 @@ CREATE TABLE extension( --DONE
     extension_ID BIGSERIAL PRIMARY KEY, --pk
     room_ID BIGSERIAL NOT NULL, --fk
     extension_name VARCHAR NOT NULL,
-    extension_price NUMERIC(3,2) NOT NULL,
+    extension_price NUMERIC(4,2) NOT NULL,
     foreign key (room_ID) references room (room_ID)
       ON DELETE CASCADE
 );
@@ -174,7 +174,7 @@ CREATE TABLE stay( --DONE
     customer_NAS VARCHAR(9), --fk
     employee_NAS VARCHAR(9), --fk
     room_ID BIGSERIAL, --fk
-    payment_total NUMERIC (5,2) NOT NULL,
+    payment_total NUMERIC (7,2) NOT NULL,
     payment_status payment_status default 'UNPAID',
     check_in_date DATE NOT NULL,
     check_out_date DATE NOT NULL,
@@ -193,7 +193,7 @@ CREATE TABLE reservation( --DONE
     room_ID BIGSERIAL, --fk
     reservation_status reservation_status default 'PENDING',
     special_request TEXT,
-    total_price NUMERIC (5,2) NOT NULL,
+    total_price NUMERIC (7,2) NOT NULL,
     check_in_date DATE NOT NULL,
     check_out_date DATE NOT NULL,
     creation_date DATE default CURRENT_DATE,
