@@ -61,6 +61,9 @@ public class RoomServiceImp implements RoomService{
 
     @Override
     public void deleteRoom(Integer id) {
+        if(!roomRepository.existsById(id)) {
+            throw new AppEntityNotFoundException("Room not found with id: " + id);
+        }
         log.info("Deleting room with id: " + id);
         roomRepository.deleteById(id);
     }
