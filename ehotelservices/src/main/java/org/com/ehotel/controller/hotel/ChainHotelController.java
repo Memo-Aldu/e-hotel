@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.com.ehotel.dto.hotel.ChainHotelDTO;
 import org.com.ehotel.dto.hotel.HotelDTO;
-import org.com.ehotel.dto.room.CommodityDTO;
 import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.helper.AppHttpResponse;
 import org.com.ehotel.helper.ResponseHandler;
@@ -72,16 +71,16 @@ public class ChainHotelController {
             @PathVariable Integer id, @RequestBody ChainHotelDTO chainHotelDTO,
             HttpServletRequest request) {
         if(id == null) {
-            throw new BadRequestException("Hotel id cannot be null");
+            throw new BadRequestException("Hotel chain id cannot be null");
         }
         if(chainHotelDTO == null || !chainHotelDTO.isValidDto()) {
-            throw new BadRequestException("Invalid extension");
+            throw new BadRequestException("Invalid hotel chain");
         }
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .success(true)
                         .message("Hotel updated successfully")
-                        .data(Map.of("extension", chainService
+                        .data(Map.of("chain", chainService
                                 .updateChain(chainHotelDTO, id)))
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.OK)
@@ -89,23 +88,6 @@ public class ChainHotelController {
                 setupResponseHeaders(request));
     }
 
-    @PostMapping
-    public ResponseEntity<AppHttpResponse> updateExtension(
-            @RequestBody ChainHotelDTO dto, HttpServletRequest request) {
-        if(!dto.isValidDto()) {
-            throw new BadRequestException("Invalid hotel chain");
-        }
-        return responseHandler.httpResponse(
-                AppHttpResponse.builder()
-                        .success(true)
-                        .message("Hotel chain updated successfully")
-                        .data(Map.of("hotel chain", chainService
-                                .createChain(dto)))
-                        .timestamp(LocalDateTime.now())
-                        .status(HttpStatus.CREATED)
-                        .build(),
-                setupResponseHeaders(request));
-    }
     @DeleteMapping("/{id}")
     public ResponseEntity<AppHttpResponse> deleteChainHotel(
             @PathVariable Integer id, HttpServletRequest request) {
