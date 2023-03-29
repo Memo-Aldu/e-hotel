@@ -28,6 +28,7 @@ public class ReservationEntity {
     private Integer id;
 
     @Column(name = "reservation_status")
+    @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
     @Column(name = "special_request")

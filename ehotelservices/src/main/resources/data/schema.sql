@@ -9,11 +9,23 @@ CREATE DOMAIN email AS citext --DONE
 CREATE TYPE reservation_status AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'CANCELED', 'UPDATED');
 CREATE TYPE room_status AS ENUM ('OCCUPIED', 'UNOCCUPIED', 'CLOSED');
 CREATE TYPE payment_status AS ENUM ('PAYED', 'UNPAID');
+CREATE TYPE app_role AS ENUM ('ROLE_USER', 'ROLE_ADMIN', 'ROLE_HOTEL_MANAGER', 'ROLE_MANAGER', 'ROLE_EMPLOYEE', 'ROLE_CUSTOMER');
+
+CREATE CAST (varchar AS app_role) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS reservation_status) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS room_status) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS payment_status) WITH INOUT AS IMPLICIT;
+
 
 -- ENTITIES
 CREATE TABLE app_user ( --DONE
     email email UNIQUE NOT NULL PRIMARY KEY,
-    password TEXT NOT NULL CHECK (char_length(password) >=4)
+    password TEXT NOT NULL CHECK (char_length(password) >=4),
+    user_role app_role DEFAULT app_role('ROLE_USER'),
+    account_non_expired BOOLEAN DEFAULT TRUE,
+    account_non_locked BOOLEAN DEFAULT TRUE,
+    credentials_non_expired BOOLEAN DEFAULT TRUE,
+    account_enable BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE hotel_chain( --DONE
@@ -63,7 +75,7 @@ CREATE TABLE employee( --DONE
     employee_middle_name VARCHAR,
     employee_last_name VARCHAR NOT NULL,
     employee_address TEXT NOT NULL,
-    employee_salary numeric(7,2) NOT NULL,
+    employee_salary numeric(9,2) NOT NULL,
     employee_DOB DATE NOT NULL,
     employee_registration_Date DATE NOT NULL default CURRENT_DATE,
     foreign key (employee_email) references app_user (email)
@@ -75,7 +87,7 @@ CREATE TABLE employee( --DONE
 );
 
 ALTER TABLE department --DONE
-    ADD COLUMN dept_manager_NAS VARCHAR(9) NOT NULL,
+    ADD COLUMN dept_manager_NAS VARCHAR(9),
 	ADD FOREIGN KEY (dept_manager_NAS) REFERENCES employee(employee_NAS)
 	ON DELETE RESTRICT;
 
@@ -106,7 +118,7 @@ CREATE TABLE room_type( --DONE
     type_ID BIGSERIAL PRIMARY KEY, --pk
     hotel_ID BIGSERIAL NOT NULL, --fk
     view_ID BIGSERIAL, --fk
-    price_per_night numeric(4,2) check (price_per_night > 0),
+    price_per_night numeric(6,2) check (price_per_night > 0),
     capacity smallint NOT NULL check (capacity > 0),
     room_name VARCHAR NOT NULL,
     room_description TEXT,
@@ -152,7 +164,7 @@ CREATE TABLE extension( --DONE
     extension_ID BIGSERIAL PRIMARY KEY, --pk
     room_ID BIGSERIAL NOT NULL, --fk
     extension_name VARCHAR NOT NULL,
-    extension_price NUMERIC(3,2) NOT NULL,
+    extension_price NUMERIC(5,2) NOT NULL,
     foreign key (room_ID) references room (room_ID)
       ON DELETE CASCADE
 );
@@ -162,7 +174,7 @@ CREATE TABLE stay( --DONE
     customer_NAS VARCHAR(9), --fk
     employee_NAS VARCHAR(9), --fk
     room_ID BIGSERIAL, --fk
-    payment_total NUMERIC (5,2) NOT NULL,
+    payment_total NUMERIC (7,2) NOT NULL,
     payment_status payment_status default 'UNPAID',
     check_in_date DATE NOT NULL,
     check_out_date DATE NOT NULL,
@@ -181,7 +193,7 @@ CREATE TABLE reservation( --DONE
     room_ID BIGSERIAL, --fk
     reservation_status reservation_status default 'PENDING',
     special_request TEXT,
-    total_price NUMERIC (5,2) NOT NULL,
+    total_price NUMERIC (7,2) NOT NULL,
     check_in_date DATE NOT NULL,
     check_out_date DATE NOT NULL,
     creation_date DATE default CURRENT_DATE,
@@ -210,7 +222,7 @@ CREATE TABLE extension_reservation( --DONE
 );
 
 CREATE TABLE reviews( --DONE
-    hotel_ID BIGSERIAL PRIMARY KEY,
+    hotel_ID BIGSERIAL NOT NULL,
     customer_NAS VARCHAR(9) NOT NULL, --fk,
     review_comment TEXT NOT NULL,
     review_rating smallint not null check(review_rating between 1 and 5),
@@ -218,7 +230,8 @@ CREATE TABLE reviews( --DONE
     foreign key (hotel_ID) references hotel(hotel_ID)
         ON DELETE CASCADE,
     foreign key (customer_NAS) references customer(customer_NAS)
-        ON DELETE SET NULL
+        ON DELETE SET NULL,
+    PRIMARY KEY (hotel_ID, customer_NAS)
 );
 
 CREATE TABLE room_reservation(--DONE
