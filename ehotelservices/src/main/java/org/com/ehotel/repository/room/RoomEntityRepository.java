@@ -34,10 +34,6 @@ public interface RoomEntityRepository extends JpaRepository<RoomEntity, Integer>
     @Query(value = "SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM appdb.ehotel.room r WHERE r.room_id = :room_id", nativeQuery = true)
     boolean existsByRoomId(@Param("room_id") Integer roomId);
 
-    /**
-     * Search By Hotel info
-     * SELECT * FROM room WHERE hotel_id in (select hotel_id from hotel where hotel_name = 'Enitan')
-     */
     @Query(value = "SELECT * FROM appdb.ehotel.room r WHERE r.hotel_id = :hotel_id", nativeQuery = true)
     Set<RoomEntity> findRoomsByHotelId(@Param("hotel_id") Integer hotelId);
 
