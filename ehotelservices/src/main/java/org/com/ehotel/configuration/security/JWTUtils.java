@@ -61,7 +61,7 @@ public class JWTUtils {
                     .getClaim("authorities").asList(SimpleGrantedAuthority.class);
             log.info("Email is : {} authorities are : {}", email, authorities);
             return new UsernamePasswordAuthenticationToken(email, null, authorities);
-            // catch InvalidTokenException or SignatureVerificationException
+           
         } catch (Exception e) {
             log.warn("Invalid token : {}", e.getMessage());
             throw new InvalidTokenException("Invalid token: " + e.getMessage());
