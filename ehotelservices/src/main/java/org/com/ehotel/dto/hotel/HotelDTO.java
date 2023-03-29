@@ -14,12 +14,11 @@ import org.com.ehotel.entity.room.RoomViewEntity;
 
 import java.util.Set;
 
-/**
- * @author : memo-aldu
- * @mailto : maldu064@uOttawa.ca
- * @created : 3/13/2023, Monday
- **/
 public record HotelDTO(
         Integer id, String name, String address, String email,
         String phoneNumber, Short rating, ChainHotelDTO chainHotel) {
+    @JsonIgnore
+    public boolean isValidDto() {
+        return name != null || email != null || address != null || rating != null || phoneNumber != null;
+    }
 }
