@@ -2,7 +2,6 @@ package org.com.ehotel.controller.hotel;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.com.ehotel.dto.hotel.ChainHotelDTO;
 import org.com.ehotel.dto.hotel.HotelDTO;
 import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.helper.AppHttpResponse;
@@ -153,13 +152,13 @@ public class HotelController {
     public ResponseEntity<AppHttpResponse> deleteHotel(
             @PathVariable Integer id, HttpServletRequest request) {
         if (id == null) {
-            throw new BadRequestException("Invalid chain id");
+            throw new BadRequestException("Invalid hotel id");
         }
         hotelService.deleteHotelEntityById(id);
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of("id", id))
-                        .message("Chain deleted")
+                        .message("hotel deleted")
                         .status(HttpStatus.OK)
                         .success(true)
                         .timestamp(LocalDateTime.now())
