@@ -44,6 +44,7 @@ CREATE TABLE hotel( --DONE
     hotel_email email NOT NULL UNIQUE,
     hotel_phone_number TEXT NOT NULL UNIQUE,
     hotel_rating smallint not null check(hotel_rating between 1 and 5),
+    city VARCHAR(20),
     foreign key (chain_ID) references hotel_chain (chain_ID)
       on delete cascade --cant exist without chain_hotel
 );
@@ -230,8 +231,7 @@ CREATE TABLE reviews( --DONE
     foreign key (hotel_ID) references hotel(hotel_ID)
         ON DELETE CASCADE,
     foreign key (customer_NAS) references customer(customer_NAS)
-        ON DELETE SET NULL,
-    PRIMARY KEY (hotel_ID, customer_NAS)
+        ON DELETE SET NULL
 );
 
 CREATE TABLE room_reservation(--DONE
@@ -251,3 +251,15 @@ CREATE TABLE room_stay( --DONE
     foreign key (stay_ID) references stay(stay_ID)
       ON DELETE CASCADE
 );
+
+--Views
+CREATE VIEW total_capacity_per_hotel AS
+SELECT H.hotel_id, SUM(RTS.type_capacity)  FROM hotel H,
+        (SELECT (RS.num_rooms * RT.capacity) AS type_capacity, RT.type_id, RT.hotel_id FROM room_type RT,
+            (SELECT count(R.room_id) AS num_rooms, room_type_id FROM room R GROUP BY R.room_type_id) AS RS
+        WHERE RT.type_id = RS.room_type_id) AS RTS
+WHERE H.hotel_id = RTS.hotel_id GROUP BY H.hotel_id;
+
+CREATE VIEW total_room_per_city AS
+SELECT COUNT(R.room_id) AS total_rooms, city FROM room R
+    FULL JOIN appdb.ehotel.hotel H ON R.hotel_id = H.hotel_id GROUP BY city;
