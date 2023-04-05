@@ -20,5 +20,5 @@ public class ReviewPK implements java.io.Serializable {
     private Integer hotelId;
 
     @Column(name = "customer_nas")
-    private String customerId;
+    private String customerNAS;
 }
