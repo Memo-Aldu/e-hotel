@@ -21,5 +21,5 @@ import java.util.Set;
  **/
 public record HotelDTO(
         Integer id, String name, String address, String email,
-        String phoneNumber, Short rating, ChainHotelDTO chainHotel) {
+        String phoneNumber, Short rating, ChainHotelDTO chainHotel, String city) {
 }

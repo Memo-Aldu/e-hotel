@@ -12,7 +12,7 @@ import java.util.Set;
  * @mailto : maldu064@uOttawa.ca
  * @created : 3/14/2023, Tuesday
  **/
-@Component @Mapper
+@Component @Mapper(componentModel = "spring")
 public interface ChainHotelMapper {
     ChainHotelDTO toDTO(ChainHotelEntity entity);
     ChainHotelEntity toEntity(ChainHotelDTO dto);
