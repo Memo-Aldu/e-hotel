@@ -11,6 +11,7 @@ import java.util.Set;
 **/
 public interface RoomService {
     Set<RoomDTO> searchRooms(RoomSearchRequest roomSearchRequest);
+    Set<RoomDTO> getRoomsByHotelId(Integer hotelId);
     RoomDTO saveRoom(RoomDTO roomDTO);
     RoomDTO updateRoom(RoomDTO roomDTO, Integer id);
     RoomDTO getRoomById(Integer id);

@@ -64,6 +64,24 @@ public class RoomController {
         );
     }
 
+    @GetMapping("/hotel/{id}")
+    public ResponseEntity<AppHttpResponse> getRoomsByHotelId(
+            @PathVariable Integer id, HttpServletRequest request) {
+        if (id == null) {
+            throw new BadRequestException("Invalid hotel id");
+        }
+        return responseHandler.httpResponse(
+                AppHttpResponse.builder()
+                        .data(Map.of("rooms", roomService.getRoomsByHotelId(id)))
+                        .message("Rooms found")
+                        .status(HttpStatus.OK)
+                        .success(true)
+                        .timestamp(LocalDateTime.now())
+                        .build(),
+                setupResponseHeaders(request)
+        );
+    }
+
     @PostMapping()
     public ResponseEntity<AppHttpResponse> saveRoom(
             @RequestBody RoomDTO roomDTO, HttpServletRequest request) {

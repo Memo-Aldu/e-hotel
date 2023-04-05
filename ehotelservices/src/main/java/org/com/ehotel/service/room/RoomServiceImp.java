@@ -30,6 +30,12 @@ public class RoomServiceImp implements RoomService{
     }
 
     @Override
+    public Set<RoomDTO> getRoomsByHotelId(Integer hotelId) {
+        log.info("Getting rooms by hotel id: " + hotelId);
+        return roomMapper.toDTOs(roomRepository.findRoomsByHotelId(hotelId));
+    }
+
+    @Override
     public RoomDTO saveRoom(RoomDTO roomDTO) {
         RoomEntity roomEntity = roomMapper.toEntity(roomDTO);
         roomEntity.setStatus(RoomStatus.UNOCCUPIED);
