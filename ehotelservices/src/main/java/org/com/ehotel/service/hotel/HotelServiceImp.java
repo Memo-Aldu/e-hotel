@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.com.ehotel.dto.hotel.HotelDTO;
 import org.com.ehotel.entity.hotel.HotelEntity;
+import org.com.ehotel.exceptions.AppEntityAlreadyExistException;
 import org.com.ehotel.exceptions.AppEntityNotFoundException;
 import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.mapper.hotel.HotelMapper;
@@ -111,10 +112,10 @@ public class HotelServiceImp implements HotelService {
             throw new BadRequestException("Invalid hotel chain id");
         }
         if(hotelRepository.existsHotelEntityByEmail(hotelDTO.email())) {
-            throw new BadRequestException("Hotel with email: " + hotelDTO.email() + " already exists");
+            throw new AppEntityAlreadyExistException("Hotel with email: " + hotelDTO.email() + " already exists");
         }
         if (hotelRepository.existsHotelEntityByPhoneNumber(hotelDTO.phoneNumber())) {
-            throw new BadRequestException("Hotel with number: " + hotelDTO.phoneNumber() + " already exists");
+            throw new AppEntityAlreadyExistException("Hotel with number: " + hotelDTO.phoneNumber() + " already exists");
         }
     }
 }
