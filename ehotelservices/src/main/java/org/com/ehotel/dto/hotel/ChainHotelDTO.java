@@ -1,6 +1,7 @@
 package org.com.ehotel.dto.hotel;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author : memo-aldu
@@ -10,4 +11,8 @@ package org.com.ehotel.dto.hotel;
 public record ChainHotelDTO(
         Integer id, String name, String email, String phoneNumber,
         Short rating, String address) {
+    @JsonIgnore
+    public boolean isValidDto() {
+        return id != null || name == null || email == null || phoneNumber == null;
+    }
 }
