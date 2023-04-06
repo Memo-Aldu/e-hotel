@@ -28,9 +28,11 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/hotel-chain")
+@CrossOrigin("*")
 public class ChainHotelController {
     private final ChainHotelService chainService;
     private final ResponseHandler responseHandler;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<AppHttpResponse> getChainHotelByID(
@@ -41,8 +43,8 @@ public class ChainHotelController {
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of(
-                                "hotel-chain", chainService.getChainHotelById(id),
-                                "chainId", id))
+                                "hotel chain", chainService.getChainHotelEntityById(id),
+                                "ChainId", id))
                         .message("Chain found")
                         .status(HttpStatus.OK)
                         .success(true)
@@ -51,39 +53,14 @@ public class ChainHotelController {
                 setupResponseHeaders(request)
         );
     }
+    @GetMapping()
+    public ResponseEntity<AppHttpResponse> getAllHotelChains( HttpServletRequest request) {
 
-    @PostMapping
-    public ResponseEntity<AppHttpResponse> createChainHotel(
-            @RequestBody ChainHotelDTO chainHotelDTO, HttpServletRequest request) {
-        if(chainHotelDTO == null) {
-            throw new BadRequestException("Invalid chain hotel");
-        }
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of(
-                                "hotel-chain", chainService.createChainHotel(chainHotelDTO)))
-                        .message("Chain created")
-                        .status(HttpStatus.CREATED)
-                        .success(true)
-                        .timestamp(LocalDateTime.now())
-                        .build(),
-                setupResponseHeaders(request)
-        );
-    }
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<AppHttpResponse> updateChainHotel(
-            @PathVariable Integer id, @RequestBody ChainHotelDTO chainHotelDTO,
-            HttpServletRequest request) {
-        if(id == null || chainHotelDTO == null) {
-            throw new BadRequestException("Invalid chain hotel");
-        }
-        return responseHandler.httpResponse(
-                AppHttpResponse.builder()
-                        .data(Map.of(
-                                "hotel-chain", chainService.updateChainHotel(chainHotelDTO, id),
-                                "chainId", id))
-                        .message("Chain updated")
+                                "Chain", chainService.getAllChainHotelEntities()))
+                        .message("Chain found")
                         .status(HttpStatus.OK)
                         .success(true)
                         .timestamp(LocalDateTime.now())
@@ -91,17 +68,38 @@ public class ChainHotelController {
                 setupResponseHeaders(request)
         );
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<AppHttpResponse> updateChainHotel(
+            @PathVariable Integer id, @RequestBody ChainHotelDTO chainHotelDTO,
+            HttpServletRequest request) {
+        if(id == null) {
+            throw new BadRequestException("Hotel chain id cannot be null");
+        }
+        if(chainHotelDTO == null || !chainHotelDTO.isValidDto()) {
+            throw new BadRequestException("Invalid hotel chain");
+        }
+        return responseHandler.httpResponse(
+                AppHttpResponse.builder()
+                        .success(true)
+                        .message("Hotel updated successfully")
+                        .data(Map.of("chain", chainService
+                                .updateChain(chainHotelDTO, id)))
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.OK)
+                        .build(),
+                setupResponseHeaders(request));
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<AppHttpResponse> deleteChainHotel(
             @PathVariable Integer id, HttpServletRequest request) {
-        if(id == null) {
-            throw new BadRequestException("Invalid id");
+        if (id == null) {
+            throw new BadRequestException("Invalid chain id");
         }
-        chainService.deleteChainHotelByID(id);
+        chainService.deleteChainHotelEntityByID(id);
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
-                        .data(Map.of("chainId", id))
+                        .data(Map.of("id", id))
                         .message("Chain deleted")
                         .status(HttpStatus.OK)
                         .success(true)
@@ -110,6 +108,26 @@ public class ChainHotelController {
                 setupResponseHeaders(request)
         );
     }
+
+    @PostMapping()
+    public ResponseEntity<AppHttpResponse> createHotelChain(
+            @RequestBody ChainHotelDTO chainDTO, HttpServletRequest request) {
+        if(chainDTO == null || !chainDTO.isValidDto()) {
+            throw new BadRequestException("Invalid hotel chain");
+        }
+        return responseHandler.httpResponse(
+                AppHttpResponse.builder()
+                        .data(Map.of("chain", chainService
+                                .createChain(chainDTO)))
+                        .message("Hotel chain created")
+                        .status(HttpStatus.CREATED)
+                        .success(true)
+                        .timestamp(LocalDateTime.now())
+                        .build(),
+                setupResponseHeaders(request)
+        );
+    }
+
 
     private HttpHeaders setupResponseHeaders(HttpServletRequest request) {
         HttpHeaders headers = new HttpHeaders();
