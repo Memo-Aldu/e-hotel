@@ -27,21 +27,23 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  **/
 @AllArgsConstructor @Slf4j
 @RestController @RequestMapping("/api/v1/hotel")
+@CrossOrigin("*")
 public class HotelController {
     private final HotelService hotelService;
     private final ResponseHandler responseHandler;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<AppHttpResponse> getHotelByID(
             @PathVariable Integer id, HttpServletRequest request) {
         if(id == null) {
-            throw new BadRequestException("Invalid hotel id");
+            throw new BadRequestException("Invalid id");
         }
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of(
-                                "hotel", hotelService.getHotelById(id),
-                                "hotelId", id))
+                                "hotel", hotelService.getHotelEntityById(id),
+                                "HotelId", id))
                         .message("Hotel found")
                         .status(HttpStatus.OK)
                         .success(true)
@@ -50,18 +52,13 @@ public class HotelController {
                 setupResponseHeaders(request)
         );
     }
+    @GetMapping()
+    public ResponseEntity<AppHttpResponse> getAllHotels( HttpServletRequest request) {
 
-    @GetMapping("/chain/{id}")
-    public ResponseEntity<AppHttpResponse> getHotelByChainID(
-            @PathVariable Integer id, HttpServletRequest request) {
-        if(id == null) {
-            throw new BadRequestException("Invalid chain id");
-        }
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of(
-                                "hotel", hotelService.getHotelsByChainId(id),
-                                "chainId", id))
+                                "hotel", hotelService.getAllHotelEntities()))
                         .message("Hotel found")
                         .status(HttpStatus.OK)
                         .success(true)
@@ -72,16 +69,15 @@ public class HotelController {
     }
 
     @PostMapping()
-    public ResponseEntity<AppHttpResponse> saveHotel(
+    public ResponseEntity<AppHttpResponse> createHotel(
             @RequestBody HotelDTO hotelDTO, HttpServletRequest request) {
-        if(hotelDTO == null) {
+        if(hotelDTO == null || !hotelDTO.isValidDto()) {
             throw new BadRequestException("Invalid hotel");
         }
-        HotelDTO hotel = hotelService.createHotel(hotelDTO);
-        log.info("Hotel created: {}", hotel);
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
-                        .data(Map.of("hotel", hotel))
+                        .data(Map.of("hotel", hotelService
+                                .createHotel(hotelDTO)))
                         .message("Hotel created")
                         .status(HttpStatus.CREATED)
                         .success(true)
@@ -90,18 +86,20 @@ public class HotelController {
                 setupResponseHeaders(request)
         );
     }
-
     @PatchMapping("/{id}")
     public ResponseEntity<AppHttpResponse> updateHotel(
-            @PathVariable Integer id, @RequestBody HotelDTO hotelDTO, HttpServletRequest request) {
-        if(id == null || hotelDTO == null) {
-            throw new BadRequestException("Invalid hotel");
+            @RequestBody HotelDTO hotelDTO,
+            @PathVariable Integer id, HttpServletRequest request) {
+        if(hotelDTO == null || !hotelDTO.isValidDto()) {
+            throw new BadRequestException("Invalid hoetl");
+        }
+        if(id == null) {
+            throw new BadRequestException("Invalid hotel id");
         }
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
-                        .data(Map.of(
-                                "hotel", hotelService.updateHotel(hotelDTO, id),
-                                "hotelId", id))
+                        .data(Map.of("hotel", hotelService
+                                .updateHotel(hotelDTO, id)))
                         .message("Hotel updated")
                         .status(HttpStatus.OK)
                         .success(true)
@@ -111,17 +109,18 @@ public class HotelController {
         );
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<AppHttpResponse> deleteHotel(
             @PathVariable Integer id, HttpServletRequest request) {
-        if(id == null) {
+        if (id == null) {
             throw new BadRequestException("Invalid hotel id");
         }
-        hotelService.deleteHotelById(id);
+        hotelService.deleteHotelEntityById(id);
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
-                        .data(Map.of("hotelId", id))
-                        .message("Hotel deleted")
+                        .data(Map.of("id", id))
+                        .message("hotel deleted")
                         .status(HttpStatus.OK)
                         .success(true)
                         .timestamp(LocalDateTime.now())
@@ -129,6 +128,7 @@ public class HotelController {
                 setupResponseHeaders(request)
         );
     }
+
 
     private HttpHeaders setupResponseHeaders(HttpServletRequest request) {
         HttpHeaders headers = new HttpHeaders();
