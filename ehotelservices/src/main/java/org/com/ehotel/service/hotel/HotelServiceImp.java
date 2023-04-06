@@ -22,6 +22,14 @@ import java.util.Set;
 public class HotelServiceImp implements HotelService {
     private final HotelEntityRepository hotelRepository;
     private final HotelMapper hotelMapper;
+    
+    @Override
+    public Set<HotelDTO> getAllHotelEntities(){
+        Set<HotelEntity> hotel = hotelEntityRepository.findAllHotelEntity();
+        log.info("All hotels found with name: ");
+        return hotelMapper.toDTOs(hotel);
+    }
+    
     @Override
     public HotelDTO getHotelById(Integer id) {
         log.info("Getting hotel by id: " + id);
