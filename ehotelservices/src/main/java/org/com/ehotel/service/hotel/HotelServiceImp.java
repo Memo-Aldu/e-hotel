@@ -24,14 +24,14 @@ public class HotelServiceImp implements HotelService {
     private final HotelMapper hotelMapper;
     
     @Override
-    public Set<HotelDTO> getAllHotelEntities(){
-        Set<HotelEntity> hotel = hotelEntityRepository.findAllHotelEntity();
+    public Set<HotelDTO> getAllHotelEntity(){
+        Set<HotelEntity> hotel = hotelRepository.findAllHotelEntity();
         log.info("All hotels found with name: ");
         return hotelMapper.toDTOs(hotel);
     }
     
     @Override
-    public HotelDTO getHotelById(Integer id) {
+    public HotelDTO getHotelEntityById(Integer id) {
         log.info("Getting hotel by id: " + id);
         return hotelMapper.toDTO(
                 hotelRepository.findHotelEntityById(id)
@@ -92,7 +92,7 @@ public class HotelServiceImp implements HotelService {
     }
 
     @Override
-    public void deleteHotelById(Integer id) {
+    public void deleteHotelEntityById(Integer id) {
         if(!hotelRepository.existsById(id)) {
             throw new AppEntityNotFoundException("Hotel not found");
         }
