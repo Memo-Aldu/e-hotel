@@ -61,18 +61,6 @@ public class CustomerServiceImp implements CustomerService {
         CustomerEntity customerEntity = customerRepo.findCustomerByEmail(email)
                 .orElseThrow(() -> new AppEntityNotFoundException("Customer not found with email: " + email));
         CustomerEntity updatedCustomer = customerMapper.toEntity(customerDTO);
-        // check if the customer is trying to update his email
-        if(customerDTO.email() != null && !customerDTO.email().isEmpty() && !customerDTO.email().equals(email)) {
-            // check if the email is already used by another customer
-            if(customerRepo.existsByEmail(customerDTO.email())) {
-                throw new AppEntityAlreadyExistException("Customer already exist with email: " + customerDTO.email());
-            }
-            // check if the app user exist
-            if(!appUserRepo.existsByEmail(customerDTO.email())) {
-                throw new AppEntityNotFoundException("App user not found with email: " + customerDTO.email());
-            }
-            customerEntity.setAppUser(updatedCustomer.getAppUser());
-        }
         // check if the customer is trying to update the phone number
         if(customerDTO.phoneNumber() != null && !customerDTO.phoneNumber().isEmpty() && !customerDTO.phoneNumber().equals(customerEntity.getPhoneNumber())) {
             if (customerRepo.existsByPhoneNumber(customerDTO.phoneNumber())) {
