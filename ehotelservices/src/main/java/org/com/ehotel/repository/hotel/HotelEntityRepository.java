@@ -1,5 +1,6 @@
 package org.com.ehotel.repository.hotel;
 
+import org.com.ehotel.entity.hotel.ChainHotelEntity;
 import org.com.ehotel.entity.hotel.HotelEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,6 +16,9 @@ import java.util.Set;
 public interface HotelEntityRepository extends JpaRepository<HotelEntity, Integer> {
     @Query(value = "SELECT * FROM appdb.ehotel.hotel a  WHERE a.hotel_id = :id", nativeQuery = true)
     Optional<HotelEntity> findHotelEntityById(@Param("id") Integer id);
+
+    @Query(value = "SELECT * FROM appdb.ehotel.hotel c", nativeQuery = true)
+    Set<HotelEntity> findAllHotelEntity();
     @Query(value = "SELECT * FROM appdb.ehotel.hotel a  WHERE a.chain_id = :chain_id", nativeQuery = true)
     Set<HotelEntity> findAllHotelEntityByChainId(@Param("chain_id") Integer chainId);
     @Transactional @Modifying
