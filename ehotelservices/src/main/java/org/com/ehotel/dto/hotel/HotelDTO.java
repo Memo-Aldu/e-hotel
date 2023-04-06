@@ -1,5 +1,6 @@
 package org.com.ehotel.dto.hotel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.com.ehotel.dto.reviews.ReviewDTO;
 import org.com.ehotel.dto.room.RoomDTO;
 import org.com.ehotel.dto.room.RoomTypeDTO;
@@ -22,4 +23,8 @@ import java.util.Set;
 public record HotelDTO(
         Integer id, String name, String address, String email,
         String phoneNumber, Short rating, ChainHotelDTO chainHotel, String city) {
+    @JsonIgnore
+    public boolean isValidDto() {
+        return id != null || name == null || email == null || address == null || rating == null || city == null || phoneNumber == null;
+    }
 }
