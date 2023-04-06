@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author : memo-aldu
@@ -20,6 +21,9 @@ public interface ChainHotelEntityRepository extends JpaRepository<ChainHotelEnti
 
     @Query(value = "SELECT * FROM appdb.ehotel.hotel_chain c WHERE c.chain_id = :id", nativeQuery = true)
     Optional<ChainHotelEntity> findChainHotelEntityById(@Param("id") Integer id);
+
+    @Query(value = "SELECT * FROM appdb.ehotel.hotel_chain c", nativeQuery = true)
+    Set<ChainHotelEntity> findAllByChainHotelEntity();
     @Transactional @Modifying
     @Query(value =  "DELETE FROM appdb.ehotel.hotel_chain a WHERE a.chain_id = :id" , nativeQuery = true)
     void deleteChainHotelEntityByID(@Param("id") Integer id);
