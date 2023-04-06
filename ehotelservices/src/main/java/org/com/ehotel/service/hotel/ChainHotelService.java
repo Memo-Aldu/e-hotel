@@ -2,14 +2,18 @@ package org.com.ehotel.service.hotel;
 
 import org.com.ehotel.dto.hotel.ChainHotelDTO;
 
-/**
- * @author : memo-aldu
- * @mailto : maldu064@uOttawa.ca
- * @created : 4/4/2023, Tuesday
- **/
+import java.util.Set;
+
 public interface ChainHotelService {
-    ChainHotelDTO  getChainHotelById(Integer id);
-    ChainHotelDTO createChainHotel(ChainHotelDTO chainHotelDTO);
-    ChainHotelDTO updateChainHotel(ChainHotelDTO chainHotelDTO, Integer id);
-    void deleteChainHotelByID(Integer id);
+
+    ChainHotelDTO  getChainHotelEntityById(Integer id);
+
+    Set<ChainHotelDTO> getAllChainHotelEntities();
+
+    ChainHotelDTO createChain(ChainHotelDTO chainHotelDTO);
+
+    ChainHotelDTO updateChain(ChainHotelDTO chainHotelDTO, Integer id);
+
+    void deleteChainHotelEntityByID(Integer id);
+
 }
