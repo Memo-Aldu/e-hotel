@@ -174,7 +174,6 @@ CREATE TABLE stay( --DONE
     stay_ID BIGSERIAL PRIMARY KEY, --pk
     customer_NAS VARCHAR(9), --fk
     employee_NAS VARCHAR(9), --fk
-    room_ID BIGSERIAL, --fk
     payment_total NUMERIC (7,2) NOT NULL,
     payment_status payment_status default 'UNPAID',
     check_in_date DATE NOT NULL,
@@ -183,15 +182,12 @@ CREATE TABLE stay( --DONE
     foreign key (customer_NAS) references customer (customer_NAS)
      ON DELETE SET NULL,
     foreign key (employee_NAS) references employee (employee_NAS)
-     ON DELETE SET NULL,
-    foreign key (room_ID) references room (room_ID)
      ON DELETE SET NULL
 );
 
 CREATE TABLE reservation( --DONE
     reservation_ID BIGSERIAL PRIMARY KEY, --pk
     customer_NAS VARCHAR(9), --fk
-    room_ID BIGSERIAL, --fk
     reservation_status reservation_status default 'PENDING',
     special_request TEXT,
     total_price NUMERIC (7,2) NOT NULL,
@@ -199,8 +195,6 @@ CREATE TABLE reservation( --DONE
     check_out_date DATE NOT NULL,
     creation_date DATE default CURRENT_DATE,
     foreign key (customer_NAS) references customer (customer_NAS)
-        ON DELETE SET NULL,
-    foreign key (room_ID) references room (room_ID)
         ON DELETE SET NULL
 );
 

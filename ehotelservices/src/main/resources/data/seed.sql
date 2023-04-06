@@ -330,24 +330,24 @@ insert into extension values
     (863324, 36872, 'Add an extra bed', 5.00);
 
 
--- stay(stay_ID, customer_NAS, employee_NAS, room_ID, payment_total, payment_status, check_in_date, check_out_date, creation_date)
+-- stay(stay_ID, customer_NAS, employee_NAS, payment_total, payment_status, check_in_date, check_out_date, creation_date)
 
 insert into stay values
-    (78038116, '978974950', '479816029', 13373, 656.25, 'UNPAID', '2020-05-24', '2020-05-31', '2020-05-24'),
-    (57427124, '431878412', '297415402', 82552, 312.50, 'UNPAID', '2020-12-20', '2020-12-25', '2020-12-20'),
-    (35918864, '374317217', '667336869', 37814, 62.50, 'UNPAID', '2020-12-24', '2020-12-26', '2020-12-24'),
-    (83930913, '063311427', '575375287', 65512, 93.75, 'UNPAID', '2021-01-10', '2021-01-13', '2021-01-10'),
-    (87865335, '188589033', '906762352', 12066, 625.00, 'UNPAID', '2021-02-14', '2021-02-24', '2021-02-14');
+    (78038116, '978974950', '479816029', 656.25, 'UNPAID', '2020-05-24', '2020-05-31', '2020-05-24'),
+    (57427124, '431878412', '297415402', 312.50, 'UNPAID', '2020-12-20', '2020-12-25', '2020-12-20'),
+    (35918864, '374317217', '667336869', 62.50, 'UNPAID', '2020-12-24', '2020-12-26', '2020-12-24'),
+    (83930913, '063311427', '575375287', 93.75, 'UNPAID', '2021-01-10', '2021-01-13', '2021-01-10'),
+    (87865335, '188589033', '906762352', 625.00, 'UNPAID', '2021-02-14', '2021-02-24', '2021-02-14');
 
 
--- reservation(reservation_ID, customer_NAS, room_ID, reservation_status, special_request, total_price, check_in_date, check_out_date, creation_date)
+-- reservation(reservation_ID, customer_NAS, reservation_status, special_request, total_price, check_in_date, check_out_date, creation_date)
 
 insert into reservation values
-    (56730527, '464209644', 05866, 'PENDING', 'Receive extra pillows', 187.50, '2021-08-16', '2021-08-18', '2021-08-09'),
-    (37119595, '308716312', 91972, 'PENDING', 'Do not disturb', 31.25, '2021-09-09', '2021-09-10', '2021-09-08'),
-    (22978826, '590919716', 76769, 'PENDING', 'Receive extra towels', 156.25, '2021-11-16', '2021-10-21', '2021-10-16'),
-    (44740926, '546162956', 43529, 'PENDING', 'Do not disturb', 187.50, '2022-07-01', '2022-07-04', '2022-06-30'),
-    (69178932, '752776445', 61186, 'PENDING', 'Receive extra bedsheets', 218.75, '2022-12-01', '2022-12-08', '2022-11-30');
+    (56730527, '464209644', 'PENDING', 'Receive extra pillows', 187.50, '2021-08-16', '2021-08-18', '2021-08-09'),
+    (37119595, '308716312', 'PENDING', 'Do not disturb', 31.25, '2021-09-09', '2021-09-10', '2021-09-08'),
+    (22978826, '590919716', 'PENDING', 'Receive extra towels', 156.25, '2021-11-16', '2021-10-21', '2021-10-16'),
+    (44740926, '546162956', 'PENDING', 'Do not disturb', 187.50, '2022-07-01', '2022-07-04', '2022-06-30'),
+    (69178932, '752776445', 'PENDING', 'Receive extra bedsheets', 218.75, '2022-12-01', '2022-12-08', '2022-11-30');
 
 
 -- extension_stay(stay_ID, extension_ID)
