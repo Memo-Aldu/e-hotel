@@ -43,7 +43,7 @@ public class ChainHotelController {
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of(
-                                "hotel chain", chainService.getChainHotelEntityById(id),
+                                "hotel chain", chainService.getChainHotelById(id),
                                 "ChainId", id))
                         .message("Chain found")
                         .status(HttpStatus.OK)
@@ -59,7 +59,7 @@ public class ChainHotelController {
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of(
-                                "Chain", chainService.getAllChainHotelEntities()))
+                                "Chain", chainService.getAllChainHotelEntity()))
                         .message("Chain found")
                         .status(HttpStatus.OK)
                         .success(true)
@@ -83,7 +83,7 @@ public class ChainHotelController {
                         .success(true)
                         .message("Hotel updated successfully")
                         .data(Map.of("chain", chainService
-                                .updateChain(chainHotelDTO, id)))
+                                .updateChainHotel(chainHotelDTO, id)))
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.OK)
                         .build(),
@@ -96,7 +96,7 @@ public class ChainHotelController {
         if (id == null) {
             throw new BadRequestException("Invalid chain id");
         }
-        chainService.deleteChainHotelEntityByID(id);
+        chainService.deleteChainHotelByID(id);
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of("id", id))
@@ -118,7 +118,7 @@ public class ChainHotelController {
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of("chain", chainService
-                                .createChain(chainDTO)))
+                                .createChainHotel(chainDTO)))
                         .message("Hotel chain created")
                         .status(HttpStatus.CREATED)
                         .success(true)
