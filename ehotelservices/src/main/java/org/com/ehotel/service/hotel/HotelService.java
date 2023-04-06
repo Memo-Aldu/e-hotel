@@ -6,8 +6,9 @@ import java.util.Set;
 public interface HotelService {
 
     HotelDTO getHotelEntityById(Integer id);
-    Set<HotelDTO> getAllHotelEntities();
+    Set<HotelDTO> getAllHotelEntity();
 
+    Set<HotelDTO> getHotelsByChainId(Integer chainId);
     void deleteHotelEntityById(Integer id);
 
     HotelDTO createHotel(HotelDTO hotelDTO);
