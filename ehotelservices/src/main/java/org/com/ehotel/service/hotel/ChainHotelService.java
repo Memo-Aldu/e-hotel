@@ -6,14 +6,14 @@ import java.util.Set;
 
 public interface ChainHotelService {
 
-    ChainHotelDTO  getChainHotelEntityById(Integer id);
+    ChainHotelDTO getChainHotelById(Integer id);
 
-    Set<ChainHotelDTO> getAllChainHotelEntities();
+    Set<ChainHotelDTO> getAllChainHotelEntity();
 
-    ChainHotelDTO createChain(ChainHotelDTO chainHotelDTO);
+    ChainHotelDTO createChainHotel(ChainHotelDTO chainHotelDTO);
 
-    ChainHotelDTO updateChain(ChainHotelDTO chainHotelDTO, Integer id);
+    ChainHotelDTO updateChainHotel(ChainHotelDTO chainHotelDTO, Integer id);
 
-    void deleteChainHotelEntityByID(Integer id);
+    void deleteChainHotelByID(Integer id);
 
 }
