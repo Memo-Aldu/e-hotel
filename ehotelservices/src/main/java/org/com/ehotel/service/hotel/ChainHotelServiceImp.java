@@ -11,6 +11,8 @@ import org.com.ehotel.mapper.hotel.ChainHotelMapper;
 import org.com.ehotel.repository.hotel.ChainHotelEntityRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 /**
  * @author : memo-aldu
  * @mailto : maldu064@uOttawa.ca
@@ -42,7 +44,7 @@ public class ChainHotelServiceImp implements ChainHotelService{
     }
     
     @Override
-    public Set<ChainHotelDTO>  getAllChainHotelEntities(){
+    public Set<ChainHotelDTO> getAllChainHotelEntity(){
         Set<ChainHotelEntity> chain = chainHotelEntityRepository.findAllByChainHotelEntity();
         log.info("All hotels found with name: ");
         return chainHotelMapper.toDTOs(chain);
