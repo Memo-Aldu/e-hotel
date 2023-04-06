@@ -2,9 +2,7 @@ package org.com.ehotel.controller.user;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.com.ehotel.dto.user.UserRegistrationRequest;
 import org.com.ehotel.dto.user.AppUserDTO;
-import org.com.ehotel.dto.user.UserUpdateRequest;
 import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.helper.AppHttpResponse;
 import org.com.ehotel.helper.ResponseHandler;
@@ -59,19 +57,19 @@ public class AppUserController {
 
     /**
      * Register user
-     * @param regRequest RegistrationRequest
+     * @param appUserDTO AppUserDTO
      * @param request HttpServletRequest
      * @return ResponseEntity<AppHttpResponse>
      */
     @PostMapping("/register")
     public ResponseEntity<AppHttpResponse> registerUser(
-            @RequestBody UserRegistrationRequest regRequest, HttpServletRequest request) {
-        log.info("Registering user: " + regRequest);
+            @RequestBody AppUserDTO appUserDTO, HttpServletRequest request) {
+        log.info("Registering user: " + appUserDTO);
         // Validate registration request
-        if (!regRequest.isValid()) {
+        if (appUserDTO == null) {
             throw new BadRequestException("Invalid registration request");
         }
-        AppUserDTO registeredUser = userService.registerUser(regRequest);
+        AppUserDTO registeredUser = userService.registerUser(appUserDTO);
         Map<String, Object> data = Map.of
                 ("user", registeredUser,
                 authService.getAccessTokenName(), authService.createToken(registeredUser),
@@ -90,18 +88,18 @@ public class AppUserController {
 
     /**
      * Update user
-     * @param updateRequest UserUpdateRequest
+     * @param appUserDTO AppUserDTO
      * @param request HttpServletRequest
      * @return ResponseEntity<AppHttpResponse>
      */
     @PatchMapping
-    public ResponseEntity<AppHttpResponse> updateUser(@RequestBody UserUpdateRequest updateRequest, HttpServletRequest request) {
-        log.info("Updating user with request: " + updateRequest.password() + " " + updateRequest.userRole());
+    public ResponseEntity<AppHttpResponse> updateUser(@RequestBody AppUserDTO appUserDTO, HttpServletRequest request) {
+        log.info("Updating user with request: " + appUserDTO);
         // get token from header
         final String token = authService.getTokenFromRequestHeader(request.getHeader(AUTHORIZATION));
         // get subject from token
         final String subject = authService.getSubjectFromToken(token);
-        final AppUserDTO updatedUser = userService.updateUser(subject, updateRequest);
+        final AppUserDTO updatedUser = userService.updateUser(subject, appUserDTO);
 
         Map<String, Object> data = Map.of
                 ("user", updatedUser,

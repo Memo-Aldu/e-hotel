@@ -2,10 +2,9 @@ package org.com.ehotel.service.user;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.com.ehotel.dto.user.UserRegistrationRequest;
 import org.com.ehotel.dto.user.AppUserDTO;
-import org.com.ehotel.dto.user.UserUpdateRequest;
 import org.com.ehotel.entity.user.AppUserEntity;
+import org.com.ehotel.enums.AppRoles;
 import org.com.ehotel.exceptions.AppEntityAlreadyExistException;
 import org.com.ehotel.exceptions.AppEntityNotFoundException;
 import org.com.ehotel.exceptions.BadRequestException;
@@ -35,49 +34,37 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public AppUserDTO registerUser(UserRegistrationRequest request) {
-        log.info("Registering user: " + request);
+    public AppUserDTO registerUser(AppUserDTO appUserDTO) {
+        AppUserEntity userToSave = appUserMapper.toEntity(appUserDTO);
         // Check if user already exists
-        Optional<AppUserEntity> optionalUser = userRepo
-                .findAppUserEntityByEmail(request.email());
-        // If user already exists, throw exception
-        if (optionalUser.isPresent()) {
-            log.info("User already exists with email: " + request.email());
-            throw new AppEntityAlreadyExistException("User already exists with email: " + request.email());
-        } else {
-            // If user does not exist, create user and save it
-            // Check if user role is null
-            if(request.userRole() != null)
-                // Modifying query cant return Entity, so we have to return email
-                userRepo.insertUserData(request.email(), request.password(), request.userRole().name());
-            else {
-                userRepo.insertUserData(request.email(), request.password());
-
-            }
-            AppUserEntity user = userRepo.findAppUserEntityByEmail(request.email())
-                    .orElseThrow(() -> new AppEntityNotFoundException("Failed to register user: " + request.email()));
-            return appUserMapper.toDTO(user);
+        if(userRepo.existsByEmail(appUserDTO.email())) {
+            throw new AppEntityAlreadyExistException("User already exists with email: " + appUserDTO.email());
         }
+        if(appUserDTO.password() == null || appUserDTO.password().isEmpty() || appUserDTO.password().length() < 4) {
+            throw new BadRequestException("Password must be at least 4 characters");
+        }
+        if(appUserDTO.userRole() == null || appUserDTO.userRole().name().isEmpty()) {
+            log.info("User role not provided, setting to default: " + AppRoles.ROLE_USER.name());
+            userToSave.setUserRole(AppRoles.ROLE_USER);
+        }
+        return appUserMapper.toDTO(userRepo.save(userToSave));
     }
 
     @Override
-    public AppUserDTO updateUser(String email, UserUpdateRequest request) {
-        AppUserEntity requestedUser = userRepo
+    public AppUserDTO updateUser(String email, AppUserDTO appUserDTO) {
+        AppUserEntity appUserEntity = userRepo
                 .findAppUserEntityByEmail(email).orElseThrow(
                         () -> new AppEntityNotFoundException("User not found with email: " + email));
-        boolean isUpdated = false;
-        if(request.password() != null && !request.password().isEmpty()) {
-            requestedUser.setPassword(request.password());
-            isUpdated = true;
+        if(appUserDTO.password() != null && !appUserDTO.password().isEmpty()) {
+            if(appUserDTO.password().length() < 4) {
+                throw new BadRequestException("Password must be at least 4 characters");
+            }
+            appUserEntity.setPassword(appUserDTO.password());
         }
-        if(request.userRole() != null && !request.userRole().name().isEmpty()) {
-            requestedUser.setUserRole(request.userRole());
-            isUpdated = true;
+        if(appUserDTO.userRole() != null && !appUserDTO.userRole().name().isEmpty()) {
+            appUserEntity.setUserRole(appUserDTO.userRole());
         }
-        if(!isUpdated) {
-            throw new BadRequestException("Nothing to update");
-        }
-        return appUserMapper.toDTO(userRepo.save(requestedUser));
+        return appUserMapper.toDTO(userRepo.save(appUserEntity));
     }
 
     @Override

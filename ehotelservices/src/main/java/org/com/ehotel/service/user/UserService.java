@@ -1,8 +1,6 @@
 package org.com.ehotel.service.user;
 
-import org.com.ehotel.dto.user.UserRegistrationRequest;
 import org.com.ehotel.dto.user.AppUserDTO;
-import org.com.ehotel.dto.user.UserUpdateRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -12,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  **/
 public interface UserService extends UserDetailsService {
     AppUserDTO getUserByEmail(String email);
-    AppUserDTO registerUser(UserRegistrationRequest request);
-    AppUserDTO updateUser(String email, UserUpdateRequest request);
+    AppUserDTO registerUser(AppUserDTO request);
+    AppUserDTO updateUser(String email, AppUserDTO request);
     void deleteUser(String email);
 }
