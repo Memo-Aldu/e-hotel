@@ -58,7 +58,7 @@ public class HotelController {
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of(
-                                "hotel", hotelService.getAllHotelEntities()))
+                                "hotel", hotelService.getAllHotelEntity()))
                         .message("Hotel found")
                         .status(HttpStatus.OK)
                         .success(true)
