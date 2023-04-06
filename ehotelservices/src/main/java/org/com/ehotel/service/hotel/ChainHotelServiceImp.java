@@ -40,6 +40,13 @@ public class ChainHotelServiceImp implements ChainHotelService{
                 )
         );
     }
+    
+    @Override
+    public Set<ChainHotelDTO>  getAllChainHotelEntities(){
+        Set<ChainHotelEntity> chain = chainHotelEntityRepository.findAllByChainHotelEntity();
+        log.info("All hotels found with name: ");
+        return chainHotelMapper.toDTOs(chain);
+    }
 
     private void validateFields(ChainHotelDTO chainHotelDTO) {
         if(chainHotelDTO.name() == null || chainHotelDTO.name().isEmpty()) {
