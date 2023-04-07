@@ -43,7 +43,7 @@ public class ChainHotelController {
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of(
-                                "hotel chain", chainService.getChainHotelById(id),
+                                "hotel-chain", chainService.getChainHotelById(id),
                                 "ChainId", id))
                         .message("Chain found")
                         .status(HttpStatus.OK)
@@ -59,7 +59,7 @@ public class ChainHotelController {
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of(
-                                "Chain", chainService.getAllChainHotelEntity()))
+                                "hotel-chain", chainService.getAllChainHotelEntity()))
                         .message("Chain found")
                         .status(HttpStatus.OK)
                         .success(true)
@@ -82,7 +82,7 @@ public class ChainHotelController {
                 AppHttpResponse.builder()
                         .success(true)
                         .message("Hotel updated successfully")
-                        .data(Map.of("chain", chainService
+                        .data(Map.of("hotel-chain", chainService
                                 .updateChainHotel(chainHotelDTO, id)))
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.OK)
@@ -117,7 +117,7 @@ public class ChainHotelController {
         }
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
-                        .data(Map.of("chain", chainService
+                        .data(Map.of("hotel-chain", chainService
                                 .createChainHotel(chainDTO)))
                         .message("Hotel chain created")
                         .status(HttpStatus.CREATED)
