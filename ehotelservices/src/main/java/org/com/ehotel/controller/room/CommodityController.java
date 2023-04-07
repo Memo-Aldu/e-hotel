@@ -26,7 +26,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @created : 3/26/2023, Sunday
  **/
 @RestController @AllArgsConstructor
-@RequestMapping("api/v1/commodities") @Slf4j
+@RequestMapping("api/v1/commodities") @Slf4j @CrossOrigin("*")
 public class CommodityController {
     private final CommodityService commodityService;
     private final ResponseHandler responseHandler;

@@ -15,9 +15,9 @@ import java.util.Set;
  **/
 @Component @Mapper(componentModel = "spring", uses = {HotelMapper.class})
 public interface DepartmentMapper {
-    @Mapping(source = "manager.NAS", target = "managerId")
+    @Mapping(source = "manager.NAS", target = "managerNAS")
     DepartmentDTO toDTO(DepartmentEntity entity);
-    @Mapping(source = "managerId", target = "manager.NAS")
+    @Mapping(source = "managerNAS", target = "manager.NAS")
     DepartmentEntity toEntity(DepartmentDTO dto);
     Set<DepartmentDTO> toDTOs(Set<DepartmentEntity> entities);
     Set<DepartmentEntity> toEntities(Set<DepartmentDTO> dtos);

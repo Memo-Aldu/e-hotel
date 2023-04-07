@@ -41,6 +41,9 @@ public class HotelEntity {
     @Column(name = "hotel_rating")
     private Short rating;
 
+    @Column(name = "city")
+    private String city;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "chain_id", name = "chain_id")
     private ChainHotelEntity chainHotel;
@@ -60,6 +63,6 @@ public class HotelEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel", cascade = CascadeType.ALL)
     private Set<RoomEntity> rooms = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel", cascade = CascadeType.ALL)
     private Set<ReviewEntity> reviews = new HashSet<>();
 }

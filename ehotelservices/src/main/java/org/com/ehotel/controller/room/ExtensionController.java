@@ -25,7 +25,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 3/27/2023, Monday
  **/
-@RestController @Slf4j
+@RestController @Slf4j @CrossOrigin("*")
 @AllArgsConstructor @RequestMapping("/api/v1/extension")
 public class ExtensionController {
     private final ExtensionService extensionService;

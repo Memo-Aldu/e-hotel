@@ -8,10 +8,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -104,6 +106,21 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                         .build(),
                 headers(ex.getMessage()));
     }
+
+    @ExceptionHandler(HttpServerErrorException.class)
+    protected ResponseEntity<AppHttpResponse> handleHttpServerErrorException(
+            HttpServerErrorException ex) {
+        return responseHandler.httpResponse(
+                AppHttpResponse.builder()
+                        .data(Map.of("error", Objects.requireNonNull(ex.getMessage())))
+                        .timestamp(LocalDateTime.now())
+                        .status(INTERNAL_SERVER_ERROR)
+                        .success(false)
+                        .message(ex.getLocalizedMessage())
+                        .build(),
+                headers(ex.getMessage()));
+    }
+
 
     private HttpHeaders headers(String message) {
         HttpHeaders headers = new HttpHeaders();

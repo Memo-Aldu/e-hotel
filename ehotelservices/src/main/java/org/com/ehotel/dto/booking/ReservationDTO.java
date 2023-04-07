@@ -1,12 +1,11 @@
 package org.com.ehotel.dto.booking;
 
-import org.com.ehotel.dto.room.ExtensionDTO;
-import org.com.ehotel.dto.room.RoomDTO;
 import org.com.ehotel.dto.user.CustomerDTO;
 import org.com.ehotel.enums.ReservationStatus;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author : memo-aldu
@@ -15,5 +14,21 @@ import java.util.Set;
  **/
 public record ReservationDTO(
         Integer id, ReservationStatus status, String specialRequest, Double totalPrice,
-        Date checkInDate, Date checkOutDate, Date creationDate, CustomerDTO customer) {
+        Date checkInDate, Date checkOutDate, Date creationDate, CustomerDTO customer,
+        List<Integer> reservedRooms, List<Integer> reservedExtensions) {
+
+    public ReservationDTO (Integer id, ReservationStatus status, String specialRequest, Double totalPrice,
+                           Date checkInDate, Date checkOutDate, Date creationDate, CustomerDTO customer,
+                           List<Integer> reservedRooms, List<Integer> reservedExtensions) {
+        this.id = id;
+        this.status = status;
+        this.specialRequest = specialRequest;
+        this.totalPrice = totalPrice;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.creationDate = creationDate;
+        this.customer = customer;
+        this.reservedRooms = Objects.requireNonNullElseGet(reservedRooms, List::of);
+        this.reservedExtensions = Objects.requireNonNullElseGet(reservedExtensions, List::of);
+    }
 }

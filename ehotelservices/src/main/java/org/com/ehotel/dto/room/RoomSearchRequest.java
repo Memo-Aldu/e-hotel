@@ -1,6 +1,7 @@
 package org.com.ehotel.dto.room;
 
 import javax.validation.Valid;
+import java.util.Locale;
 
 /**
  * @author : memo-aldu
@@ -12,6 +13,19 @@ public record RoomSearchRequest(
         short minRating, short maxRating, String hotelChainName,
         double maxPricePerNight, int maxNumberOfGuests
 ) {
+
+    public RoomSearchRequest(String checkInDate, String checkOutDate, String searchAddress,
+                             short minRating, short maxRating, String hotelChainName,
+                             double maxPricePerNight, int maxNumberOfGuests) {
+        this.checkInDate = checkInDate.toLowerCase(Locale.ROOT);
+        this.checkOutDate = checkOutDate.toLowerCase(Locale.ROOT);
+        this.searchAddress = searchAddress.toLowerCase();
+        this.hotelChainName = hotelChainName.toLowerCase();
+        this.maxPricePerNight = maxPricePerNight;
+        this.maxNumberOfGuests = maxNumberOfGuests;
+        this.minRating = minRating;
+        this.maxRating = maxRating;
+    }
 
     public boolean valid() {
         if (maxPricePerNight < 0 || maxNumberOfGuests <= 0) {

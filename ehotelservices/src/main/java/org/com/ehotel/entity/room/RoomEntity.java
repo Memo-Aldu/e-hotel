@@ -50,16 +50,10 @@ public class RoomEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room", cascade = CascadeType.ALL)
     private Set<ExtensionEntity> extensions = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "room_reservation",
-            joinColumns = @JoinColumn(name = "room_id"),
-            inverseJoinColumns = @JoinColumn(name = "reservation_id"))
+    @ManyToMany(mappedBy = "reservedRooms")
     private Set<ReservationEntity> reservations = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "room_stay",
-            joinColumns = @JoinColumn(name = "room_id"),
-            inverseJoinColumns = @JoinColumn(name = "stay_id"))
+    @ManyToMany(mappedBy = "rooms")
     private Set<StayEntity> stays = new HashSet<>();
 
 }

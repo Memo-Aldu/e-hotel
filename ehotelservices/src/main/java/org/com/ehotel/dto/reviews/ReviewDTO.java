@@ -12,6 +12,6 @@ import java.sql.Date;
  * @created : 3/13/2023, Monday
  **/
 public record ReviewDTO(
-        ReviewPK id, HotelDTO hotel, CustomerDTO customer,
+        HotelDTO hotel, CustomerDTO customer,
         Short rating, String comment, Date date) {
 }

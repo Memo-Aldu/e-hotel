@@ -21,14 +21,14 @@ public class ReviewEntity {
     @EmbeddedId
     private ReviewPK id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @MapsId("hotelId")
     @JoinColumn(name = "hotel_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private HotelEntity hotel;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @MapsId("customerId")
+    @MapsId("customerNAS")
     @JoinColumn(name = "customer_nas")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private CustomerEntity customer;
 
     @Column(name = "review_rating")

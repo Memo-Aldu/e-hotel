@@ -25,7 +25,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 3/23/2023, Thursday
  **/
-@RestController @AllArgsConstructor
+@RestController @AllArgsConstructor @CrossOrigin("*")
 @RequestMapping("/api/v1/room") @Slf4j
 public class RoomController {
     private final RoomService roomService;
@@ -56,6 +56,24 @@ public class RoomController {
                 AppHttpResponse.builder()
                         .data(Map.of("room", roomService.getRoomById(id)))
                         .message("Room found")
+                        .status(HttpStatus.OK)
+                        .success(true)
+                        .timestamp(LocalDateTime.now())
+                        .build(),
+                setupResponseHeaders(request)
+        );
+    }
+
+    @GetMapping("/hotel/{id}")
+    public ResponseEntity<AppHttpResponse> getRoomsByHotelId(
+            @PathVariable Integer id, HttpServletRequest request) {
+        if (id == null) {
+            throw new BadRequestException("Invalid hotel id");
+        }
+        return responseHandler.httpResponse(
+                AppHttpResponse.builder()
+                        .data(Map.of("rooms", roomService.getRoomsByHotelId(id)))
+                        .message("Rooms found")
                         .status(HttpStatus.OK)
                         .success(true)
                         .timestamp(LocalDateTime.now())

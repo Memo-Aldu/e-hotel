@@ -8,8 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author : memo-aldu
@@ -18,24 +19,30 @@ import java.util.Optional;
  **/
 @Repository
 public interface EmployeeEntityRepository extends JpaRepository<EmployeeEntity, String> {
-
     // JPQL(Java Persistence Query Language) Query, targets the entity
     @Query("SELECT e FROM EmployeeEntity e WHERE e.NAS = ?1")
-    Optional<EmployeeEntity> findEmployeeEntityByNAS(String nas);
+    Optional<EmployeeEntity> findEmployeeByNAS(String nas);
     @Query("SELECT e FROM EmployeeEntity e WHERE e.appUser = ?1")
     Optional<EmployeeEntity> findByAppUser(AppUserEntity appUser);
-    @Query("SELECT e FROM EmployeeEntity e WHERE e.NAS = ?1")
-    void deleteEmployeeEntityByNAS(String nas);
-    // native query (SQL Query) targets the table directly
-    @Query(value = "SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END FROM employee e WHERE e.employee_nas = :employee_nas", nativeQuery = true)
-    boolean exists(@Param("employee_nas") String nas);
     // native query
-    @Query(value = "SELECT * FROM employee e WHERE e.employee_email = :employee_email", nativeQuery = true)
+    @Query(value = "SELECT * FROM appdb.ehotel.employee e WHERE e.employee_email = :employee_email", nativeQuery = true)
     Optional<EmployeeEntity> findEmployeeByEmail(@Param("employee_email") String email);
+    @Query(value = "SELECT * FROM appdb.ehotel.employee e WHERE e.employee_dept = :employee_dept", nativeQuery = true)
+    Set<EmployeeEntity> findEmployeesByDepartmentId(@Param("employee_dept") int branchId);
+    @Query(value = "SELECT * FROM appdb.ehotel.employee e WHERE e.employee_role = :employee_role", nativeQuery = true)
+    Set<EmployeeEntity> findEmployeesByRoleID(@Param("employee_role") int roleID);
     // native query (SQL Query) targets the table directly
-    @Query(value = "SELECT * FROM employee e WHERE e.employee_dept = :employee_dept", nativeQuery = true)
-    List<EmployeeEntity> findEmployeesByDepartmentId(@Param("employee_dept") int branchId);
-    @Query(value = "SELECT * FROM employee e WHERE e.employee_role = :employee_role", nativeQuery = true)
-    List<EmployeeEntity> findEmployeesByRoleID(@Param("employee_role") int roleID);
+    @Query(value = "SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END FROM appdb.ehotel.employee e WHERE e.employee_nas = :employee_nas", nativeQuery = true)
+    boolean existsByNAS(@Param("employee_nas") String nas);
+    @Query(value = "SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END FROM appdb.ehotel.employee e WHERE e.employee_email = :employee_email", nativeQuery = true)
+    boolean existsByEmail(@Param("employee_email") String email);
+    @Query(value = "SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END FROM appdb.ehotel.employee e WHERE e.employee_phone_number = :phoneNumber", nativeQuery = true)
+    boolean existsByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+    @Transactional @Modifying
+    @Query("SELECT e FROM EmployeeEntity e WHERE e.NAS = ?1")
+    void deleteEmployeeByNAS(String nas);
+    @Transactional @Modifying
+    @Query(value = "DELETE FROM appdb.ehotel.employee e WHERE e.employee_email = :employee_email", nativeQuery = true)
+    void deleteEmployeeByEmail(@Param("employee_email") String email);
 
 }

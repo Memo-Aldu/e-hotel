@@ -29,7 +29,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 2023-03-21, Tuesday
  **/
-@RestController @Slf4j
+@RestController @Slf4j @CrossOrigin("*")
 @AllArgsConstructor @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
     private ResponseHandler responseHandler;
