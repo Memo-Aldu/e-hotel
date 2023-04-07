@@ -48,6 +48,14 @@ public class HotelServiceImp implements HotelService {
     }
 
     @Override
+    public Set<HotelDTO> searchHotel(String query) {
+        log.info("Searching hotels by query: " + query);
+        return hotelMapper.toDTOs(
+                hotelRepository.searchHotel(("%" + query + "%").toLowerCase())
+        );
+    }
+
+    @Override
     public HotelDTO createHotel(HotelDTO hotelDTO) {
         // Validate hotelDTO fields for null or empty
         validateFields(hotelDTO);

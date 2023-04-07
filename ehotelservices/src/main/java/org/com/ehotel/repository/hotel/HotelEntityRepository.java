@@ -16,11 +16,15 @@ import java.util.Set;
 public interface HotelEntityRepository extends JpaRepository<HotelEntity, Integer> {
     @Query(value = "SELECT * FROM appdb.ehotel.hotel a  WHERE a.hotel_id = :id", nativeQuery = true)
     Optional<HotelEntity> findHotelEntityById(@Param("id") Integer id);
-
     @Query(value = "SELECT * FROM appdb.ehotel.hotel c", nativeQuery = true)
     Set<HotelEntity> findAllHotelEntity();
     @Query(value = "SELECT * FROM appdb.ehotel.hotel a  WHERE a.chain_id = :chain_id", nativeQuery = true)
     Set<HotelEntity> findAllHotelEntityByChainId(@Param("chain_id") Integer chainId);
+    @Query(value = "SELECT H.* FROM appdb.ehotel.hotel H " +
+            "INNER JOIN appdb.ehotel.hotel_chain HC ON H.chain_id = HC.chain_id " +
+            "WHERE  LOWER(H.hotel_name) LIKE :query OR LOWER(H.city) LIKE :query " +
+            "OR LOWER(H.hotel_address) LIKE :query OR LOWER(HC.chain_name) LIKE :query", nativeQuery = true)
+    Set<HotelEntity> searchHotel(@Param("query") String query);
     @Transactional @Modifying
     @Query(value ="DELETE FROM appdb.ehotel.hotel a WHERE a.hotel_id = :id", nativeQuery = true)
     void deleteHotelEntityById(@Param("id") Integer id);

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Set;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
@@ -53,12 +54,18 @@ public class HotelController {
         );
     }
     @GetMapping()
-    public ResponseEntity<AppHttpResponse> getAllHotels( HttpServletRequest request) {
-
+    public ResponseEntity<AppHttpResponse> getAllHotels(
+            @RequestParam(defaultValue = "", required = false) String query,  HttpServletRequest request) {
+        Set<HotelDTO> hotelDTOS = null;
+        if(query != null && !query.isEmpty()) {
+            hotelDTOS  = hotelService.searchHotel(query);
+        } else {
+            hotelDTOS = hotelService.getAllHotelEntity();
+        }
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
                         .data(Map.of(
-                                "hotel", hotelService.getAllHotelEntity()))
+                                "hotel", hotelDTOS))
                         .message("Hotel found")
                         .status(HttpStatus.OK)
                         .success(true)
