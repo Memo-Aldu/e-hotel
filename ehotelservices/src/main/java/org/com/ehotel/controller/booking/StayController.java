@@ -31,7 +31,7 @@ public class StayController {
     private final ResponseHandler responseHandler;
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppHttpResponse> getReservationById(
+    public ResponseEntity<AppHttpResponse> getStayById(
             @PathVariable Integer id, HttpServletRequest request) {
         if(id == null) {
             throw new BadRequestException("Invalid id");
@@ -49,7 +49,7 @@ public class StayController {
     }
 
     @GetMapping("/customer/{customerNAS}")
-    public ResponseEntity<AppHttpResponse> getReservationsByCustomerNAS(
+    public ResponseEntity<AppHttpResponse> getStayByCustomerNAS(
             @PathVariable String customerNAS, HttpServletRequest request) {
         if (customerNAS == null) {
             throw new BadRequestException("Invalid customer NAS");
@@ -67,7 +67,7 @@ public class StayController {
     }
 
     @GetMapping("/hotel/{hotelId}")
-    public ResponseEntity<AppHttpResponse> getReservationsByHotelId(
+    public ResponseEntity<AppHttpResponse> getStayByHotelId(
             @PathVariable Integer hotelId, HttpServletRequest request) {
         if(hotelId == null) {
             throw new BadRequestException("Invalid hotel id");
@@ -85,7 +85,7 @@ public class StayController {
     }
 
     @PostMapping
-    public ResponseEntity<AppHttpResponse> createReservation(
+    public ResponseEntity<AppHttpResponse> createStay(
             @RequestBody StayDTO stayDTO, HttpServletRequest request) {
         if(stayDTO == null) {
             throw new BadRequestException("Invalid stay");
@@ -103,7 +103,7 @@ public class StayController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<AppHttpResponse> updateReservation(
+    public ResponseEntity<AppHttpResponse> updateStay(
             @RequestBody StayDTO stayDTO, @PathVariable Integer id, HttpServletRequest request) {
         if(stayDTO == null || id == null) {
             throw new BadRequestException("Invalid stay");
@@ -121,7 +121,7 @@ public class StayController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<AppHttpResponse> deleteReservation(
+    public ResponseEntity<AppHttpResponse> deleteStay(
             @PathVariable Integer id, HttpServletRequest request) {
         if(id == null) {
             throw new BadRequestException("Invalid id");
