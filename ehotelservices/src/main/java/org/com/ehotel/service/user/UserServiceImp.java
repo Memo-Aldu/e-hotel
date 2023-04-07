@@ -47,6 +47,10 @@ public class UserServiceImp implements UserService {
             log.info("User role not provided, setting to default: " + AppRoles.ROLE_USER.name());
             userToSave.setUserRole(AppRoles.ROLE_USER);
         }
+        userToSave.setIsAccountNonExpired(true);
+        userToSave.setIsAccountNonLocked(true);
+        userToSave.setIsCredentialsNonExpired(true);
+        userToSave.setIsEnable(true);
         return appUserMapper.toDTO(userRepo.save(userToSave));
     }
 
