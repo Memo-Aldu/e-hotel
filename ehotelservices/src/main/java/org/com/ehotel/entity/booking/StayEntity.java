@@ -60,7 +60,7 @@ public class StayEntity {
     private Set<RoomEntity> rooms = new HashSet<>();
 
     //many to many with extension
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "extension_stay",
             joinColumns = @JoinColumn(name = "stay_id"),
             inverseJoinColumns = @JoinColumn(name = "extension_id"))
