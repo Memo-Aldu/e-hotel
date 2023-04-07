@@ -21,7 +21,7 @@ public interface RoomEntityRepository extends JpaRepository<RoomEntity, Integer>
             "INNER JOIN appdb.ehotel.hotel_chain C ON H.chain_id = C.chain_id WHERE T.price_per_night <= :price_per_night AND T.capacity = :capacity " +
             "AND LOWER(C.chain_name) LIKE CONCAT('%',:hotel_chain_name,'%') AND H.hotel_rating BETWEEN :hotel_rating_min AND :hotel_rating_max " +
             "AND LOWER(H.hotel_address) LIKE CONCAT('%',:hotel_address,'%') AND ((R.occupancy_status = 'UNOCCUPIED') OR " +
-            "(R.room_id IN (SELECT S.room_id FROM appdb.ehotel.stay S WHERE ((S.check_out_date < :check_in_date) OR (:check_out_date < S.check_in_date))" +
+            "(R.room_id IN (SELECT RS.room_id FROM appdb.ehotel.stay S INNER JOIN appdb.ehotel.room_stay RS ON S.stay_id = RS.stay_id WHERE ((S.check_out_date < :check_in_date) OR (:check_out_date < S.check_in_date))" +
             " ORDER BY S.check_out_date DESC)))" , nativeQuery = true)
     Set<RoomEntity> search(@Param("check_in_date") Date checkInDate , @Param("check_out_date") Date checkOutDate,
                            @Param("hotel_address") String hotelAddress, @Param("hotel_rating_min") short hotelRatingMin,
