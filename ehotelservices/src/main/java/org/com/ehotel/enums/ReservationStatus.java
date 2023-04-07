@@ -6,5 +6,5 @@ package org.com.ehotel.enums;
  * @created : 3/12/2023, Sunday
  **/
 public enum ReservationStatus {
-    PENDING, APPROVED, REJECTED, CANCELED, UPDATED
+    PENDING, APPROVED, REJECTED, CANCELED
 }
