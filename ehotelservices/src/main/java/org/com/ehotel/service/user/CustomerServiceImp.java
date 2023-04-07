@@ -3,7 +3,9 @@ package org.com.ehotel.service.user;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.com.ehotel.dto.user.CustomerDTO;
+import org.com.ehotel.entity.user.AppUserEntity;
 import org.com.ehotel.entity.user.CustomerEntity;
+import org.com.ehotel.enums.AppRoles;
 import org.com.ehotel.exceptions.AppEntityAlreadyExistException;
 import org.com.ehotel.exceptions.AppEntityNotFoundException;
 import org.com.ehotel.exceptions.BadRequestException;
@@ -50,9 +52,11 @@ public class CustomerServiceImp implements CustomerService {
         if(customerDTO.registrationDate() == null || customerDTO.registrationDate().toString().isEmpty()) {
             customerEntity.setRegistrationDate(java.sql.Date.valueOf(LocalDate.now()));
         }
-        if(!appUserRepo.existsByEmail(customerDTO.email())) {
-            throw new AppEntityNotFoundException("App user not found with email: " + customerDTO.email());
-        }
+        AppUserEntity appUserEntity = appUserRepo.findById(customerDTO.email())
+                .orElseThrow(() -> new AppEntityNotFoundException("App user not found with email: " + customerDTO.email()));
+        // set the app user role to customer
+        appUserEntity.setUserRole(AppRoles.ROLE_CUSTOMER);
+        customerEntity.setAppUser(appUserEntity);
         return customerMapper.toDTO(customerRepo.save(customerEntity));
     }
 

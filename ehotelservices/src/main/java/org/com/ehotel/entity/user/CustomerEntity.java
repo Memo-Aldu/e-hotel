@@ -26,7 +26,7 @@ public class CustomerEntity {
     @Column(name = "customer_nas", unique = true)
     private String NAS;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "email", name = "customer_email", nullable = false)
     private AppUserEntity appUser;
 

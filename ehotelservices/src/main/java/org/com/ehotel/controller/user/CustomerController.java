@@ -3,6 +3,7 @@ package org.com.ehotel.controller.user;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.com.ehotel.dto.user.CustomerDTO;
+import org.com.ehotel.enums.AppRoles;
 import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.helper.AppHttpResponse;
 import org.com.ehotel.helper.ResponseHandler;
@@ -56,10 +57,15 @@ public class CustomerController {
         if(customer == null) {
             throw new BadRequestException("Customer is required");
         }
+        CustomerDTO customerDTO = customerService.save(customer);
+        Map<String, Object> data = Map.of
+                ("customer", customerDTO,
+                        authService.getAccessTokenName(), authService.createToken(customerDTO.email(), AppRoles.ROLE_CUSTOMER),
+                        authService.getRefreshTokenName(), authService.createRefreshToken(customerDTO.email())
+                );
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
-                        .data(Map.of(
-                                "customer", customerService.save(customer)))
+                        .data(data)
                         .message("Customer created")
                         .status(HttpStatus.CREATED)
                         .success(true)

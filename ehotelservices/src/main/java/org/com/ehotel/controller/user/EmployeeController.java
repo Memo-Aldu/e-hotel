@@ -2,7 +2,9 @@ package org.com.ehotel.controller.user;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.com.ehotel.dto.user.CustomerDTO;
 import org.com.ehotel.dto.user.EmployeeDTO;
+import org.com.ehotel.enums.AppRoles;
 import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.helper.AppHttpResponse;
 import org.com.ehotel.helper.ResponseHandler;
@@ -56,9 +58,15 @@ public class EmployeeController {
         if(employeeDTO == null) {
             throw new BadRequestException("Employee is required");
         }
+        EmployeeDTO employee = employeeService.save(employeeDTO);
+        Map<String, Object> data = Map.of
+                ("employee", employee,
+                        authService.getAccessTokenName(), authService.createToken(employee.email(), AppRoles.ROLE_EMPLOYEE),
+                        authService.getRefreshTokenName(), authService.createRefreshToken(employee.email())
+                );
         return responseHandler.httpResponse(
                 AppHttpResponse.builder()
-                        .data(Map.of("employee", employeeService.save(employeeDTO)))
+                        .data(data)
                         .message("Employee created")
                         .status(HttpStatus.CREATED)
                         .success(true)

@@ -3,7 +3,9 @@ package org.com.ehotel.service.user;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.com.ehotel.dto.user.EmployeeDTO;
+import org.com.ehotel.entity.user.AppUserEntity;
 import org.com.ehotel.entity.user.EmployeeEntity;
+import org.com.ehotel.enums.AppRoles;
 import org.com.ehotel.exceptions.AppEntityAlreadyExistException;
 import org.com.ehotel.exceptions.AppEntityNotFoundException;
 import org.com.ehotel.exceptions.BadRequestException;
@@ -50,9 +52,10 @@ public class EmployeeServiceImp implements EmployeeService {
         if(employeeDTO.registrationDate() == null || employeeDTO.registrationDate().toString().isEmpty()) {
             employeeEntity.setRegistrationDate(java.sql.Date.valueOf(LocalDate.now()));
         }
-        if(!appUserRepo.existsByEmail(employeeDTO.email())) {
-            throw new AppEntityNotFoundException("App user not found with email: " + employeeDTO.email());
-        }
+        AppUserEntity appUserEntity = appUserRepo.findAppUserEntityByEmail(employeeDTO.email())
+                .orElseThrow(() -> new AppEntityNotFoundException("AppUser not found with email: " + employeeDTO.email()));
+        appUserEntity.setUserRole(AppRoles.ROLE_EMPLOYEE);
+        employeeEntity.setAppUser(appUserEntity);
         return employeeMapper.toDTO(employeeRepo.save(employeeEntity));
     }
     // TODO: Update email, role, department

@@ -6,6 +6,7 @@ import org.com.ehotel.configuration.security.JWTConfig;
 import org.com.ehotel.dto.auth.AuthenticationRequestDTO;
 import org.com.ehotel.configuration.security.JWTUtils;
 import org.com.ehotel.dto.user.AppUserDTO;
+import org.com.ehotel.enums.AppRoles;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -49,8 +50,20 @@ public class JwtAuthenticationServiceImp implements JwtAuthenticationService {
     }
 
     @Override
+    public String createToken(String subject, AppRoles role) {
+        return jwtUtils.createToken(new AppUserDTO(subject, null, role,null,
+                null, true, true, true, true));
+    }
+
+    @Override
     public String createRefreshToken(AppUserDTO user) {
         return jwtUtils.createRefreshToken(user);
+    }
+
+    @Override
+    public String createRefreshToken(String subject) {
+        return jwtUtils.createRefreshToken(new AppUserDTO(subject, null, AppRoles.ROLE_USER,null,
+                null, true, true, true, true));
     }
 
     @Override
