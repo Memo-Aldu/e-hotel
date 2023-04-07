@@ -35,16 +35,10 @@ public class ExtensionEntity {
     private RoomEntity room;
 
     // many to many with reservation
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "extension_reservation",
-            joinColumns = @JoinColumn(name = "extension_id"),
-            inverseJoinColumns = @JoinColumn(name = "reservation_id"))
+    @ManyToMany(mappedBy = "reservedExtensions", fetch = FetchType.LAZY)
     private Set<ReservationEntity> reservations = new HashSet<>();
 
     // many to many with stay
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "extension_stay",
-            joinColumns = @JoinColumn(name = "extension_id"),
-            inverseJoinColumns = @JoinColumn(name = "stay_id"))
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "requestedExtensions")
     private Set<StayEntity> stays = new HashSet<>();
 }
