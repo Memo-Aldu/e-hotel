@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.com.ehotel.configuration.EndpointConfig;
 import org.com.ehotel.enums.AppRoles;
+import org.com.ehotel.enums.Endpoints;
 import org.com.ehotel.service.user.UserService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -33,20 +35,29 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf().disable()
-            .authorizeRequests()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeRequests()
+                // open endpoints for anyone
                 .antMatchers(endpoints.getOpenEndpoints()).permitAll()
+                .antMatchers(HttpMethod.GET,Endpoints.ROOM.getPath()+"/**").permitAll()
+                .antMatchers(HttpMethod.GET,Endpoints.HOTEL.getPath()+"/**").permitAll()
+                // endpoints for user
                 .antMatchers(endpoints.getUserEndpoints())
                     .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
+                .antMatchers(HttpMethod.POST, Endpoints.CUSTOMER.getPath()+"/**", Endpoints.EMPLOYEE.getPath()+"/**")
+                    .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
+                .antMatchers(HttpMethod.GET, Endpoints.CHAIN_HOTEL.getPath() + "/**", Endpoints.DEPARTMENT.getPath() + "/**", Endpoints.ROLE.getPath() + "/**")
+                    .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
+                // endpoints for customer
                 .antMatchers(endpoints.getCustomerEndpoints())
-                    .hasAnyAuthority(AppRoles.ROLE_CUSTOMER.name())
+                    .hasAnyAuthority(AppRoles.ROLE_CUSTOMER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_ADMIN.name())
+                // endpoints for employee
                 .antMatchers(endpoints.getEmployeeEndpoints())
                     .hasAnyAuthority(AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_ADMIN.name())
+                // endpoints for admin TODO: Implement admin endpoints
                 .antMatchers(endpoints.getAdminEndpoints())
                     .hasAnyAuthority(AppRoles.ROLE_ADMIN.name())
-            .anyRequest()
-            .authenticated()
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .anyRequest().authenticated()
             .and()
             .authenticationProvider(daoAuthenticationProvider())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
