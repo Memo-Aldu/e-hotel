@@ -26,7 +26,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 4/6/2023, Thursday
  **/
-@RestController @AllArgsConstructor
+@RestController @AllArgsConstructor @CrossOrigin("*")
 @RequestMapping("/api/v1/employee") @Slf4j
 public class EmployeeController {
     private final EmployeeService employeeService;

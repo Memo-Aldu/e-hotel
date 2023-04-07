@@ -25,7 +25,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 4/5/2023, Wednesday
  **/
-@RestController @Slf4j
+@RestController @Slf4j @CrossOrigin("*")
 @AllArgsConstructor @RequestMapping("/api/v1/customer")
 // This Controller uses the jwt subject to identify the customer
 public class CustomerController {

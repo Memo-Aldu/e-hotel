@@ -25,7 +25,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 3/29/2023, Wednesday
  **/
-@AllArgsConstructor @RestController
+@AllArgsConstructor @RestController @CrossOrigin("*")
 @Slf4j @RequestMapping("/api/v1/room-type")
 public class RoomTypeController {
     private final RoomTypeService roomTypeService;

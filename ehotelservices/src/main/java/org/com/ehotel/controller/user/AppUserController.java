@@ -26,7 +26,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @created : 3/15/2023, Wednesday
  **/
 @Slf4j @AllArgsConstructor @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/user") @CrossOrigin("*")
 public class AppUserController {
     private final UserService userService;
     private final JwtAuthenticationService authService;
