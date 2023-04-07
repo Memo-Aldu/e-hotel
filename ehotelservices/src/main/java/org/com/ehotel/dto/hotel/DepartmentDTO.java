@@ -6,5 +6,5 @@ package org.com.ehotel.dto.hotel;
  * @created : 3/13/2023, Monday
  **/
 public record DepartmentDTO(
-        Integer id, String name, HotelDTO hotel, Integer managerId) {
+        Integer id, String name, HotelDTO hotel, String managerNAS) {
 }
