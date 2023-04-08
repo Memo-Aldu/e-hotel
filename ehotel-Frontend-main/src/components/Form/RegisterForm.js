@@ -8,9 +8,8 @@ import { Link } from "react-router-dom";
 
 const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/user/register';
 
-const Register = () => {
+const RegisterForm = () => {
     const emailRef = useRef();
     const errRef = useRef();
 
@@ -189,4 +188,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default RegisterForm

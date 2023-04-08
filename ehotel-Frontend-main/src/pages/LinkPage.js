@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-
+// We don't need this page
 const LinkPage = () => {
     return (
         <section>

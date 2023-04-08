@@ -1,11 +1,11 @@
 import {useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {setCredentials} from './authSlice'
-import { useLoginMutation } from './authApiSlice'
+import {setCredentials} from '../../features/auth/authSlice'
+import { useLoginMutation } from '../../features/auth/authApiSlice'
 import { Link } from 'react-router-dom'
 
-const Login = () => {
+const LoginForm = () => {
     const emailRef = useRef();
     const errRef = useRef();
     const [email, setEmail] = useState('')
@@ -84,13 +84,13 @@ const Login = () => {
                 <button>Sign In</button>
             </form>
             <p>
-                Create an account<br />
+                Create an account
                 <span className="line">
-                    <Link to="/user/register">Sign Up</Link>
+                    <Link to="/register">Sign Up</Link>
                 </span>
             </p>
         </section>)
   return content;
 }
 
-export default Login
+export default LoginForm

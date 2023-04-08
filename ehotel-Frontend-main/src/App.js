@@ -1,12 +1,12 @@
-import Register from './pages/auth/Register';
-import Login from "./features/auth/Login";
+import Register from './components/Form/RegisterForm';
+import Login from "./components/Form/LoginForm";
 import Home from './pages/home/Home';
 import Layout from './components/Layout';
 import Employee from './features/auth/Employee';
-import Missing from './components/Missing';
-import Unauthorized from './components/Unauthorized';
+import Missing from './pages/auth/Missing';
+import Unauthorized from './pages/auth/Unauthorized';
 import Lounge from './pages/employee/Lounge';
-import LinkPage from './components/LinkPage';
+import LinkPage from './pages/LinkPage';
 import RequireAuth from './features/auth/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 import roles from "./roles"
