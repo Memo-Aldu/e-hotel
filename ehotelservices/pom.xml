@@ -58,6 +58,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!-- database -->
         <dependency>
@@ -99,13 +100,30 @@
             <version>4.1.0</version>
         </dependency>
     </dependencies>
-
+    <!-- define the packaging type -->
+    <packaging>jar</packaging>
     <build>
+        <finalName>ehotelservices-1.0-SNAPSHOT</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.maven.plugin.version}</version>
+                <configuration>
+                    <mainClass>org.com.ehotel.EHotelApplication</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!-- mapstruct required for annotation-->
             <plugin>
