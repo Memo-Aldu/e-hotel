@@ -29,8 +29,14 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 2023-03-21, Tuesday
  **/
-@RestController @Slf4j @CrossOrigin("*")
+@RestController @Slf4j
 @AllArgsConstructor @RequestMapping("/api/v1/auth")
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT}
+)
 public class AuthenticationController {
     private ResponseHandler responseHandler;
     private final JwtAuthenticationService authService;
