@@ -33,10 +33,10 @@ const LoginForm = () => {
             if(result.data.user.userRole === 'ROLE_EMPLOYEE') {
                 console.log('employee')
                 navigate('/employee')
-            } else if (result.data.user.userRole === 'ROLE_CUSTOMER') {
+            } else if(result.data.user.userRole === 'ROLE_CUSTOMER') { //APP_USER 
                 navigate('/') // navigate to customer page
             } else {
-                navigate('/employee') // navigate to home page
+                navigate('/') // navigate to home page
             }
         } catch (err) {
             if (!err?.status) {

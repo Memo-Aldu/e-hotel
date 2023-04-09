@@ -47,3 +47,11 @@ body {
     transform: rotate(360deg);
   }
 }
+
+
+input {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: none;
+}

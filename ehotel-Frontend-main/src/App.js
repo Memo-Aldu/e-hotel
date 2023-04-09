@@ -10,6 +10,7 @@ import LinkPage from './pages/LinkPage';
 import RequireAuth from './features/auth/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 import roles from "./roles"
+import styles from './App.css'
 
 
 function App() {
