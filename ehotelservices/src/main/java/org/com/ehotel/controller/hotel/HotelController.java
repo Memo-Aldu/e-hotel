@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
@@ -62,10 +63,16 @@ public class HotelController {
     }
     @GetMapping()
     public ResponseEntity<AppHttpResponse> getAllHotels(
-            @RequestBody(required = false) HotelSearchDTO searchDTO
-            ,  HttpServletRequest request) {
+            @RequestParam(required = false, defaultValue = "") String query,
+            @RequestParam(required = false, defaultValue = "") Date checkIn,
+            @RequestParam(required = false, defaultValue = "") Date checkOut,
+            @RequestParam(required = false) Integer adults,
+            @RequestParam(required = false) Integer children,  HttpServletRequest request) {
+        HotelSearchDTO searchDTO = new HotelSearchDTO(query, checkIn, checkOut,
+                adults == null ? 1 : adults,
+                children == null ? 0 : children);
         Set<HotelDTO> hotelDTOS = null;
-        if(searchDTO != null) {
+        if(query != null && !query.isEmpty()) {
             hotelDTOS  = hotelService.searchHotel(searchDTO);
         } else {
             hotelDTOS = hotelService.getAllHotelEntity();
