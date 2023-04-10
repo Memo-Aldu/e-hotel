@@ -3,6 +3,7 @@ package org.com.ehotel.service.hotel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.com.ehotel.dto.hotel.HotelDTO;
+import org.com.ehotel.dto.hotel.HotelSearchDTO;
 import org.com.ehotel.entity.hotel.HotelEntity;
 import org.com.ehotel.exceptions.AppEntityAlreadyExistException;
 import org.com.ehotel.exceptions.AppEntityNotFoundException;
@@ -48,10 +49,32 @@ public class HotelServiceImp implements HotelService {
     }
 
     @Override
-    public Set<HotelDTO> searchHotel(String query) {
-        log.info("Searching hotels by query: " + query);
+    public Set<HotelDTO> searchHotel(HotelSearchDTO searchDTO) {
+        log.info("Searching hotels by searchDTO: " + searchDTO);
+        if(searchDTO.query() == null || searchDTO.query().isEmpty()) {
+            throw new BadRequestException("Invalid query");
+        }
+        if(searchDTO.checkIn() == null || searchDTO.checkOut() == null) {
+            throw new BadRequestException("Invalid check in or check out date");
+        }
+        if(searchDTO.checkIn().after(searchDTO.checkOut())) {
+            throw new BadRequestException("Check in date must be before check out date");
+        }
+        if(searchDTO.checkIn().before(new java.util.Date())) {
+            throw new BadRequestException("Check in date must be after today");
+        }
+        if(searchDTO.adults() == null || searchDTO.adults() < 1) {
+            throw new BadRequestException("Invalid number of adults");
+        }
+        if(searchDTO.children() < 0) {
+            throw new BadRequestException("Invalid number of children");
+        }
         return hotelMapper.toDTOs(
-                hotelRepository.searchHotel(("%" + query + "%").toLowerCase())
+                hotelRepository.searchHotel(
+                        ("%" + searchDTO.query() + "%").toLowerCase(),
+                        searchDTO.checkIn(),
+                        searchDTO.checkOut(),
+                        searchDTO.adults() + searchDTO.children())
         );
     }
 

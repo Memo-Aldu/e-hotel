@@ -3,6 +3,7 @@ package org.com.ehotel.controller.hotel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.com.ehotel.dto.hotel.HotelDTO;
+import org.com.ehotel.dto.hotel.HotelSearchDTO;
 import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.helper.AppHttpResponse;
 import org.com.ehotel.helper.ResponseHandler;
@@ -61,10 +62,11 @@ public class HotelController {
     }
     @GetMapping()
     public ResponseEntity<AppHttpResponse> getAllHotels(
-            @RequestParam(defaultValue = "", required = false) String query,  HttpServletRequest request) {
+            @RequestBody(required = false) HotelSearchDTO searchDTO
+            ,  HttpServletRequest request) {
         Set<HotelDTO> hotelDTOS = null;
-        if(query != null && !query.isEmpty()) {
-            hotelDTOS  = hotelService.searchHotel(query);
+        if(searchDTO != null) {
+            hotelDTOS  = hotelService.searchHotel(searchDTO);
         } else {
             hotelDTOS = hotelService.getAllHotelEntity();
         }
