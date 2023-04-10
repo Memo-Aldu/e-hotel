@@ -93,7 +93,7 @@ public class HotelController {
     @PostMapping()
     public ResponseEntity<AppHttpResponse> createHotel(
             @RequestBody HotelDTO hotelDTO, HttpServletRequest request) {
-        if(hotelDTO == null || !hotelDTO.isValidDto()) {
+        if(hotelDTO == null) {
             throw new BadRequestException("Invalid hotel");
         }
         return responseHandler.httpResponse(
@@ -112,7 +112,7 @@ public class HotelController {
     public ResponseEntity<AppHttpResponse> updateHotel(
             @RequestBody HotelDTO hotelDTO,
             @PathVariable Integer id, HttpServletRequest request) {
-        if(hotelDTO == null || !hotelDTO.isValidDto()) {
+        if(hotelDTO == null) {
             throw new BadRequestException("Invalid hoetl");
         }
         if(id == null) {

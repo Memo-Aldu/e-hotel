@@ -49,6 +49,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
            // get the authorization header
            log.info("Requested endpoint private: {} methode {}", request.getServletPath(), request.getMethod());
            final String authorizationHeader = request.getHeader(AUTHORIZATION);
+           log.info("Authorization header: {}", authorizationHeader);
            response.setHeader(AUTHORIZATION, authorizationHeader);
            // check if the authorization header is not null and starts with Bearer
            if (authorizationHeader != null && jwtUtils.tokenStartsWithPrefix(authorizationHeader)) {

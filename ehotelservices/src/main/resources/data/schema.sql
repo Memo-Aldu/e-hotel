@@ -1,6 +1,7 @@
 set search_path TO ehotel;
 
 -- CUSTOM DOMAIN
+
 CREATE EXTENSION citext; --DONE
 CREATE DOMAIN email AS citext --DONE
     CHECK ( value ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$' );
@@ -15,7 +16,6 @@ CREATE CAST (varchar AS app_role) WITH INOUT AS IMPLICIT;
 CREATE CAST (varchar AS reservation_status) WITH INOUT AS IMPLICIT;
 CREATE CAST (varchar AS room_status) WITH INOUT AS IMPLICIT;
 CREATE CAST (varchar AS payment_status) WITH INOUT AS IMPLICIT;
-
 
 -- ENTITIES
 CREATE TABLE app_user ( --DONE
@@ -139,7 +139,7 @@ CREATE TABLE room( --DONE
     foreign key (hotel_ID) references hotel (hotel_ID)
      ON DELETE CASCADE,
     foreign key (room_type_ID) references room_type (type_ID)
-     ON DELETE RESTRICT --cannot delete room_type if rooms exist with that type
+     ON DELETE SET NULL
 );
 
 CREATE TABLE incident( --DONE
@@ -200,12 +200,12 @@ CREATE TABLE reservation( --DONE
 
 -- tables M:M
 CREATE TABLE extension_stay( --DONE
-    stay_ID BIGSERIAL NOT NULL, -- fk
-    extension_ID BIGSERIAL NOT NULL,
+    stay_ID BIGSERIAL, -- fk
+    extension_ID BIGSERIAL,
     foreign key (stay_ID) references stay (stay_ID)
        ON DELETE CASCADE,
     foreign key (extension_ID) references extension(extension_ID)
-       ON DELETE CASCADE
+       ON DELETE SET NULL
 );
 
 CREATE TABLE extension_reservation( --DONE
@@ -214,6 +214,7 @@ CREATE TABLE extension_reservation( --DONE
     foreign key (reservation_ID) references reservation(reservation_ID)
       ON DELETE CASCADE,
     foreign key (extension_ID) references extension (extension_ID)
+      ON DELETE SET NULL
 );
 
 CREATE TABLE reviews( --DONE
@@ -245,6 +246,13 @@ CREATE TABLE room_stay( --DONE
     foreign key (stay_ID) references stay(stay_ID)
       ON DELETE CASCADE
 );
+
+ALTER TABLE employee ALTER COLUMN employee_role DROP NOT NULL;
+ALTER TABLE employee ALTER COLUMN employee_dept DROP NOT NULL;
+ALTER TABLE room_type ALTER COLUMN view_id DROP NOT NULL;
+ALTER TABLE room ALTER COLUMN room_type_id DROP NOT NULL;
+ALTER TABLE extension_reservation ALTER COLUMN extension_ID DROP NOT NULL;
+ALTER TABLE extension_stay ALTER COLUMN extension_ID DROP NOT NULL;
 
 --Views
 CREATE VIEW total_capacity_per_hotel AS

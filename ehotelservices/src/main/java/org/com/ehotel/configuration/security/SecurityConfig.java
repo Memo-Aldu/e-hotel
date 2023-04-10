@@ -47,9 +47,9 @@ public class SecurityConfig {
                     .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
                 .antMatchers(HttpMethod.POST, Endpoints.CUSTOMER.getPath()+"/**", Endpoints.EMPLOYEE.getPath()+"/**")
                     .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
-                .antMatchers(HttpMethod.GET, Endpoints.CHAIN_HOTEL.getPath() + "/**", Endpoints.DEPARTMENT.getPath() + "/**", Endpoints.ROLE.getPath() + "/**")
+                .antMatchers(HttpMethod.GET, Endpoints.DEPARTMENT.getPath() + "/**", Endpoints.ROLE.getPath() + "/**")
                     .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
-                .antMatchers(HttpMethod.OPTIONS, Endpoints.CHAIN_HOTEL.getPath() + "/**", Endpoints.DEPARTMENT.getPath() + "/**", Endpoints.ROLE.getPath() + "/**")
+                .antMatchers(HttpMethod.OPTIONS, Endpoints.DEPARTMENT.getPath() + "/**", Endpoints.ROLE.getPath() + "/**")
                 .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
                 // endpoints for customer
                 .antMatchers(endpoints.getCustomerEndpoints())
