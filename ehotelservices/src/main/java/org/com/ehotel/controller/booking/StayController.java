@@ -24,8 +24,15 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 4/7/2023, Friday
  **/
-@RestController @CrossOrigin("*") @Slf4j
+@RestController @Slf4j
 @AllArgsConstructor @RequestMapping("/api/v1/stay")
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class StayController {
     private final StayService stayService;
     private final ResponseHandler responseHandler;

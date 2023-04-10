@@ -19,7 +19,7 @@ export const AppNavbar = () => {
             <Container className="mx-auto my-1">
                 <Navbar.Brand href="/">EHotel</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav">
-                    <span className=""><i class={expanded ? "fa-solid fa-x" : "fa-solid fa-bars"}></i></span>
+                    <span className=""><i className={expanded ? "fa-solid fa-x" : "fa-solid fa-bars"}></i></span>
                 </Navbar.Toggle>
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">

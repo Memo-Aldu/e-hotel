@@ -1,21 +1,17 @@
 import { useLocation, Outlet, Navigate} from "react-router-dom"
 import {useSelector} from 'react-redux'
-import { selectCurrentToken } from "./authSlice"
+import { selectCurrentToken, selectCurrentUser } from "./authSlice"
 
 
 const RequireAuth = ({ allowedRoles }) => {
-    const {user, loading } = useSelector(state => state.auth);
-    console.log("user", user, "loading", loading)
+    const user = useSelector(selectCurrentUser)
     const token = useSelector(selectCurrentToken)
     const location = useLocation()
 
-    if (loading) {
-        return <p className="container">Checking auth..</p>;
-    }
     
     const userHasRequiredRole = user && allowedRoles.includes(user.userRole) ? true : false;
 
-    if (!userHasRequiredRole && !loading && user) {
+    if (!userHasRequiredRole) {
         console.log("not authorized")
         return <Navigate to="/unauthorized" state={{ from: location }} replace />; // build your won access denied page (sth like 404)
     }

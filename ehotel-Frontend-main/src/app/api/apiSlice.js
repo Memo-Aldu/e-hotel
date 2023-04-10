@@ -12,24 +12,24 @@ const baseQuery = fetchBaseQuery({
         }
 
         headers.set('Content-Type', 'application/json');
-        headers.set('Access-Control-Allow-Origin', 'localhost:3000');
-        headers.set('Access-Control-Allow-Methods', 'GET, PUT,POST ,DELETE, PATCH, OPTIONS');
-        headers.set("Access-Control-Allow-Credentials", "true");
         return headers;
     }
 });
 
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions);
-    if (result?.error?.originalStatus === 401) {
+    const refreshToken = api.getState().auth.refreshToken;
+    if (result?.error?.originalStatus === 401 && refreshToken) {
         console.log('sending refresh request');
-        //send refresh token
-        const refreshResult = await baseQuery("/auth/token/refresh", api, extraOptions);
-        console.log('refresh result: ' + JSON.stringify(refreshResult));
-        if(refreshResult?.data?.data) {
+        extraOptions.headers.set('Authorization', `Bearer ${refreshToken}`);
+        const response = await baseQuery("/auth/token/refresh", api, extraOptions);
+        
+        console.log('refresh result: ' + JSON.stringify(response));
+        if(response?.data?.data) {
             const user = api.getState().auth.user;
             // store the new token
-            api.dispatch(setCredentials({user, token: refreshResult.data.data.access_token}));
+            api.dispatch(setCredentials({user, token: response.data.data.access_token,
+                 refresh_Token: response.data.data.refresh_token}));
             // retry the original request
             result = await baseQuery(args, api, extraOptions);
         } else {

@@ -25,8 +25,15 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 4/7/2023, Friday
  **/
-@RestController @CrossOrigin(origins = "*") @Slf4j
+@RestController @Slf4j
 @AllArgsConstructor @RequestMapping("/api/v1/role")
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class RoleController {
     private final RoleService roleService;
     private final ResponseHandler responseHandler;

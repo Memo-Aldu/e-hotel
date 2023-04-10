@@ -27,7 +27,8 @@ const LoginForm = () => {
         e.preventDefault()
         try {
             const result = await login({email, password}).unwrap()
-            dispatch(setCredentials({user: result.data.user, accessToken: result.data.access_token}))
+            dispatch(setCredentials({user: result.data.user, accessToken: result.data.access_token, 
+                refreshToken: result.data.refresh_token}))
             setEmail('');
             setPassword('');
             if(result.data.user.userRole === 'ROLE_EMPLOYEE') {

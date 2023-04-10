@@ -28,7 +28,13 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  **/
 @AllArgsConstructor @Slf4j
 @RestController @RequestMapping("/api/v1/hotel")
-@CrossOrigin("*")
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class HotelController {
     private final HotelService hotelService;
     private final ResponseHandler responseHandler;
