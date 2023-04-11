@@ -66,11 +66,14 @@ public class HotelController {
             @RequestParam(required = false, defaultValue = "") String query,
             @RequestParam(required = false, defaultValue = "") Date checkIn,
             @RequestParam(required = false, defaultValue = "") Date checkOut,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
             @RequestParam(required = false) Integer adults,
             @RequestParam(required = false) Integer children,  HttpServletRequest request) {
         HotelSearchDTO searchDTO = new HotelSearchDTO(query, checkIn, checkOut,
                 adults == null ? 1 : adults,
-                children == null ? 0 : children);
+                children == null ? 0 : children,
+                minPrice == null ? 0.0 : minPrice, maxPrice == null ? 100000.0 : maxPrice);
         Set<HotelDTO> hotelDTOS = null;
         if(query != null && !query.isEmpty()) {
             hotelDTOS  = hotelService.searchHotel(searchDTO);

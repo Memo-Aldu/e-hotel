@@ -9,6 +9,6 @@ import java.sql.Date;
  **/
 public record HotelSearchDTO(
         String query, Date checkIn, Date checkOut,
-        Integer adults, Integer children
+        Integer adults, Integer children, Double minPrice, Double maxPrice
 ) {
 }

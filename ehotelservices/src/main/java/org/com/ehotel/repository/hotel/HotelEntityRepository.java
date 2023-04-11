@@ -26,10 +26,12 @@ public interface HotelEntityRepository extends JpaRepository<HotelEntity, Intege
             "INNER JOIN appdb.ehotel.room_type T ON R.room_type_id = T.type_id " +
             "WHERE  (LOWER(H.hotel_name) LIKE :query OR LOWER(H.city) LIKE :query " +
             "OR LOWER(H.hotel_address) LIKE :query OR LOWER(HC.chain_name) LIKE :query) " +
-            "AND T.capacity >= :capacity AND ((R.occupancy_status = 'UNOCCUPIED') OR " +
+            "AND T.capacity >= :capacity AND (T.price_per_night BETWEEN :roomMinPrice AND :roomMaxPrice)  AND ((R.occupancy_status = 'UNOCCUPIED') OR " +
             "(R.room_id IN (SELECT RS.room_id FROM appdb.ehotel.stay S INNER JOIN appdb.ehotel.room_stay RS ON S.stay_id = RS.stay_id " +
             "WHERE ((S.check_out_date < :checkIn) OR (:checkOut < S.check_in_date))))) ORDER BY H.hotel_rating DESC" , nativeQuery = true)
-    Set<HotelEntity> searchHotel(@Param("query") String query, @Param("checkIn") Date checkIn, @Param("checkOut") Date checkOut, @Param("capacity") Integer capacity);
+    Set<HotelEntity> searchHotel(@Param("query") String query, @Param("checkIn") Date checkIn,
+                                 @Param("checkOut") Date checkOut, @Param("capacity") Integer capacity,
+                                 @Param("roomMinPrice") Double roomMinPrice, @Param("roomMaxPrice") Double roomMaxPrice);
     @Transactional @Modifying
     @Query(value ="DELETE FROM appdb.ehotel.hotel a WHERE a.hotel_id = :id", nativeQuery = true)
     void deleteHotelEntityById(@Param("id") Integer id);

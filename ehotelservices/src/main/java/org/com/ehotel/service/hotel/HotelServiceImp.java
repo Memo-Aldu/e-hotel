@@ -69,12 +69,18 @@ public class HotelServiceImp implements HotelService {
         if(searchDTO.children() < 0) {
             throw new BadRequestException("Invalid number of children");
         }
+        if(searchDTO.minPrice() != null && searchDTO.maxPrice() != null) {
+            if(searchDTO.minPrice() > searchDTO.maxPrice()) {
+                throw new BadRequestException("Min price must be less than max price");
+            }
+        }
         return hotelMapper.toDTOs(
                 hotelRepository.searchHotel(
                         ("%" + searchDTO.query() + "%").toLowerCase(),
                         searchDTO.checkIn(),
                         searchDTO.checkOut(),
-                        searchDTO.adults() + searchDTO.children())
+                        searchDTO.adults() + searchDTO.children(),
+                        searchDTO.minPrice(), searchDTO.maxPrice())
         );
     }
 
