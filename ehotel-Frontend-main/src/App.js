@@ -11,6 +11,7 @@ import RequireAuth from './features/auth/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 import roles from "./roles"
 import styles from './App.css'
+import SearchPage from './pages/search/SearchPage';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="linkpage" element={<LinkPage />} />
+          <Route path="search" element={<SearchPage />} />
           <Route path="unauthorized" element={<Unauthorized />} />
           <Route path="lounge" element={<Lounge />} />
           {/* protected routes */}

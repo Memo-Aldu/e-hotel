@@ -12,7 +12,7 @@ export const hotelApiSlice = apiSlice.injectEndpoints({
             query: (searchParams) => ({
                 url: "/hotel",
                 method: "GET",
-                body: { ...searchParams},
+                params: { ...searchParams},
             }),
         }),
         addHotel: builder.mutation({
