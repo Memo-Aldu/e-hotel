@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
 import { Routes, Route } from 'react-router-dom';
 import { AppNavbar } from "../../Navbar/Navbar"
-
+import { useNavigate } from "react-router-dom";
 import { StayForm } from "../../Form/StayForm"
 
 const AddStay = () => {
+    const navigate = useNavigate();
     return (
         
         <>
@@ -14,8 +15,9 @@ const AddStay = () => {
                 <br />
                 <StayForm/>
                 <div className="flexGrow">
-                    <Link to="/">Home</Link>
-                    <Link to="/lounge">Home</Link>
+                    <div className="flexGrow">
+                        <button className="btn btn-primary m-3 pl-1" onClick={() => navigate(-1)}>Back</button>
+                    </div>
                 </div>
             </section>
         </>

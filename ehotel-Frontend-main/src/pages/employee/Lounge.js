@@ -16,9 +16,6 @@ const Lounge = () => {
                 <Link  className="btn btn-primary m-3 pl-1" to="/addEmployee">Employee</Link>
                 <Link  className="btn btn-primary m-3 pl-1" to="/addCustomer">Customer</Link>
                 <Link  className="btn btn-primary m-3 pl-1" to="/addRoom">Room</Link>
-                    </div>
-                <div className="flexGrow">
-                    <Link to="/">Home</Link>
                 </div>
             </section>
         </>

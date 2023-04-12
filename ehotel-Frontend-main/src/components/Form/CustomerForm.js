@@ -4,9 +4,9 @@ import { useAddCustomerMutation } from '../../features/customer/customerApiSlice
 import { Link } from 'react-router-dom'
 
 export const CustomerForm = () => {
+    const navigate = useNavigate()
     const [errMsg, setErrMsg] = useState('')
     const errRef = useRef();
-    const navigate = useNavigate()
 
     const nameRef = useRef();
     const [name, setName] = useState('')
@@ -245,12 +245,9 @@ export const CustomerForm = () => {
                 </div>
                 <button>Add</button>
             </form>
-            <p>
-                Return
-                <span className="line">
-                    <Link to="/">Back</Link>
-                </span>
-            </p>
+            <div className="flexGrow">
+                    <button className="btn btn-primary m-3 pl-1" onClick={() => navigate(-1)}>Back</button>
+            </div>
         </section>)
   return content;
 }

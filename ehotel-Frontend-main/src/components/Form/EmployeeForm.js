@@ -330,12 +330,9 @@ export const EmployeeForm = () => {
                 </div>
                 <button>Add</button>
             </form>
-            <p>
-                Return
-                <span className="line">
-                    <Link to="/">Back</Link>
-                </span>
-            </p>
+            <div className="flexGrow">
+                    <button className="btn btn-primary m-3 pl-1" onClick={() => navigate(-1)}>Back</button>
+            </div>
         </section>)
   return content;
 }

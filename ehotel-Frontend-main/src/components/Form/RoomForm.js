@@ -117,12 +117,6 @@ export const RoomForm = () => {
                 </div>
                 <button>Add</button>
             </form>
-            <p>
-                Return
-                <span className="line">
-                    <Link to="/">Back</Link>
-                </span>
-            </p>
         </section>)
   return content;
     }

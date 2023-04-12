@@ -13,10 +13,6 @@ const AddRoom = () => {
             <section>
                 <br />
                 <RoomForm/>
-                <div className="flexGrow">
-                    <Link to="/">Home</Link>
-                    <Link to="/lounge">Home</Link>
-                </div>
             </section>
         </>
     )

@@ -13,10 +13,6 @@ export const addCustomer = () => {
             <section>
                 <br />
                 <CustomerForm/>
-                <div className="flexGrow">
-                    <Link to="/">Home</Link>
-                    <Link to="/lounge">Home</Link>
-                </div>
             </section>
         </>
     )

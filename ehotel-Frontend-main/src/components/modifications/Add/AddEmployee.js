@@ -13,10 +13,6 @@ export const addEmployee = () => {
             <section>
                 <br />
                 <EmployeeForm/>
-                <div className="flexGrow">
-                    <Link to="/">Home</Link>
-                    <Link to="/lounge">Home</Link>
-                </div>
             </section>
         </>
     )

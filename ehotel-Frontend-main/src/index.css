@@ -23,3 +23,10 @@ code {
   height: 100%;
   z-index: 9999;
 }
+
+.App{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+}
