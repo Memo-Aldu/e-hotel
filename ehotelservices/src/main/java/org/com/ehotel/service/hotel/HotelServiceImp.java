@@ -60,9 +60,6 @@ public class HotelServiceImp implements HotelService {
         if(searchDTO.checkIn().after(searchDTO.checkOut())) {
             throw new BadRequestException("Check in date must be before check out date");
         }
-        if(searchDTO.checkIn().before(new java.util.Date())) {
-            throw new BadRequestException("Check in date must be after today");
-        }
         if(searchDTO.adults() == null || searchDTO.adults() < 1) {
             throw new BadRequestException("Invalid number of adults");
         }
