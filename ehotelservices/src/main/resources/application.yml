@@ -4,8 +4,8 @@ spring:
   application:
     name: ehotel-service
   datasource:
-    url: jdbc:postgresql://34.168.253.84:5432/appdb
-    username: appuser
+    url: jdbc:postgresql://104.198.78.230:5432/appdb
+    username: postgres
     password: root
   jpa:
     hibernate:
@@ -16,11 +16,12 @@ spring:
       hibernate.dialect: org.hibernate.dialect.PostgreSQL81Dialect
       hibernate:
         default_schema: ehotel
+    database: POSTGRESQL
 ## Application Configuration Properties
 application:
   jwt:
     secretKey: 12345678901234567890123456789012
-    tokenExpirationAfterDays: 1
+    tokenExpirationAfterDays: 7
     refreshTokenExpirationAfterDays: 30
     tokenPrefix: "Bearer "
     accessHeader: access_token

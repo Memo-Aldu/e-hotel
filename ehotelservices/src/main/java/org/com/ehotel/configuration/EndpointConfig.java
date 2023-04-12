@@ -16,6 +16,9 @@ public class EndpointConfig {
     private final String[] openEndpoints = new String[]{
             Endpoints.AUTH.getPath() + "/**", Endpoints.APP_USER.getPath()+"/register"};
 
+    private final String[] openGETEndpoints = new String[]{
+            Endpoints.ROOM.getPath() + "/**", Endpoints.HOTEL.getPath() + "/**", Endpoints.CHAIN_HOTEL.getPath() + "/**",};
+
     private final String[] userEndpoints = new String[]{
             Endpoints.APP_USER.getPath() + "/**"};
 
@@ -32,6 +35,10 @@ public class EndpointConfig {
 
     public Predicate<HttpServletRequest> isSecured =
             request -> Arrays.stream(openEndpoints).toList()
+                    .stream()
+                    .noneMatch(uri -> pathMatcher.match(uri, request.getRequestURI()));
+    public Predicate<HttpServletRequest> isSecuredGET =
+            request -> Arrays.stream(openGETEndpoints).toList()
                     .stream()
                     .noneMatch(uri -> pathMatcher.match(uri, request.getRequestURI()));
 }

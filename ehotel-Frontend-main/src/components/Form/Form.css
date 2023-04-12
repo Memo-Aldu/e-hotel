@@ -1,0 +1,16 @@
+/*--------- location form ---------*/
+.slide-form {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    color: white;
+  }
+  .slide-form input {
+    border: none;
+    border-radius: 5px;
+    margin: 0px 0px 10px 0px;
+  }
+  .slide-form .submit {
+    background: #31b675;
+    color: white;
+}
+

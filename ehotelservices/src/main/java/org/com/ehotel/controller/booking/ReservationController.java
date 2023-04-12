@@ -25,8 +25,15 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 2023-04-06, Thursday
  **/
-@AllArgsConstructor @Slf4j @CrossOrigin("*")
+@AllArgsConstructor @Slf4j
 @RestController @RequestMapping("/api/v1/reservation")
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class ReservationController {
     private final ReservationService reservationService;
     private final ResponseHandler responseHandler;

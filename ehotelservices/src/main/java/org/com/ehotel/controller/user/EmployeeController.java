@@ -28,8 +28,15 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 4/6/2023, Thursday
  **/
-@RestController @AllArgsConstructor @CrossOrigin("*")
+@RestController @AllArgsConstructor
 @RequestMapping("/api/v1/employee") @Slf4j
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class EmployeeController {
     private final EmployeeService employeeService;
     private final ResponseHandler responseHandler;
