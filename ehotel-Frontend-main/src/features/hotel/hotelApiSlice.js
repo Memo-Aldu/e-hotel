@@ -8,6 +8,12 @@ export const hotelApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             })
         }),
+        getAllHotel: builder.mutation({
+            query: () => ({
+                url: "/hotel",
+                method: "GET",
+            }),
+        }),
         searchHotel: builder.mutation({
             query: (searchParams) => ({
                 url: "/hotel",
@@ -16,7 +22,9 @@ export const hotelApiSlice = apiSlice.injectEndpoints({
             }),
         }),
         addHotel: builder.mutation({
-            query: (hotel) => ({
+            query: (hotel) => (console.log("hotel: " + JSON.stringify(hotel)),
+            {
+                
                 url: "/hotel",
                 method: "POST",
                 body: { ...hotel},
@@ -40,5 +48,5 @@ export const hotelApiSlice = apiSlice.injectEndpoints({
     })
 });
 
-export const { useGetHotelByIdMutation, useSearchHotelMutation, 
+export const { useGetHotelByIdMutation,useGetAllHotelMutation, useSearchHotelMutation, 
     useAddHotelMutation, useUpdateHotelMutation, useDeleteHotelMutation } = hotelApiSlice;
