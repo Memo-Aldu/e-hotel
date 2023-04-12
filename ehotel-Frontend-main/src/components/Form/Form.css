@@ -1,0 +1,38 @@
+/*--------- location form ---------*/
+
+
+.slide-form h2 {
+    margin-top: 30px;
+}
+.slide-form {
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 30%;
+    height: 55vh;
+    border-radius: 5px;
+    color: white;
+  }
+  .slide-form input {
+    margin-top: 10px;
+  }
+  .slide-form .submit {
+    background: #31b675;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .slider {
+      height: 65vh;
+    }
+    .slide img {
+      height: 65vh;
+    }
+    .slide-form {
+      left: 10%;
+      top: 12%;
+      width: 80%;
+      height: 55vh;
+    }
+}
