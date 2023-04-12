@@ -1,5 +1,6 @@
 set search_path TO ehotel;
 
+CREATE SCHEMA IF NOT EXISTS ehotel;
 -- CUSTOM DOMAIN
 
 CREATE EXTENSION citext; --DONE
@@ -265,3 +266,12 @@ WHERE H.hotel_id = RTS.hotel_id GROUP BY H.hotel_id;
 CREATE VIEW total_room_per_city AS
 SELECT COUNT(R.room_id) AS total_rooms, city FROM room R
     FULL JOIN appdb.ehotel.hotel H ON R.hotel_id = H.hotel_id GROUP BY city;
+
+-- Indexes
+create extension pg_trgm with schema ehotel;
+CREATE INDEX hotel_name_gin_trgm_idx ON hotel USING gin (hotel_name gin_trgm_ops);
+CREATE INDEX hotel_city_l_gin_trgm_idx ON hotel USING gin (city gin_trgm_ops);
+CREATE INDEX hotel_address_gin_trgm_idx ON hotel USING gin (hotel_address gin_trgm_ops);
+CREATE INDEX hotel_chainname_gin_trgm_idx ON hotel_chain USING gin (chain_name gin_trgm_ops);
+CREATE INDEX room_status_gin_trgm_idx ON room(occupancy_status);
+ANALYZE;
