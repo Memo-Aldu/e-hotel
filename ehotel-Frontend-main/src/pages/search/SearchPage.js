@@ -97,7 +97,7 @@ const SearchPage = () => {
               alt="First slide"
             />
             <div class="col-md-6 px-0">
-              <h1 class="display-4 fst-italic">Title of a longer featured blog post</h1>
+              <h1 class="display-4 fst-italic">Search for Hotels</h1>
               <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
               <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading...</a></p>
           </div>
@@ -107,7 +107,7 @@ const SearchPage = () => {
           <div class="col-md-4 col-lg-3">
             <div className='row'>
               <LocationSearchForm className='color-overlay align-items-center' 
-              props={{minPrice: priceRange[0], maxPrice: priceRange[1]}}/>
+              props={{minPrice: priceRange[0], maxPrice: priceRange[1], ... state?.search}}/>
             </div>
             <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
               <div className="col p-4 d-flex flex-column position-static">
@@ -155,7 +155,7 @@ const SearchPage = () => {
             <AppAlert props={{visible: loading, msg: msg, alertType: alertType}}/>
             {
               state && hotels && hotels.map((hotel, index) => {
-                return <HotelSearchCard key={`hotel-${index}`} {...hotel} />
+                return <HotelSearchCard key={`hotel-${hotel.id}`} {...hotel} />
               })
             }
           </div>

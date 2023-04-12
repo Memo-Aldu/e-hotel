@@ -11,10 +11,11 @@ import { setLoading } from '../../features/app/loadSlice';
 
 
 const LocationSearchForm = (props) => {
-    const [searchInput, setSearchInput] = React.useState('');
-    const [checkIn, setCheckIn] = React.useState('');
-    const [checkOut, setCheckOut] = React.useState('');
-    const [guestAdults, setGuestAdults] = React.useState(1);
+    const passedSearchParams = props?.props;
+    const [searchInput, setSearchInput] = React.useState(passedSearchParams?.query ? passedSearchParams.query : '');
+    const [checkIn, setCheckIn] = React.useState(passedSearchParams?.checkIn ? passedSearchParams.checkIn : '');
+    const [checkOut, setCheckOut] = React.useState(passedSearchParams?.checkOut ? passedSearchParams?.checkOut : '');
+    const [guestAdults, setGuestAdults] = React.useState(passedSearchParams?.adults ? passedSearchParams.adults : 1);
     const [validated, setValidated] = React.useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -51,8 +52,8 @@ const LocationSearchForm = (props) => {
             checkOut: checkOut,
             adults: guestAdults,
             children: 0,
-            minPrice : props.props.minPrice ? props.props.minPrice : 0,
-            maxPrice : props.props.maxPrice ? props.props.maxPrice : 1000000,
+            minPrice : props.props?.minPrice ? props.props.minPrice : 0,
+            maxPrice : props.props?.maxPrice ? props.props.maxPrice : 1000000,
         };
         console.log('data for fetching hotels', data);
         try {
@@ -96,7 +97,7 @@ const LocationSearchForm = (props) => {
             </Form.Group>
             <Form.Group className="" controlId="formAdult">
                     <Form.Label style={{color: 'white'}}>Number of Guest</Form.Label>
-                    <Form.Control type="number" placeholder="Guest(s)" onChange={handleChangeGuestAdults}/>
+                    <Form.Control defaultValue={1} type="number" placeholder="Guest(s)" onChange={handleChangeGuestAdults}/>
             </Form.Group>
             <div className = 'd-grid'>
                 <Button variant="primary" type="submit" color='' className='my-2'>Submit</Button>

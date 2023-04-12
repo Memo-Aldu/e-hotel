@@ -12,6 +12,7 @@ import { Routes, Route } from 'react-router-dom';
 import roles from "./roles"
 import styles from './App.css'
 import SearchPage from './pages/search/SearchPage';
+import RoomPage from './pages/hotel/RoomPage';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="linkpage" element={<LinkPage />} />
           <Route path="search" element={<SearchPage />} />
+          <Route path='room' element={<RoomPage/>}/>
           <Route path="unauthorized" element={<Unauthorized />} />
           <Route path="lounge" element={<Lounge />} />
           {/* protected routes */}

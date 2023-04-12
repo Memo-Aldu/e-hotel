@@ -49,7 +49,7 @@ export const AppNavbar = () => {
                 <Nav>
                     <Nav.Link onClick={handleLoginLogout} className=''>
                         <i className={showLogin ? "fas fa-user" : "fas fa-arrow-right-from-bracket" }></i>
-                        <p className="d-inline ms-2">Login</p>
+                        <p className="d-inline ms-2">{showLogin ? 'Login' : 'Logout'}</p>
                     </Nav.Link>
                     {
                         showLogin ? 
