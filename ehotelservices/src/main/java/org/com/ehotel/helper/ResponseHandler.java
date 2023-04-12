@@ -47,6 +47,11 @@ public class ResponseHandler {
     public HttpServletResponse jsonResponse (AppHttpResponse AppHttpResponse,
                                              HttpServletResponse response) {
         response.setContentType(APPLICATION_JSON_VALUE);
+        response.setHeader("Access-Control-Allow-Origin", "localhost:3000");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        System.out.println("ResponseHandler.jsonResponse");
         try {
             String json = objectMapper.writeValueAsString(
                     AppHttpResponse);

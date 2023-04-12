@@ -1,5 +1,3 @@
-import Register from './components/Form/RegisterForm';
-import Login from "./components/Form/LoginForm";
 import Home from './pages/home/Home';
 import Layout from './components/Layout';
 import Employee from './features/auth/Employee';
@@ -17,6 +15,11 @@ import AddEmployee from './components/modifications/Add/AddEmployee';
 import AddCustomer from './components/modifications/Add/AddCustomer';
 import AddRoom from './components/modifications/Add/AddRoom';
 import { HotelList } from "./components/modifications/List/HotelList"
+import SearchPage from './pages/search/SearchPage';
+import LoginPage from './pages/auth/LoginPage';
+import RoomPage from './pages/hotel/RoomPage';
+import RegisterPage from './pages/auth/RegisterPage';
+
 
 function App() {
 
@@ -25,9 +28,11 @@ function App() {
         <Route path="/" element={<Layout/>}>
           {/* public routes */}
           <Route index element={<Home />}/>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
           <Route path="linkpage" element={<LinkPage />} />
+          <Route path="search" element={<SearchPage />} />
+          <Route path='room' element={<RoomPage/>}/>
           <Route path="unauthorized" element={<Unauthorized />} />
 
           {/* protected routes */}

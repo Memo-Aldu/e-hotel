@@ -4,8 +4,8 @@ spring:
   application:
     name: ehotel-service
   datasource:
-    url: jdbc:postgresql://34.168.253.84:5432/appdb
-    username: appuser
+    url: jdbc:postgresql://104.198.78.230:5432/appdb
+    username: postgres
     password: root
   jpa:
     hibernate:

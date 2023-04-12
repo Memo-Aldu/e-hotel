@@ -3,6 +3,7 @@ package org.com.ehotel.controller.hotel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.com.ehotel.dto.hotel.HotelDTO;
+import org.com.ehotel.dto.hotel.HotelSearchDTO;
 import org.com.ehotel.exceptions.BadRequestException;
 import org.com.ehotel.helper.AppHttpResponse;
 import org.com.ehotel.helper.ResponseHandler;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +30,13 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  **/
 @AllArgsConstructor @Slf4j
 @RestController @RequestMapping("/api/v1/hotel")
-@CrossOrigin("*")
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class HotelController {
     private final HotelService hotelService;
     private final ResponseHandler responseHandler;
@@ -55,10 +63,20 @@ public class HotelController {
     }
     @GetMapping()
     public ResponseEntity<AppHttpResponse> getAllHotels(
-            @RequestParam(defaultValue = "", required = false) String query,  HttpServletRequest request) {
+            @RequestParam(required = false, defaultValue = "") String query,
+            @RequestParam(required = false, defaultValue = "") Date checkIn,
+            @RequestParam(required = false, defaultValue = "") Date checkOut,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Integer adults,
+            @RequestParam(required = false) Integer children,  HttpServletRequest request) {
+        HotelSearchDTO searchDTO = new HotelSearchDTO(query, checkIn, checkOut,
+                adults == null ? 1 : adults,
+                children == null ? 0 : children,
+                minPrice == null ? 0.0 : minPrice, maxPrice == null ? 100000.0 : maxPrice);
         Set<HotelDTO> hotelDTOS = null;
         if(query != null && !query.isEmpty()) {
-            hotelDTOS  = hotelService.searchHotel(query);
+            hotelDTOS  = hotelService.searchHotel(searchDTO);
         } else {
             hotelDTOS = hotelService.getAllHotelEntity();
         }
@@ -78,7 +96,7 @@ public class HotelController {
     @PostMapping()
     public ResponseEntity<AppHttpResponse> createHotel(
             @RequestBody HotelDTO hotelDTO, HttpServletRequest request) {
-        if(hotelDTO == null || !hotelDTO.isValidDto()) {
+        if(hotelDTO == null) {
             throw new BadRequestException("Invalid hotel");
         }
         return responseHandler.httpResponse(
@@ -97,7 +115,7 @@ public class HotelController {
     public ResponseEntity<AppHttpResponse> updateHotel(
             @RequestBody HotelDTO hotelDTO,
             @PathVariable Integer id, HttpServletRequest request) {
-        if(hotelDTO == null || !hotelDTO.isValidDto()) {
+        if(hotelDTO == null) {
             throw new BadRequestException("Invalid hoetl");
         }
         if(id == null) {

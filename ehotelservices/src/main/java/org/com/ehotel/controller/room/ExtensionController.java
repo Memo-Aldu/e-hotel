@@ -25,8 +25,15 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 3/27/2023, Monday
  **/
-@RestController @Slf4j @CrossOrigin("*")
+@RestController @Slf4j
 @AllArgsConstructor @RequestMapping("/api/v1/extension")
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class ExtensionController {
     private final ExtensionService extensionService;
     private final ResponseHandler responseHandler;

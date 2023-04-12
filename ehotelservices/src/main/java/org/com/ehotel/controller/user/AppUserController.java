@@ -29,9 +29,10 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 @RequestMapping("/api/v1/user")
 @CrossOrigin(
         allowCredentials = "true",
-        origins = "http://localhost:3030, http://localhost:8080",
+        origins = "http://localhost:3000",
         allowedHeaders = "*",
-        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT}
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
 )
 public class AppUserController {
     private final UserService userService;

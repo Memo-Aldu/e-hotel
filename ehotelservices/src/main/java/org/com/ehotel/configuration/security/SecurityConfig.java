@@ -39,15 +39,18 @@ public class SecurityConfig {
                 .and().authorizeRequests()
                 // open endpoints for anyone
                 .antMatchers(endpoints.getOpenEndpoints()).permitAll()
-                .antMatchers(HttpMethod.GET,Endpoints.ROOM.getPath()+"/**").permitAll()
-                .antMatchers(HttpMethod.GET,Endpoints.HOTEL.getPath()+"/**").permitAll()
+                .antMatchers(HttpMethod.GET , endpoints.getOpenGETEndpoints()).permitAll()
+                .antMatchers(HttpMethod.OPTIONS , endpoints.getOpenGETEndpoints()).permitAll()
+
                 // endpoints for user
                 .antMatchers(endpoints.getUserEndpoints())
                     .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
                 .antMatchers(HttpMethod.POST, Endpoints.CUSTOMER.getPath()+"/**", Endpoints.EMPLOYEE.getPath()+"/**")
                     .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
-                .antMatchers(HttpMethod.GET, Endpoints.CHAIN_HOTEL.getPath() + "/**", Endpoints.DEPARTMENT.getPath() + "/**", Endpoints.ROLE.getPath() + "/**")
+                .antMatchers(HttpMethod.GET, Endpoints.DEPARTMENT.getPath() + "/**", Endpoints.ROLE.getPath() + "/**")
                     .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
+                .antMatchers(HttpMethod.OPTIONS, Endpoints.DEPARTMENT.getPath() + "/**", Endpoints.ROLE.getPath() + "/**")
+                .hasAnyAuthority(AppRoles.ROLE_USER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_CUSTOMER.name())
                 // endpoints for customer
                 .antMatchers(endpoints.getCustomerEndpoints())
                     .hasAnyAuthority(AppRoles.ROLE_CUSTOMER.name(), AppRoles.ROLE_EMPLOYEE.name(), AppRoles.ROLE_ADMIN.name())

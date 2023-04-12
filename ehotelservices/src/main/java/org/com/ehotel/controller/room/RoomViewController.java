@@ -24,8 +24,15 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 3/29/2023, Wednesday
  **/
-@RestController @AllArgsConstructor @CrossOrigin("*")
+@RestController @AllArgsConstructor
 @Slf4j @RequestMapping("/api/v1/room-view")
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class RoomViewController {
     private final RoomViewService roomViewService;
     private final ResponseHandler responseHandler;

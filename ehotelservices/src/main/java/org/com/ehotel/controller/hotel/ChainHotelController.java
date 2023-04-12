@@ -24,11 +24,15 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
  * @mailto : maldu064@uOttawa.ca
  * @created : 4/4/2023, Tuesday
  **/
-@AllArgsConstructor
-@Slf4j
-@RestController
-@RequestMapping("/api/v1/hotel-chain")
-@CrossOrigin("*")
+@AllArgsConstructor @Slf4j
+@RestController @RequestMapping("/api/v1/hotel-chain")
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class ChainHotelController {
     private final ChainHotelService chainService;
     private final ResponseHandler responseHandler;

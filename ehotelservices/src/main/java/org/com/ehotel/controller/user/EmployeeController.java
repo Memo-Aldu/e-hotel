@@ -34,7 +34,8 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
         allowCredentials = "true",
         origins = "http://localhost:3000",
         allowedHeaders = "*",
-        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT}
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT
+                , RequestMethod.DELETE, RequestMethod.OPTIONS}
 )
 public class EmployeeController {
     private final EmployeeService employeeService;

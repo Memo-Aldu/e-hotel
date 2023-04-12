@@ -37,14 +37,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
        // check if the requested endpoint is open
-       log.info("Requested endpoint : {}", request.getServletPath());
        if (!endpointConfig.isSecured.test(request)) {
-           log.info("Open endpoint : {}", request.getServletPath());
-           // let the request pass
+           log.info("Requested endpoint Open : {} methode {}", request.getServletPath(), request.getMethod());
            filterChain.doFilter(request, response);
-       } else {
+       }
+       else if((request.getMethod().equals("GET") || request.getMethod().equals("OPTIONS")) && !endpointConfig.isSecuredGET.test(request)){
+           log.info("Requested endpoint GET/OPTIONS OPEN: {} methode {}", request.getServletPath(), request.getMethod());
+           filterChain.doFilter(request, response);
+       }
+       else {
            // get the authorization header
+           log.info("Requested endpoint private: {} methode {}", request.getServletPath(), request.getMethod());
            final String authorizationHeader = request.getHeader(AUTHORIZATION);
+           log.info("Authorization header: {}", authorizationHeader);
            response.setHeader(AUTHORIZATION, authorizationHeader);
            // check if the authorization header is not null and starts with Bearer
            if (authorizationHeader != null && jwtUtils.tokenStartsWithPrefix(authorizationHeader)) {
