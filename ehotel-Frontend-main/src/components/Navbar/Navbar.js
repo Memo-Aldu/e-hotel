@@ -20,11 +20,12 @@ export const AppNavbar = () => {
     };
 
     const handleLoginLogout = () => {
-        setShowLogin(!showLogin);
-        if (showLogin) {
+        if (showLogin && user == null) {
             navigate('/login');
+
         } else {
             dispatch(logOut());
+            setShowLogin(!showLogin);
             navigate('/');
         }
     }
@@ -44,7 +45,7 @@ export const AppNavbar = () => {
                 <Nav className="me-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/">About us</Nav.Link>
-                    <Nav.Link href="/">Destination</Nav.Link>
+                    <Nav.Link href="/search">Destination</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link onClick={handleLoginLogout} className=''>
