@@ -4,9 +4,9 @@ spring:
   application:
     name: ehotel-service
   datasource:
-    url: jdbc:postgresql://ehotel.czkxh7ra9ucu.us-east-2.rds.amazonaws.com/appdb
-    username: postgres
-    password: rootehotelapp
+    url: YOUR DB
+    username: YOUR USERNAME
+    password: YOUR PASS
   jpa:
     hibernate:
       ddl-auto: update
